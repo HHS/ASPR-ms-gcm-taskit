@@ -10,12 +10,12 @@ name: Development Build Pre Maven Central
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "dev_temp" ]
     paths:
     - '**.xml'
     - '**.java'
   pull_request:
-    branches: [ "dev", "main" ]
+    branches: [ "dev_temp", "main_temp" ]
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
     steps:
     - name: Checkout GCM Taskit
       uses: actions/checkout@v3
-    - name: Checkout Util
+    - name: Checkout Taskit
       uses: actions/checkout@v3
       with:
         repository: HHS/ASPR-ms-taskit

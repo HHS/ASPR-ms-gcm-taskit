@@ -12,7 +12,7 @@ on:
   push:
     tags:
     - 'v*'
-    branches: ["main"]
+    branches: ["main_temp"]
 
 jobs:
   create-release:
@@ -35,7 +35,7 @@ jobs:
         cache: maven
     - name: Build Taskit
       run: mvn clean install -DskipTests --file taskit/pom.xml
-    - name: Build Taskit
+    - name: Build GCM Taskit
       run: mvn clean install -Prelease --file protobuf/pom.xml
     - name: Get Version
       run: |

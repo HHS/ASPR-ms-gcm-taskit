@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.nucleus.PlanData;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PlanDataInput} and
- * {@linkplain PlanData}
+ * {@linkplain PlanDataInput} and {@linkplain PlanData}
  */
 public class PlanDataTranslationSpec extends ProtobufTranslationSpec<PlanDataInput, PlanData> {
 

@@ -17,9 +17,7 @@ public class PersonPropertyDimensionTranslationSpec
 
         PersonPropertyId personPropertyId = this.translationEngine.convertObject(inputObject.getPersonPropertyId());
 
-        builder
-                .setPersonPropertyId(personPropertyId)
-                .setTrackTimes(inputObject.getTrackTimes());
+        builder.setPersonPropertyId(personPropertyId).setTrackTimes(inputObject.getTrackTimes());
 
         for (Any anyValue : inputObject.getValuesList()) {
             Object value = this.translationEngine.getObjectFromAny(anyValue);
@@ -36,9 +34,7 @@ public class PersonPropertyDimensionTranslationSpec
         PersonPropertyIdInput personPropertyIdInput = this.translationEngine
                 .convertObjectAsSafeClass(appObject.getPersonPropertyId(), PersonPropertyId.class);
 
-        builder
-                .setPersonPropertyId(personPropertyIdInput)
-                .setTrackTimes(appObject.getTrackTimes());
+        builder.setPersonPropertyId(personPropertyIdInput).setTrackTimes(appObject.getTrackTimes());
 
         for (Object objValue : appObject.getValues()) {
             builder.addValues(this.translationEngine.getAnyFromObject(objValue));

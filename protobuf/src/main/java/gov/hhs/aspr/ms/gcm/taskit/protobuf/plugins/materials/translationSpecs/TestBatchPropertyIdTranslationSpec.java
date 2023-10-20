@@ -1,13 +1,12 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.materials.testsupport.TestBatchPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.testsupport.input.TestBatchPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.materials.testsupport.TestBatchPropertyId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestBatchPropertyIdInput} and
- * {@linkplain TestBatchPropertyId}
+ * {@linkplain TestBatchPropertyIdInput} and {@linkplain TestBatchPropertyId}
  */
 public class TestBatchPropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestBatchPropertyIdInput, TestBatchPropertyId> {

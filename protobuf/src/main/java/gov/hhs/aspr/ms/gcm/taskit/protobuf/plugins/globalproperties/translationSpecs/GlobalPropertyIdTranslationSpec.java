@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.globalproperties.support.GlobalPropertyId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain GlobalPropertyIdInput} and
- * {@linkplain GlobalPropertyId}
+ * {@linkplain GlobalPropertyIdInput} and {@linkplain GlobalPropertyId}
  */
 public class GlobalPropertyIdTranslationSpec extends ProtobufTranslationSpec<GlobalPropertyIdInput, GlobalPropertyId> {
 
@@ -18,8 +17,7 @@ public class GlobalPropertyIdTranslationSpec extends ProtobufTranslationSpec<Glo
 
     @Override
     protected GlobalPropertyIdInput convertAppObject(GlobalPropertyId appObject) {
-        return GlobalPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject))
-                .build();
+        return GlobalPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

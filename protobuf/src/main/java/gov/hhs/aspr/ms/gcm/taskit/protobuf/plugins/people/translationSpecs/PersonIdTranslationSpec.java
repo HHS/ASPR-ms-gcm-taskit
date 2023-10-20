@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PersonIdInput} and
- * {@linkplain PersonId}
+ * {@linkplain PersonIdInput} and {@linkplain PersonId}
  */
 public class PersonIdTranslationSpec extends ProtobufTranslationSpec<PersonIdInput, PersonId> {
 

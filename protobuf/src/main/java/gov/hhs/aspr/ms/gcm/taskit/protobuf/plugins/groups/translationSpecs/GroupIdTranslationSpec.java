@@ -5,9 +5,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
 
 /**
- * TranslationSpec that defines how to convert between
- * {@linkplain GroupIdInput} and
- * {@linkplain GroupId}
+ * TranslationSpec that defines how to convert between {@linkplain GroupIdInput}
+ * and {@linkplain GroupId}
  */
 public class GroupIdTranslationSpec extends ProtobufTranslationSpec<GroupIdInput, GroupId> {
 

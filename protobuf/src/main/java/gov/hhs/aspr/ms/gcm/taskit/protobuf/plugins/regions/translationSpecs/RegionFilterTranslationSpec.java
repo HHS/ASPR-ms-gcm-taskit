@@ -11,8 +11,7 @@ import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain RegionFilterInput} and
- * {@linkplain RegionFilter}
+ * {@linkplain RegionFilterInput} and {@linkplain RegionFilter}
  */
 public class RegionFilterTranslationSpec extends ProtobufTranslationSpec<RegionFilterInput, RegionFilter> {
 

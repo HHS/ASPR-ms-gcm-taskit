@@ -57,8 +57,7 @@ public class GroupPropertyReportPluginDataTranslationSpec
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);
 
-        builder
-                .setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
+        builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
                 .setReportLabel(reportLabelInput)
                 .setReportPeriod(this.translationEngine.convertObject(appObject.getReportPeriod()));
 
@@ -67,21 +66,19 @@ public class GroupPropertyReportPluginDataTranslationSpec
                     GroupTypeId.class);
 
             GroupPropertyReportPropertyMap.Builder groupPropertyReportBuilder = GroupPropertyReportPropertyMap
-                    .newBuilder().setGroupTypeId(groupTypeIdInput);
+                    .newBuilder()
+                    .setGroupTypeId(groupTypeIdInput);
             for (GroupPropertyId groupPropertyId : appObject.getIncludedProperties(groupTypeId)) {
-                GroupPropertyIdInput groupPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                        groupPropertyId,
-                        GroupPropertyId.class);
+                GroupPropertyIdInput groupPropertyIdInput = this.translationEngine
+                        .convertObjectAsSafeClass(groupPropertyId, GroupPropertyId.class);
                 groupPropertyReportBuilder.addGroupProperties(groupPropertyIdInput);
             }
             builder.addIncludedProperties(groupPropertyReportBuilder.build());
 
-            groupPropertyReportBuilder = GroupPropertyReportPropertyMap
-                    .newBuilder().setGroupTypeId(groupTypeIdInput);
+            groupPropertyReportBuilder = GroupPropertyReportPropertyMap.newBuilder().setGroupTypeId(groupTypeIdInput);
             for (GroupPropertyId groupPropertyId : appObject.getExcludedProperties(groupTypeId)) {
-                GroupPropertyIdInput groupPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                        groupPropertyId,
-                        GroupPropertyId.class);
+                GroupPropertyIdInput groupPropertyIdInput = this.translationEngine
+                        .convertObjectAsSafeClass(groupPropertyId, GroupPropertyId.class);
                 groupPropertyReportBuilder.addGroupProperties(groupPropertyIdInput);
             }
             builder.addExcludedProperties(groupPropertyReportBuilder.build());

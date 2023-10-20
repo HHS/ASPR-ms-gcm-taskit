@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain GroupTypeIdInput} and
- * {@linkplain GroupTypeId}
+ * {@linkplain GroupTypeIdInput} and {@linkplain GroupTypeId}
  */
 public class GroupTypeIdTranslationSpec extends ProtobufTranslationSpec<GroupTypeIdInput, GroupTypeId> {
 
@@ -18,8 +17,7 @@ public class GroupTypeIdTranslationSpec extends ProtobufTranslationSpec<GroupTyp
 
     @Override
     protected GroupTypeIdInput convertAppObject(GroupTypeId appObject) {
-        return GroupTypeIdInput.newBuilder()
-                .setId(this.translationEngine.getAnyFromObject(appObject)).build();
+        return GroupTypeIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

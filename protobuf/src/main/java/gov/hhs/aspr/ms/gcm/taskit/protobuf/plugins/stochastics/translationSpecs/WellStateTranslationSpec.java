@@ -11,11 +11,9 @@ import gov.hhs.aspr.ms.gcm.plugins.stochastics.support.WellState;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain WellStateInput} and
- * {@linkplain WellState}
+ * {@linkplain WellStateInput} and {@linkplain WellState}
  */
-public class WellStateTranslationSpec
-        extends ProtobufTranslationSpec<WellStateInput, WellState> {
+public class WellStateTranslationSpec extends ProtobufTranslationSpec<WellStateInput, WellState> {
 
     @Override
     protected WellState convertInputObject(WellStateInput inputObject) {

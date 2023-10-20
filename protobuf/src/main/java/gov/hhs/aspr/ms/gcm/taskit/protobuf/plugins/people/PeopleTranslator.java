@@ -13,9 +13,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the People Plugin.
- * <li>Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * PeoplePluginData
+ * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * to read and write PeoplePluginData
  */
 public class PeopleTranslator {
 
@@ -39,8 +38,7 @@ public class PeopleTranslator {
                     ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
                             .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
 
-                    translationEngineBuilder
-                            .addTranslationSpec(new PeoplePluginDataTranslationSpec())
+                    translationEngineBuilder.addTranslationSpec(new PeoplePluginDataTranslationSpec())
                             .addTranslationSpec(new PersonIdTranslationSpec())
                             .addTranslationSpec(new PersonRangeTranslationSpec());
 

@@ -13,9 +13,7 @@ public class ExampleDimensionTranslationSpec extends ProtobufTranslationSpec<Exa
 
     @Override
     protected ExampleDimensionInput convertAppObject(ExampleDimension appObject) {
-        return ExampleDimensionInput.newBuilder()
-                .setLevelName(appObject.getLevelName())
-                .build();
+        return ExampleDimensionInput.newBuilder().setLevelName(appObject.getLevelName()).build();
     }
 
     @Override

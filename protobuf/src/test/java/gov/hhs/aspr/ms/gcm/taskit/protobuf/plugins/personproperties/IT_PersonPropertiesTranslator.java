@@ -11,15 +11,6 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyInteractionReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.personproperties.reports.PersonPropertyInteractionReportPluginData;
@@ -30,6 +21,15 @@ import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.TestPersonProper
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyInteractionReportPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyReportPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
+import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
 import util.random.RandomGeneratorProvider;
 
@@ -47,12 +47,10 @@ public class IT_PersonPropertiesTranslator {
         TranslationController translatorController = TranslationController.builder()
                 .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class)
-                .build();
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class).build();
 
         long seed = 4684903523797799712L;
         int initialPoptulation = 100;
@@ -85,12 +83,10 @@ public class IT_PersonPropertiesTranslator {
         TranslationController translatorController = TranslationController.builder()
                 .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class)
-                .build();
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class).build();
 
         long seed = 4684903523797799712L;
 
@@ -135,12 +131,10 @@ public class IT_PersonPropertiesTranslator {
         TranslationController translatorController = TranslationController.builder()
                 .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class)
-                .build();
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class).build();
 
         long seed = 4684903523797799712L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
@@ -148,10 +142,8 @@ public class IT_PersonPropertiesTranslator {
         ReportLabel reportLabel = new SimpleReportLabel("interaction report label");
         ReportPeriod reportPeriod = ReportPeriod.DAILY;
 
-        PersonPropertyInteractionReportPluginData.Builder builder = PersonPropertyInteractionReportPluginData
-                .builder()
-                .setReportLabel(reportLabel)
-                .setReportPeriod(reportPeriod);
+        PersonPropertyInteractionReportPluginData.Builder builder = PersonPropertyInteractionReportPluginData.builder()
+                .setReportLabel(reportLabel).setReportPeriod(reportPeriod);
 
         Set<TestPersonPropertyId> expectedPersonPropertyIds = EnumSet.allOf(TestPersonPropertyId.class);
 

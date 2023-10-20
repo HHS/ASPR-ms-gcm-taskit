@@ -8,8 +8,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.NotFilter;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain NotFilterInput} and
- * {@linkplain NotFilter}
+ * {@linkplain NotFilterInput} and {@linkplain NotFilter}
  */
 public class NotFilterTranslationSpec extends ProtobufTranslationSpec<NotFilterInput, NotFilter> {
 

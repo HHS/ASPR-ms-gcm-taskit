@@ -43,8 +43,7 @@ public class AT_PartitionsTranslator {
                     for (File file : files) {
                         String className = file.getName();
                         if (className.endsWith(".class")) {
-                            className = packageName + "." + className.substring(0,
-                                    className.length() - 6);
+                            className = packageName + "." + className.substring(0, className.length() - 6);
                             Class<?> classRef = classLoader.loadClass(className);
 
                             assertTrue(translationSpecClasses.contains(classRef), classRef.getSimpleName());
@@ -62,7 +61,8 @@ public class AT_PartitionsTranslator {
         Translator expectedTranslator = Translator.builder()
                 .setTranslatorId(PartitionsTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                }).build();
+                })
+                .build();
 
         assertEquals(expectedTranslator, PartitionsTranslator.getTranslator());
     }

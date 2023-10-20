@@ -6,16 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.globalproperties.reports.GlobalPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalPropertyId;
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.reports.input.GlobalPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.reports.GlobalPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -77,8 +77,7 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
     public void testGetAppObjectClass() {
         GlobalPropertyReportPluginDataTranslationSpec translationSpec = new GlobalPropertyReportPluginDataTranslationSpec();
 
-        assertEquals(GlobalPropertyReportPluginData.class,
-                translationSpec.getAppObjectClass());
+        assertEquals(GlobalPropertyReportPluginData.class, translationSpec.getAppObjectClass());
     }
 
     @Test
@@ -86,8 +85,7 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
     public void testGetInputObjectClass() {
         GlobalPropertyReportPluginDataTranslationSpec translationSpec = new GlobalPropertyReportPluginDataTranslationSpec();
 
-        assertEquals(GlobalPropertyReportPluginDataInput.class,
-                translationSpec.getInputObjectClass());
+        assertEquals(GlobalPropertyReportPluginDataInput.class, translationSpec.getInputObjectClass());
     }
 
 }

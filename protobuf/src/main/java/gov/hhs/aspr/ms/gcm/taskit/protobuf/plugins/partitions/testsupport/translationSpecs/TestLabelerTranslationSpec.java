@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestLabelerInput} and
- * {@linkplain TestLabeler}
+ * {@linkplain TestLabelerInput} and {@linkplain TestLabeler}
  */
 public class TestLabelerTranslationSpec extends ProtobufTranslationSpec<TestLabelerInput, TestLabeler> {
 

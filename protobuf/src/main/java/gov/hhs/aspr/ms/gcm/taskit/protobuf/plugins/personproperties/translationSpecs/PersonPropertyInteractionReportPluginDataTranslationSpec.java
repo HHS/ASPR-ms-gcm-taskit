@@ -15,8 +15,7 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
  * {@linkplain PersonPropertyInteractionReportPluginDataInput} and
  * {@linkplain PersonPropertyInteractionReportPluginData}
  */
-public class PersonPropertyInteractionReportPluginDataTranslationSpec
-        extends
+public class PersonPropertyInteractionReportPluginDataTranslationSpec extends
         ProtobufTranslationSpec<PersonPropertyInteractionReportPluginDataInput, PersonPropertyInteractionReportPluginData> {
 
     @Override
@@ -48,14 +47,11 @@ public class PersonPropertyInteractionReportPluginDataTranslationSpec
                 ReportLabel.class);
         ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
 
-        builder
-                .setReportLabel(reportLabelInput)
-                .setReportPeriod(reportPeriodInput);
+        builder.setReportLabel(reportLabelInput).setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getPersonPropertyIds()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    personPropertyId,
-                    PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
             builder.addPersonPropertyIds(personPropertyIdInput);
         }
 

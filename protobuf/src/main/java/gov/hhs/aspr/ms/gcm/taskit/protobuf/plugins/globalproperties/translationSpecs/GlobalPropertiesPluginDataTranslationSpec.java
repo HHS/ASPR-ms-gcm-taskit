@@ -54,8 +54,7 @@ public class GlobalPropertiesPluginDataTranslationSpec
 
             PropertyDefinitionInput propertyDefinitionInput = this.translationEngine.convertObject(propertyDefinition);
 
-            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput
-                    .newBuilder()
+            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                     .setPropertyDefinition(propertyDefinitionInput)
                     .setPropertyId(this.translationEngine.getAnyFromObject(globalPropertyId))
                     .setPropertyDefinitionTime(appObject.getGlobalPropertyDefinitionTime(globalPropertyId))
@@ -69,8 +68,7 @@ public class GlobalPropertiesPluginDataTranslationSpec
             Any propertyValueInput = this.translationEngine
                     .getAnyFromObject(appObject.getGlobalPropertyValue(globalPropertyId).get());
 
-            PropertyValueMapInput.Builder propertyValueMapInputBuilder = PropertyValueMapInput
-                    .newBuilder()
+            PropertyValueMapInput.Builder propertyValueMapInputBuilder = PropertyValueMapInput.newBuilder()
                     .setPropertyId(this.translationEngine.getAnyFromObject(globalPropertyId))
                     .setPropertyValue(propertyValueInput)
                     .setPropertyValueTime(appObject.getGlobalPropertyTime(globalPropertyId).get());

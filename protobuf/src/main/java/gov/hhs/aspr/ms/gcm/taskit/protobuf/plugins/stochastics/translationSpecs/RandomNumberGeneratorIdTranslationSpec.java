@@ -20,7 +20,8 @@ public class RandomNumberGeneratorIdTranslationSpec
     @Override
     protected RandomNumberGeneratorIdInput convertAppObject(RandomNumberGeneratorId appObject) {
         return RandomNumberGeneratorIdInput.newBuilder()
-                .setId(this.translationEngine.getAnyFromObject(appObject)).build();
+                .setId(this.translationEngine.getAnyFromObject(appObject))
+                .build();
     }
 
     @Override

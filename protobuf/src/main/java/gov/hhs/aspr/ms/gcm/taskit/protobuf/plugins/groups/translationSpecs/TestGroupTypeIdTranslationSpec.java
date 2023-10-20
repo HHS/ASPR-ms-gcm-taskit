@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.TestGroupTypeId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestGroupTypeIdInput} and
- * {@linkplain TestGroupTypeId}
+ * {@linkplain TestGroupTypeIdInput} and {@linkplain TestGroupTypeId}
  */
 public class TestGroupTypeIdTranslationSpec extends ProtobufTranslationSpec<TestGroupTypeIdInput, TestGroupTypeId> {
 

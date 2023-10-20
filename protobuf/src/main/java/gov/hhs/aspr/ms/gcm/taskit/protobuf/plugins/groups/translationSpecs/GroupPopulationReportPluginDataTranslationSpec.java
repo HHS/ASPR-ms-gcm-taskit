@@ -1,10 +1,10 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPopulationReportPluginData;
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPopulationReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPopulationReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 
 public class GroupPopulationReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<GroupPopulationReportPluginDataInput, GroupPopulationReportPluginData> {

@@ -11,8 +11,7 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
  * {@linkplain MaterialsProducerPropertyReportPluginDataInput} and
  * {@linkplain MaterialsProducerPropertyReportPluginData}
  */
-public class MaterialsProducerPropertyReportPluginDataTranslationSpec
-        extends
+public class MaterialsProducerPropertyReportPluginDataTranslationSpec extends
         ProtobufTranslationSpec<MaterialsProducerPropertyReportPluginDataInput, MaterialsProducerPropertyReportPluginData> {
 
     @Override

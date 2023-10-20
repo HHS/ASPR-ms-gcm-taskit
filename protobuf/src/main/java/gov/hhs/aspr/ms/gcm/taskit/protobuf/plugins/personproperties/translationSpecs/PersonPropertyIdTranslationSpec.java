@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
 
 /**
  * TranslationSpec that defines how to convert between

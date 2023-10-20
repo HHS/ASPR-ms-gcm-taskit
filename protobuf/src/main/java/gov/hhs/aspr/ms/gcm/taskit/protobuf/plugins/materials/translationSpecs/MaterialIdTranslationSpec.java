@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain MaterialIdInput} and
- * {@linkplain MaterialId}
+ * {@linkplain MaterialIdInput} and {@linkplain MaterialId}
  */
 public class MaterialIdTranslationSpec extends ProtobufTranslationSpec<MaterialIdInput, MaterialId> {
 

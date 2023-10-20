@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 import com.google.type.Date;
 
+import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
+import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.PlanQueueDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
-import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
 
 /**
  * TranslationSpec that defines how to convert between

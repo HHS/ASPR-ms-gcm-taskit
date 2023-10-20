@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain ReportPeriodInput} and
- * {@linkplain ReportPeriod}
+ * {@linkplain ReportPeriodInput} and {@linkplain ReportPeriod}
  */
 public class ReportPeriodTranslationSpec extends ProtobufTranslationSpec<ReportPeriodInput, ReportPeriod> {
 

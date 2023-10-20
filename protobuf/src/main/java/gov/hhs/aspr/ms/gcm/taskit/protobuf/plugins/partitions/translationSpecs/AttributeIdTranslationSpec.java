@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.testsupport.attributes.support.Att
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain AttributeIdInput} and
- * {@linkplain AttributeId}
+ * {@linkplain AttributeIdInput} and {@linkplain AttributeId}
  */
 public class AttributeIdTranslationSpec extends ProtobufTranslationSpec<AttributeIdInput, AttributeId> {
 
@@ -18,8 +17,7 @@ public class AttributeIdTranslationSpec extends ProtobufTranslationSpec<Attribut
 
     @Override
     protected AttributeIdInput convertAppObject(AttributeId appObject) {
-        return AttributeIdInput.newBuilder()
-                .setId(this.translationEngine.getAnyFromObject(appObject)).build();
+        return AttributeIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

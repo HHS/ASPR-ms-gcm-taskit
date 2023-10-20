@@ -22,9 +22,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the Partitions Plugin.
- * <li>Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * PartitionsPluginData
+ * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * to read and write PartitionsPluginData
  */
 public class PartitionsTranslator {
 

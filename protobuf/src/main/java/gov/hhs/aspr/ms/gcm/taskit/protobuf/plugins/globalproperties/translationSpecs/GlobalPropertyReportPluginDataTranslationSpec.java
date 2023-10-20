@@ -45,21 +45,17 @@ public class GlobalPropertyReportPluginDataTranslationSpec
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);
 
-        builder
-                .setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
-                .setReportLabel(reportLabelInput);
+        builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy()).setReportLabel(reportLabelInput);
 
         for (GlobalPropertyId globalPropertyId : appObject.getIncludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    globalPropertyId,
-                    GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(globalPropertyId, GlobalPropertyId.class);
             builder.addIncludedProperties(globalPropertyIdInput);
         }
 
         for (GlobalPropertyId globalPropertyId : appObject.getExcludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    globalPropertyId,
-                    GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(globalPropertyId, GlobalPropertyId.class);
             builder.addExcludedProperties(globalPropertyIdInput);
         }
 

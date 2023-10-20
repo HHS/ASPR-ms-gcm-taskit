@@ -5,9 +5,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 
 /**
- * TranslationSpec that defines how to convert between
- * {@linkplain PlannerInput} and
- * {@linkplain Planner}
+ * TranslationSpec that defines how to convert between {@linkplain PlannerInput}
+ * and {@linkplain Planner}
  */
 public class PlannerTranslationSpec extends ProtobufTranslationSpec<PlannerInput, Planner> {
 

@@ -8,8 +8,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.Filter;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain AndFilterInput} and
- * {@linkplain AndFilter}
+ * {@linkplain AndFilterInput} and {@linkplain AndFilter}
  */
 public class AndFilterTranslationSpec extends ProtobufTranslationSpec<AndFilterInput, AndFilter> {
 

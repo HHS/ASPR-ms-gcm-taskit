@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourceId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestResourceIdInput} and
- * {@linkplain TestResourceId}
+ * {@linkplain TestResourceIdInput} and {@linkplain TestResourceId}
  */
 public class TestResourceIdTranslationSpec extends ProtobufTranslationSpec<TestResourceIdInput, TestResourceId> {
 

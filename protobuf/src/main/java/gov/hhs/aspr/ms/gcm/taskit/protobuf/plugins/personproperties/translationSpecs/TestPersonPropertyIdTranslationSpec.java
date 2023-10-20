@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.TestPersonProper
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestPersonPropertyIdInput} and
- * {@linkplain TestPersonPropertyId}
+ * {@linkplain TestPersonPropertyIdInput} and {@linkplain TestPersonPropertyId}
  */
 public class TestPersonPropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestPersonPropertyIdInput, TestPersonPropertyId> {

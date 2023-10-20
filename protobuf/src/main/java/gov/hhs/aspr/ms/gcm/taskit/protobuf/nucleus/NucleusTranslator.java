@@ -1,9 +1,5 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
 
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,64 +13,60 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlanDataTran
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlanQueueDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlannerTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.SimulationStateTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for Nucleus
- * <li>Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * the classes within Nucleus
+ * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * to read and write the classes within Nucleus
  */
 public class NucleusTranslator {
 
-        private NucleusTranslator() {
-        }
+    private NucleusTranslator() {
+    }
 
-        protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-                List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
+        List<TranslationSpec<?, ?>> list = new ArrayList<>();
 
-                list.add(new SimulationStateTranslationSpec());
-                list.add(new ExamplePlanDataTranslationSpec());
-                list.add(new PlanQueueDataTranslationSpec());
-                list.add(new PlannerTranslationSpec());
-                list.add(new DimensionTranslationSpec());
-                list.add(new ExampleDimensionTranslationSpec());
-                list.add(new PlanDataTranslationSpec());
-                list.add(new ExperimentParameterDataTranslationSpec());
+        list.add(new SimulationStateTranslationSpec());
+        list.add(new ExamplePlanDataTranslationSpec());
+        list.add(new PlanQueueDataTranslationSpec());
+        list.add(new PlannerTranslationSpec());
+        list.add(new DimensionTranslationSpec());
+        list.add(new ExampleDimensionTranslationSpec());
+        list.add(new PlanDataTranslationSpec());
+        list.add(new ExperimentParameterDataTranslationSpec());
 
-                return list;
-        }
+        return list;
+    }
 
-        private static Translator.Builder builder() {
-                Translator.Builder builder = Translator.builder()
-                                .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
-                                .setInitializer((translatorContext) -> {
-                                        ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                                                        .getTranslationEngineBuilder(
-                                                                        ProtobufTranslationEngine.Builder.class);
+    private static Translator.Builder builder() {
+        Translator.Builder builder = Translator.builder()
+                .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
+                .setInitializer((translatorContext) -> {
+                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
+                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
 
-                                        for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                                                translationEngineBuilder.addTranslationSpec(translationSpec);
-                                        }
+                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    }
 
-                                        translationEngineBuilder
-                                                        .addFieldToIncludeDefaultValue(
-                                                                        SimulationStateInput.getDescriptor()
-                                                                                        .findFieldByName("startTime"))
-                                                        .addFieldToIncludeDefaultValue(
-                                                                        PlanQueueDataInput.getDescriptor()
-                                                                                        .findFieldByName("time"))
-                                                        .addFieldToIncludeDefaultValue(
-                                                                        PlanQueueDataInput.getDescriptor()
-                                                                                        .findFieldByName("plannerId"))
-                                                        .addFieldToIncludeDefaultValue(
-                                                                        PlanQueueDataInput.getDescriptor()
-                                                                                        .findFieldByName("active"));
-                                });
+                    translationEngineBuilder
+                            .addFieldToIncludeDefaultValue(
+                                    SimulationStateInput.getDescriptor().findFieldByName("startTime"))
+                            .addFieldToIncludeDefaultValue(PlanQueueDataInput.getDescriptor().findFieldByName("time"))
+                            .addFieldToIncludeDefaultValue(
+                                    PlanQueueDataInput.getDescriptor().findFieldByName("plannerId"))
+                            .addFieldToIncludeDefaultValue(
+                                    PlanQueueDataInput.getDescriptor().findFieldByName("active"));
+                });
 
-                return builder;
-        }
+        return builder;
+    }
 
-        public static Translator getTranslator() {
-                return builder().build();
-        }
+    public static Translator getTranslator() {
+        return builder().build();
+    }
 }

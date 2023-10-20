@@ -16,9 +16,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the GlobalProperties Plugin.
- * <li>Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * GlobalPropertiesPluginData
+ * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * to read and write GlobalPropertiesPluginData
  */
 public class GlobalPropertiesTranslator {
 

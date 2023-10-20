@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourcePropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.testsupport.input.TestResourcePropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourcePropertyId;
 
 /**
  * TranslationSpec that defines how to convert between

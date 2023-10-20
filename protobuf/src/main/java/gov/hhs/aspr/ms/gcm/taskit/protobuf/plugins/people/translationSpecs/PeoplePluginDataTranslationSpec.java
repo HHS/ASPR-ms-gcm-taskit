@@ -8,11 +8,9 @@ import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PeoplePluginDataInput} and
- * {@linkplain PeoplePluginData}
+ * {@linkplain PeoplePluginDataInput} and {@linkplain PeoplePluginData}
  */
-public class PeoplePluginDataTranslationSpec
-        extends ProtobufTranslationSpec<PeoplePluginDataInput, PeoplePluginData> {
+public class PeoplePluginDataTranslationSpec extends ProtobufTranslationSpec<PeoplePluginDataInput, PeoplePluginData> {
 
     @Override
     protected PeoplePluginData convertInputObject(PeoplePluginDataInput inputObject) {

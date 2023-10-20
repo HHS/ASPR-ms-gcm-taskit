@@ -73,8 +73,7 @@ public class AT_GroupsPluginDataTranslationSpec {
         expectedGroupsPerPerson = 0;
         expectedPeoplePerGroup = 0;
         GroupsPluginData.Builder builder = (GroupsPluginData.Builder) GroupsTestPluginFactory
-                .getStandardGroupsPluginData(expectedGroupsPerPerson,
-                        expectedPeoplePerGroup, people, seed)
+                .getStandardGroupsPluginData(expectedGroupsPerPerson, expectedPeoplePerGroup, people, seed)
                 .getCloneBuilder();
         builder.addGroup(new GroupId(100), TestGroupTypeId.GROUP_TYPE_1)
                 .associatePersonToGroup(new GroupId(100), new PersonId(110))

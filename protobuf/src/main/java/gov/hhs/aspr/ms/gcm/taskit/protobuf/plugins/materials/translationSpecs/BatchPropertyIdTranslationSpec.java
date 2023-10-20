@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.materials.support.BatchPropertyId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain BatchPropertyIdInput} and
- * {@linkplain BatchPropertyId}
+ * {@linkplain BatchPropertyIdInput} and {@linkplain BatchPropertyId}
  */
 public class BatchPropertyIdTranslationSpec extends ProtobufTranslationSpec<BatchPropertyIdInput, BatchPropertyId> {
 

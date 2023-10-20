@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalProper
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestGlobalPropertyIdInput} and
- * {@linkplain TestGlobalPropertyId}
+ * {@linkplain TestGlobalPropertyIdInput} and {@linkplain TestGlobalPropertyId}
  */
 public class TestGlobalPropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestGlobalPropertyIdInput, TestGlobalPropertyId> {

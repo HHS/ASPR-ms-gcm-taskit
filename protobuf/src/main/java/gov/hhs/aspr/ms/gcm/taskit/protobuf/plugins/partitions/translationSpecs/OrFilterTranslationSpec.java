@@ -8,8 +8,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.OrFilter;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain OrFilterInput} and
- * {@linkplain OrFilter}
+ * {@linkplain OrFilterInput} and {@linkplain OrFilter}
  */
 public class OrFilterTranslationSpec extends ProtobufTranslationSpec<OrFilterInput, OrFilter> {
 

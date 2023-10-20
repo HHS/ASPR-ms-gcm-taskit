@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain ExamplePlanDataInput} and
- * {@linkplain ExamplePlanData}
+ * {@linkplain ExamplePlanDataInput} and {@linkplain ExamplePlanData}
  */
 public class ExamplePlanDataTranslationSpec extends ProtobufTranslationSpec<ExamplePlanDataInput, ExamplePlanData> {
 

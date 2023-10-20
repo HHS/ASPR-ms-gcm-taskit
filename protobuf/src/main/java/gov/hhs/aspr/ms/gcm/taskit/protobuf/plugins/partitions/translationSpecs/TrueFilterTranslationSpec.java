@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.TrueFilter;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TrueFilterInput} and
- * {@linkplain TrueFilter}
+ * {@linkplain TrueFilterInput} and {@linkplain TrueFilter}
  */
 public class TrueFilterTranslationSpec extends ProtobufTranslationSpec<TrueFilterInput, TrueFilter> {
 

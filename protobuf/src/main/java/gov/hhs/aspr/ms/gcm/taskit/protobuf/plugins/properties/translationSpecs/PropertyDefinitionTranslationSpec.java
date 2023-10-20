@@ -2,9 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translationSpecs;
 
 import com.google.protobuf.Any;
 
+import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 
 /**
  * TranslationSpec that defines how to convert between

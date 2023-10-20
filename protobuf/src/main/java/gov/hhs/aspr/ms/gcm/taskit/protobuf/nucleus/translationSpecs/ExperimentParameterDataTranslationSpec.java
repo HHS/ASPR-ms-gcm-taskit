@@ -2,9 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
 
 import java.nio.file.Path;
 
+import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
 
 /**
  * TranslationSpec that defines how to convert between

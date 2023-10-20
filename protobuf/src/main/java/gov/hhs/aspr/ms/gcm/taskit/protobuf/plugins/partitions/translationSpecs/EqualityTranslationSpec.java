@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain EqualityInput} and
- * {@linkplain Equality}
+ * {@linkplain EqualityInput} and {@linkplain Equality}
  */
 public class EqualityTranslationSpec extends ProtobufTranslationSpec<EqualityInput, Equality> {
 

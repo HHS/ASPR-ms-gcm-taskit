@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestFilterInput} and
- * {@linkplain TestFilter}
+ * {@linkplain TestFilterInput} and {@linkplain TestFilter}
  */
 public class TestFilterTranslationSpec extends ProtobufTranslationSpec<TestFilterInput, TestFilter> {
 

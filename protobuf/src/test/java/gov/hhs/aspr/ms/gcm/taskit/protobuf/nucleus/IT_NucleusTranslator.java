@@ -52,8 +52,7 @@ public class IT_NucleusTranslator {
 
             PlanQueueData.Builder planQueueBuilder = PlanQueueData.builder();
 
-            planQueueBuilder
-                    .setArrivalId(arrivalId)
+            planQueueBuilder.setArrivalId(arrivalId)
                     .setKey(key)
                     .setPlanData(examplePlanData)
                     .setPlanner(planner)
@@ -65,7 +64,8 @@ public class IT_NucleusTranslator {
         double startTime = 5;
         long planningQueueArrivalId = arrivalId + 1;
 
-        builder.setStartTime(startTime).setPlanningQueueArrivalId(planningQueueArrivalId)
+        builder.setStartTime(startTime)
+                .setPlanningQueueArrivalId(planningQueueArrivalId)
                 .setBaseDate(LocalDate.of(2023, 4, 12));
 
         SimulationState exptectedSimulationState = builder.build();

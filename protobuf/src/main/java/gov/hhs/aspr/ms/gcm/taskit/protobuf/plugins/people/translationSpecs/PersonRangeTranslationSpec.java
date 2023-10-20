@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PersonRangeInput} and
- * {@linkplain PersonRange}
+ * {@linkplain PersonRangeInput} and {@linkplain PersonRange}
  */
 public class PersonRangeTranslationSpec extends ProtobufTranslationSpec<PersonRangeInput, PersonRange> {
 
@@ -18,8 +17,10 @@ public class PersonRangeTranslationSpec extends ProtobufTranslationSpec<PersonRa
 
     @Override
     protected PersonRangeInput convertAppObject(PersonRange appObject) {
-        return PersonRangeInput.newBuilder().setLowPersonId(appObject.getLowPersonId())
-                .setHighPersonId(appObject.getHighPersonId()).build();
+        return PersonRangeInput.newBuilder()
+                .setLowPersonId(appObject.getLowPersonId())
+                .setHighPersonId(appObject.getHighPersonId())
+                .build();
     }
 
     @Override

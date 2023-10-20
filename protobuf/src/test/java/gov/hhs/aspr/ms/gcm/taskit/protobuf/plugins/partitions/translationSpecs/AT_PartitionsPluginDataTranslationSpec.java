@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.data.input.PartitionsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestLabelerTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -40,9 +40,7 @@ public class AT_PartitionsPluginDataTranslationSpec {
         PartitionsPluginDataTranslationSpec translationSpec = new PartitionsPluginDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        PartitionsPluginData expectedAppValue = PartitionsPluginData.builder()
-                .setRunContinuitySupport(true)
-                .build();
+        PartitionsPluginData expectedAppValue = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
 
         PartitionsPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
 
@@ -51,9 +49,7 @@ public class AT_PartitionsPluginDataTranslationSpec {
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
 
-        expectedAppValue = PartitionsPluginData.builder()
-                .setRunContinuitySupport(false)
-                .build();
+        expectedAppValue = PartitionsPluginData.builder().setRunContinuitySupport(false).build();
 
         inputValue = translationSpec.convertAppObject(expectedAppValue);
         actualAppValue = translationSpec.convertInputObject(inputValue);

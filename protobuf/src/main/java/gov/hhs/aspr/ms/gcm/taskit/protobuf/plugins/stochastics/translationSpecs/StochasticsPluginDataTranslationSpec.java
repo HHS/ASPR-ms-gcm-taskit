@@ -48,9 +48,10 @@ public class StochasticsPluginDataTranslationSpec
             WellStateInput generatorWellStateInput = this.translationEngine
                     .convertObject(appObject.getWellState(randomNumberGeneratorId));
 
-            builder.addRandomNumberGeneratorIds(
-                    RandomNumberGeneratorMapInput.newBuilder().setWellState(generatorWellStateInput)
-                            .setRandomNumberGeneratorId(randomNumberGeneratorIdInput).build());
+            builder.addRandomNumberGeneratorIds(RandomNumberGeneratorMapInput.newBuilder()
+                    .setWellState(generatorWellStateInput)
+                    .setRandomNumberGeneratorId(randomNumberGeneratorIdInput)
+                    .build());
         }
 
         return builder.build();

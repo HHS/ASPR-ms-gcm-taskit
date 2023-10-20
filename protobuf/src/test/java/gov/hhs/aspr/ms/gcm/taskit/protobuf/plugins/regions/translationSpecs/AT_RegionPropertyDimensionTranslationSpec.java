@@ -44,8 +44,7 @@ public class AT_RegionPropertyDimensionTranslationSpec {
         RegionPropertyDimensionTranslationSpec translationSpec = new RegionPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        RegionPropertyDimension expectedAppValue = RegionPropertyDimension
-                .builder()
+        RegionPropertyDimension expectedAppValue = RegionPropertyDimension.builder()
                 .setRegionId(TestRegionId.REGION_1)
                 .setRegionPropertyId(TestRegionPropertyId.REGION_PROPERTY_3_DOUBLE_MUTABLE)
                 .addValue(10.0)

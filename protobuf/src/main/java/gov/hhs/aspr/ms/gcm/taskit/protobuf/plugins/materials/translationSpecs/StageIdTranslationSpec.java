@@ -5,9 +5,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.gcm.plugins.materials.support.StageId;
 
 /**
- * TranslationSpec that defines how to convert between
- * {@linkplain StageIdInput} and
- * {@linkplain StageId}
+ * TranslationSpec that defines how to convert between {@linkplain StageIdInput}
+ * and {@linkplain StageId}
  */
 public class StageIdTranslationSpec extends ProtobufTranslationSpec<StageIdInput, StageId> {
 

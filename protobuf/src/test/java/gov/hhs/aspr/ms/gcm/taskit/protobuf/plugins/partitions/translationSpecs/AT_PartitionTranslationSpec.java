@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Labeler;
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Partition;
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.Filter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.PartitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.TestFilter;
@@ -13,9 +16,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.transl
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestLabelerTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Labeler;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Partition;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.Filter;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -58,9 +58,7 @@ public class AT_PartitionTranslationSpec {
 
         assertEquals(expectedAppValue, actualAppValue);
 
-        expectedAppValue = Partition.builder()
-                .addLabeler(partitionLabeler)
-                .build();
+        expectedAppValue = Partition.builder().addLabeler(partitionLabeler).build();
 
         inputValue = translationSpec.convertAppObject(expectedAppValue);
 

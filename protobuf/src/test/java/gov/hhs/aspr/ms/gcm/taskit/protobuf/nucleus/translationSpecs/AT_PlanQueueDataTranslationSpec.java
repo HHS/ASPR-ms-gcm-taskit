@@ -53,8 +53,7 @@ public class AT_PlanQueueDataTranslationSpec {
 
         PlanQueueData.Builder planQueueBuilder = PlanQueueData.builder();
 
-        planQueueBuilder
-                .setArrivalId(arrivalId)
+        planQueueBuilder.setArrivalId(arrivalId)
                 .setKey(key)
                 .setPlanData(examplePlanData)
                 .setPlanner(planner)

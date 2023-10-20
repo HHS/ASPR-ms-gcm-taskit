@@ -5,9 +5,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Labeler;
 
 /**
- * TranslationSpec that defines how to convert between
- * {@linkplain LabelerInput} and
- * {@linkplain Labeler}
+ * TranslationSpec that defines how to convert between {@linkplain LabelerInput}
+ * and {@linkplain Labeler}
  */
 public class LabelerTranslationSpec extends ProtobufTranslationSpec<LabelerInput, Labeler> {
 

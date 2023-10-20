@@ -1,10 +1,10 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupsForPersonFilter;
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupsForPersonFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupsForPersonFilter;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 
 public class GroupsForPersonFilterTranslationSpec
         extends ProtobufTranslationSpec<GroupsForPersonFilterInput, GroupsForPersonFilter> {
@@ -23,10 +23,7 @@ public class GroupsForPersonFilterTranslationSpec
                 Equality.class);
         int groupCount = appObject.getGroupCount();
 
-        return GroupsForPersonFilterInput.newBuilder()
-                .setEquality(equalityInput)
-                .setGroupCount(groupCount)
-                .build();
+        return GroupsForPersonFilterInput.newBuilder().setEquality(equalityInput).setGroupCount(groupCount).build();
     }
 
     @Override

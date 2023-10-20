@@ -5,13 +5,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.testsupport.input.TestGlobalPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -30,8 +30,7 @@ public class AT_TestGlobalPropertyIdTranslationSpec {
         TranslationController translationController = TranslationController.builder()
                 .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         ProtobufTranslationEngine protobufTranslationEngine = translationController
@@ -54,8 +53,7 @@ public class AT_TestGlobalPropertyIdTranslationSpec {
     public void testGetAppObjectClass() {
         TestGlobalPropertyIdTranslationSpec translationSpec = new TestGlobalPropertyIdTranslationSpec();
 
-        assertEquals(TestGlobalPropertyId.class,
-                translationSpec.getAppObjectClass());
+        assertEquals(TestGlobalPropertyId.class, translationSpec.getAppObjectClass());
     }
 
     @Test
@@ -63,8 +61,7 @@ public class AT_TestGlobalPropertyIdTranslationSpec {
     public void testGetInputObjectClass() {
         TestGlobalPropertyIdTranslationSpec translationSpec = new TestGlobalPropertyIdTranslationSpec();
 
-        assertEquals(TestGlobalPropertyIdInput.class,
-                translationSpec.getInputObjectClass());
+        assertEquals(TestGlobalPropertyIdInput.class, translationSpec.getInputObjectClass());
     }
 
 }

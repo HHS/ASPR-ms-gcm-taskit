@@ -20,9 +20,7 @@ public class GroupPropertyDimensionTranslationSpec
         GroupPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getGroupPropertyId());
         GroupId groupId = this.translationEngine.convertObject(inputObject.getGroupId());
 
-        builder
-                .setGroupPropertyId(globalPropertyId)
-                .setGroupId(groupId);
+        builder.setGroupPropertyId(globalPropertyId).setGroupId(groupId);
 
         for (Any anyValue : inputObject.getValuesList()) {
             Object value = this.translationEngine.getObjectFromAny(anyValue);
@@ -40,9 +38,7 @@ public class GroupPropertyDimensionTranslationSpec
                 .convertObjectAsSafeClass(appObject.getGroupPropertyId(), GroupPropertyId.class);
         GroupIdInput groupIdInput = this.translationEngine.convertObject(appObject.getGroupId());
 
-        builder
-                .setGroupPropertyId(globalPropertyIdInput)
-                .setGroupId(groupIdInput);
+        builder.setGroupPropertyId(globalPropertyIdInput).setGroupId(groupIdInput);
 
         for (Object objValue : appObject.getValues()) {
             builder.addValues(this.translationEngine.getAnyFromObject(objValue));

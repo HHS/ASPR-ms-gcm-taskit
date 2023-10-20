@@ -43,8 +43,7 @@ public class AT_PersonPropertyDimensionTranslationSpec {
         PersonPropertyDimensionTranslationSpec translationSpec = new PersonPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        PersonPropertyDimension expectedAppValue = PersonPropertyDimension
-                .builder()
+        PersonPropertyDimension expectedAppValue = PersonPropertyDimension.builder()
                 .setPersonPropertyId(TestPersonPropertyId.PERSON_PROPERTY_6_DOUBLE_MUTABLE_TRACK)
                 .setTrackTimes(true)
                 .addValue(10.0)

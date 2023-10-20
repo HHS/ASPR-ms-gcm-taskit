@@ -25,7 +25,8 @@ public class PersonResourceReportPluginDataTranslationSpec
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
         ReportPeriod reportPeriod = this.translationEngine.convertObject(inputObject.getReportPeriod());
 
-        builder.setReportLabel(reportLabel).setReportPeriod(reportPeriod)
+        builder.setReportLabel(reportLabel)
+                .setReportPeriod(reportPeriod)
                 .setDefaultInclusion(inputObject.getDefaultInclusionPolicy());
 
         for (ResourceIdInput resourceIdInput : inputObject.getIncludedPropertiesList()) {
@@ -49,8 +50,7 @@ public class PersonResourceReportPluginDataTranslationSpec
                 ReportLabel.class);
         ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
 
-        builder
-                .setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
+        builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
                 .setReportPeriod(reportPeriodInput)
                 .setReportLabel(reportLabelInput);
 

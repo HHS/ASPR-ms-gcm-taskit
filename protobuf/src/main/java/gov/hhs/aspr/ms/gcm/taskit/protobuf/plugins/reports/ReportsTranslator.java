@@ -14,9 +14,8 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 
 /**
  * Translator for the Reports Plugin.
- * <li>Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * ReportsPlugin
+ * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * to read and write ReportsPlugin
  */
 public class ReportsTranslator {
 

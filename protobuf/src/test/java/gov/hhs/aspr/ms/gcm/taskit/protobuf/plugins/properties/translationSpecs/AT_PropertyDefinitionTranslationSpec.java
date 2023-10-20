@@ -49,10 +49,7 @@ public class AT_PropertyDefinitionTranslationSpec {
 
         assertEquals(expectedAppValue, actualAppValue);
 
-        expectedAppValue = PropertyDefinition.builder()
-                .setPropertyValueMutability(true)
-                .setType(String.class)
-                .build();
+        expectedAppValue = PropertyDefinition.builder().setPropertyValueMutability(true).setType(String.class).build();
 
         inputValue = translationSpec.convertAppObject(expectedAppValue);
         actualAppValue = translationSpec.convertInputObject(inputValue);
@@ -60,11 +57,8 @@ public class AT_PropertyDefinitionTranslationSpec {
         assertEquals(expectedAppValue, actualAppValue);
 
         assertThrows(RuntimeException.class, () -> {
-            translationSpec.convertInputObject(PropertyDefinitionInput
-                    .getDefaultInstance()
-                    .toBuilder()
-                    .setType("Foo")
-                    .build());
+            translationSpec.convertInputObject(
+                    PropertyDefinitionInput.getDefaultInstance().toBuilder().setType("Foo").build());
         });
     }
 

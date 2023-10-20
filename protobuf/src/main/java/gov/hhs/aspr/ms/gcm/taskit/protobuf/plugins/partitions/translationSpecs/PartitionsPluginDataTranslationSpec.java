@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PartitionsPluginDataInput} and
- * {@linkplain PartitionsPluginData}
+ * {@linkplain PartitionsPluginDataInput} and {@linkplain PartitionsPluginData}
  */
 public class PartitionsPluginDataTranslationSpec
         extends ProtobufTranslationSpec<PartitionsPluginDataInput, PartitionsPluginData> {

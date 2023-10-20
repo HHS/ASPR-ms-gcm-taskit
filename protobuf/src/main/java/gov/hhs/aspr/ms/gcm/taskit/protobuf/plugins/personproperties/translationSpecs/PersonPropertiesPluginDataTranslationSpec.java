@@ -55,12 +55,10 @@ public class PersonPropertiesPluginDataTranslationSpec
         for (PersonPropertyTimeMapInput personPropertyTimeMapInput : inputObject.getPersonPropertyTimesList()) {
             PersonPropertyId propertyId = this.translationEngine
                     .convertObject(personPropertyTimeMapInput.getPersonPropertyId());
-            for (PersonPropertyTimeInput personPropertyTimeInput : personPropertyTimeMapInput
-                    .getPropertyTimesList()) {
+            for (PersonPropertyTimeInput personPropertyTimeInput : personPropertyTimeMapInput.getPropertyTimesList()) {
                 PersonId personId = new PersonId(personPropertyTimeInput.getPId());
 
-                builder.setPersonPropertyTime(personId, propertyId,
-                        personPropertyTimeInput.getPropertyValueTime());
+                builder.setPersonPropertyTime(personId, propertyId, personPropertyTimeInput.getPropertyValueTime());
             }
         }
 
@@ -85,8 +83,7 @@ public class PersonPropertiesPluginDataTranslationSpec
             double propertyDefinitionTime = personPropertyDefinitionTimes.get(personPropertyId);
             boolean propertyTrackingPolicy = personPropertyTimeTrackingPolicies.get(personPropertyId);
 
-            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput
-                    .newBuilder()
+            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                     .setPropertyDefinition(propertyDefinitionInput)
                     .setPropertyId(this.translationEngine.getAnyFromObject(personPropertyId))
                     .setPropertyDefinitionTime(propertyDefinitionTime)

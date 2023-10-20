@@ -12,15 +12,6 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionPropertyReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.plugins.regions.datamanagers.RegionsPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.regions.reports.RegionPropertyReportPluginData;
@@ -31,136 +22,141 @@ import gov.hhs.aspr.ms.gcm.plugins.regions.testsupport.TestRegionPropertyId;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionPropertyReportPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
+import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
 import util.random.RandomGeneratorProvider;
 
 public class IT_RegionsTranslator {
-        Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-        Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path basePath = TestResourceHelper.getResourceDir(this.getClass());
+    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
 
-        @Test
-        @UnitTestForCoverage
-        public void testRegionsTranslator() {
-                String fileName = "regionsPluginData.json";
+    @Test
+    @UnitTestForCoverage
+    public void testRegionsTranslator() {
+        String fileName = "regionsPluginData.json";
 
-                TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-                TranslationController translatorController = TranslationController.builder()
-                                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                                .addTranslator(RegionsTranslator.getTranslator())
-                                .addTranslator(PropertiesTranslator.getTranslator())
-                                .addTranslator(PeopleTranslator.getTranslator())
-                                .addTranslator(ReportsTranslator.getTranslator())
-                                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class)
-                                .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class)
-                                .build();
+        TranslationController translatorController = TranslationController.builder()
+                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslator(RegionsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class)
+                .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class)
+                .build();
 
-                long seed = 524805676405822016L;
-                int initialPopulation = 100;
-                List<PersonId> people = new ArrayList<>();
+        long seed = 524805676405822016L;
+        int initialPopulation = 100;
+        List<PersonId> people = new ArrayList<>();
 
-                for (int i = 0; i < initialPopulation; i++) {
-                        people.add(new PersonId(i));
-                }
-
-                RegionsPluginData expectedPluginData = RegionsTestPluginFactory.getStandardRegionsPluginData(people,
-                                true, seed);
-
-                translatorController.writeOutput(expectedPluginData);
-                translatorController.readInput();
-
-                RegionsPluginData actualPluginData = translatorController.getFirstObject(RegionsPluginData.class);
-
-                assertEquals(expectedPluginData, actualPluginData);
-                assertEquals(expectedPluginData.toString(), actualPluginData.toString());
+        for (int i = 0; i < initialPopulation; i++) {
+            people.add(new PersonId(i));
         }
 
-        @Test
-        @UnitTestForCoverage
-        public void testRegionPropertyReportTranslatorSpec() {
-                String fileName = "propertyReport.json";
+        RegionsPluginData expectedPluginData = RegionsTestPluginFactory.getStandardRegionsPluginData(people, true,
+                seed);
 
-                TestResourceHelper.createTestOutputFile(filePath, fileName);
+        translatorController.writeOutput(expectedPluginData);
+        translatorController.readInput();
 
-                TranslationController translatorController = TranslationController.builder()
-                                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                                .addTranslator(RegionsTranslator.getTranslator())
-                                .addTranslator(PropertiesTranslator.getTranslator())
-                                .addTranslator(PeopleTranslator.getTranslator())
-                                .addTranslator(ReportsTranslator.getTranslator())
-                                .addInputFilePath(filePath.resolve(fileName),
-                                                RegionPropertyReportPluginDataInput.class)
-                                .addOutputFilePath(filePath.resolve(fileName),
-                                                RegionPropertyReportPluginData.class)
-                                .build();
+        RegionsPluginData actualPluginData = translatorController.getFirstObject(RegionsPluginData.class);
 
-                long seed = 524805676405822016L;
-                ReportLabel reportLabel = new SimpleReportLabel("region property report label");
+        assertEquals(expectedPluginData, actualPluginData);
+        assertEquals(expectedPluginData.toString(), actualPluginData.toString());
+    }
 
-                RegionPropertyReportPluginData.Builder builder = RegionPropertyReportPluginData.builder()
-                                .setReportLabel(reportLabel)
-                                .setDefaultInclusion(false);
+    @Test
+    @UnitTestForCoverage
+    public void testRegionPropertyReportTranslatorSpec() {
+        String fileName = "propertyReport.json";
 
-                Set<TestRegionPropertyId> expectedRegionPropertyIds = EnumSet.allOf(TestRegionPropertyId.class);
-                assertFalse(expectedRegionPropertyIds.isEmpty());
+        TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-                RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
+        TranslationController translatorController = TranslationController.builder()
+                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslator(RegionsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class)
+                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class)
+                .build();
 
-                for (RegionPropertyId regionPropertyId : TestRegionPropertyId.values()) {
-                        if (randomGenerator.nextBoolean()) {
-                                builder.includeRegionProperty(regionPropertyId);
-                        } else {
-                                builder.excludeRegionProperty(regionPropertyId);
-                        }
-                }
+        long seed = 524805676405822016L;
+        ReportLabel reportLabel = new SimpleReportLabel("region property report label");
 
-                RegionPropertyReportPluginData expectedPluginData = builder.build();
+        RegionPropertyReportPluginData.Builder builder = RegionPropertyReportPluginData.builder()
+                .setReportLabel(reportLabel)
+                .setDefaultInclusion(false);
 
-                translatorController.writeOutput(expectedPluginData);
-                translatorController.readInput();
+        Set<TestRegionPropertyId> expectedRegionPropertyIds = EnumSet.allOf(TestRegionPropertyId.class);
+        assertFalse(expectedRegionPropertyIds.isEmpty());
 
-                RegionPropertyReportPluginData actualPluginData = translatorController
-                                .getFirstObject(RegionPropertyReportPluginData.class);
+        RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
 
-                assertEquals(expectedPluginData, actualPluginData);
-                assertEquals(expectedPluginData.toString(), actualPluginData.toString());
+        for (RegionPropertyId regionPropertyId : TestRegionPropertyId.values()) {
+            if (randomGenerator.nextBoolean()) {
+                builder.includeRegionProperty(regionPropertyId);
+            } else {
+                builder.excludeRegionProperty(regionPropertyId);
+            }
         }
 
-        @Test
-        @UnitTestForCoverage
-        public void testRegionTransferReportTranslatorSpec() {
-                String fileName = "transferReport.json";
+        RegionPropertyReportPluginData expectedPluginData = builder.build();
 
-                TestResourceHelper.createTestOutputFile(filePath, fileName);
+        translatorController.writeOutput(expectedPluginData);
+        translatorController.readInput();
 
-                TranslationController translatorController = TranslationController.builder()
-                                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                                .addTranslator(RegionsTranslator.getTranslator())
-                                .addTranslator(PropertiesTranslator.getTranslator())
-                                .addTranslator(PeopleTranslator.getTranslator())
-                                .addTranslator(ReportsTranslator.getTranslator())
-                                .addInputFilePath(filePath.resolve(fileName),
-                                                RegionTransferReportPluginDataInput.class)
-                                .addOutputFilePath(filePath.resolve(fileName),
-                                                RegionTransferReportPluginData.class)
-                                .build();
+        RegionPropertyReportPluginData actualPluginData = translatorController
+                .getFirstObject(RegionPropertyReportPluginData.class);
 
-                ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
-                ReportPeriod reportPeriod = ReportPeriod.DAILY;
+        assertEquals(expectedPluginData, actualPluginData);
+        assertEquals(expectedPluginData.toString(), actualPluginData.toString());
+    }
 
-                RegionTransferReportPluginData.Builder builder = RegionTransferReportPluginData.builder();
+    @Test
+    @UnitTestForCoverage
+    public void testRegionTransferReportTranslatorSpec() {
+        String fileName = "transferReport.json";
 
-                builder.setReportLabel(reportLabel).setReportPeriod(reportPeriod);
+        TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-                RegionTransferReportPluginData expectedPluginData = builder.build();
+        TranslationController translatorController = TranslationController.builder()
+                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslator(RegionsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class)
+                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class)
+                .build();
 
-                translatorController.writeOutput(expectedPluginData);
-                translatorController.readInput();
+        ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
+        ReportPeriod reportPeriod = ReportPeriod.DAILY;
 
-                RegionTransferReportPluginData actualPluginData = translatorController
-                                .getFirstObject(RegionTransferReportPluginData.class);
+        RegionTransferReportPluginData.Builder builder = RegionTransferReportPluginData.builder();
 
-                assertEquals(expectedPluginData, actualPluginData);
-                assertEquals(expectedPluginData.toString(), actualPluginData.toString());
-        }
+        builder.setReportLabel(reportLabel).setReportPeriod(reportPeriod);
+
+        RegionTransferReportPluginData expectedPluginData = builder.build();
+
+        translatorController.writeOutput(expectedPluginData);
+        translatorController.readInput();
+
+        RegionTransferReportPluginData actualPluginData = translatorController
+                .getFirstObject(RegionTransferReportPluginData.class);
+
+        assertEquals(expectedPluginData, actualPluginData);
+        assertEquals(expectedPluginData.toString(), actualPluginData.toString());
+    }
 }

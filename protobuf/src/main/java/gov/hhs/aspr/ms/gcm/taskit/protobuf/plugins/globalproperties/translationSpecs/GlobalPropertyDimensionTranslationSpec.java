@@ -17,9 +17,7 @@ public class GlobalPropertyDimensionTranslationSpec
 
         GlobalPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getGlobalPropertyId());
 
-        builder
-                .setGlobalPropertyId(globalPropertyId)
-                .setAssignmentTime(inputObject.getAssignmentTime());
+        builder.setGlobalPropertyId(globalPropertyId).setAssignmentTime(inputObject.getAssignmentTime());
 
         for (Any anyValue : inputObject.getValuesList()) {
             Object value = this.translationEngine.getObjectFromAny(anyValue);
@@ -36,9 +34,7 @@ public class GlobalPropertyDimensionTranslationSpec
         GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
                 .convertObjectAsSafeClass(appObject.getGlobalPropertyId(), GlobalPropertyId.class);
 
-        builder
-                .setGlobalPropertyId(globalPropertyIdInput)
-                .setAssignmentTime(appObject.getAssignmentTime());
+        builder.setGlobalPropertyId(globalPropertyIdInput).setAssignmentTime(appObject.getAssignmentTime());
 
         for (Object objValue : appObject.getValues()) {
             builder.addValues(this.translationEngine.getAnyFromObject(objValue));

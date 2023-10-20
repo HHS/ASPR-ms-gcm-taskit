@@ -22,10 +22,10 @@ public class ResourceInitializationTranslationSpec
 
     @Override
     protected ResourceInitializationInput convertAppObject(ResourceInitialization appObject) {
-        return ResourceInitializationInput
-                .newBuilder()
+        return ResourceInitializationInput.newBuilder()
                 .setAmount(appObject.getAmount())
-                .setResourceId(this.translationEngine.getAnyFromObject(appObject.getResourceId())).build();
+                .setResourceId(this.translationEngine.getAnyFromObject(appObject.getResourceId()))
+                .build();
     }
 
     @Override

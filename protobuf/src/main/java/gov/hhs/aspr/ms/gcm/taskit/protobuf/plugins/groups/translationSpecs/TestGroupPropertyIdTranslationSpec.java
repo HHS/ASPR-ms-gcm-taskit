@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.TestGroupPropertyId;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestGroupPropertyIdInput} and
- * {@linkplain TestGroupPropertyId}
+ * {@linkplain TestGroupPropertyIdInput} and {@linkplain TestGroupPropertyId}
  */
 public class TestGroupPropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestGroupPropertyIdInput, TestGroupPropertyId> {

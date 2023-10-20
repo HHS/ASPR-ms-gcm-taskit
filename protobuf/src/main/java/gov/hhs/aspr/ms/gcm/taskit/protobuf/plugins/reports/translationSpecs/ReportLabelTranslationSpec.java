@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain ReportLabelInput} and
- * {@linkplain ReportLabel}
+ * {@linkplain ReportLabelInput} and {@linkplain ReportLabel}
  */
 public class ReportLabelTranslationSpec extends ProtobufTranslationSpec<ReportLabelInput, ReportLabel> {
 
@@ -18,8 +17,7 @@ public class ReportLabelTranslationSpec extends ProtobufTranslationSpec<ReportLa
 
     @Override
     protected ReportLabelInput convertAppObject(ReportLabel appObject) {
-        return ReportLabelInput.newBuilder()
-                .setLabel(this.translationEngine.getAnyFromObject(appObject)).build();
+        return ReportLabelInput.newBuilder().setLabel(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

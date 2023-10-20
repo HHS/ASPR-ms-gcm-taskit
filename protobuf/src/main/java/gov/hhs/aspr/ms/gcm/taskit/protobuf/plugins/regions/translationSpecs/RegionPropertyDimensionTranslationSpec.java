@@ -19,9 +19,7 @@ public class RegionPropertyDimensionTranslationSpec
         RegionPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getRegionPropertyId());
         RegionId groupId = this.translationEngine.convertObject(inputObject.getRegionId());
 
-        builder
-                .setRegionPropertyId(globalPropertyId)
-                .setRegionId(groupId);
+        builder.setRegionPropertyId(globalPropertyId).setRegionId(groupId);
 
         for (Any anyValue : inputObject.getValuesList()) {
             Object value = this.translationEngine.getObjectFromAny(anyValue);
@@ -40,9 +38,7 @@ public class RegionPropertyDimensionTranslationSpec
         RegionIdInput groupIdInput = this.translationEngine.convertObjectAsSafeClass(appObject.getRegionId(),
                 RegionId.class);
 
-        builder
-                .setRegionPropertyId(globalPropertyIdInput)
-                .setRegionId(groupIdInput);
+        builder.setRegionPropertyId(globalPropertyIdInput).setRegionId(groupIdInput);
 
         for (Object objValue : appObject.getValues()) {
             builder.addValues(this.translationEngine.getAnyFromObject(objValue));

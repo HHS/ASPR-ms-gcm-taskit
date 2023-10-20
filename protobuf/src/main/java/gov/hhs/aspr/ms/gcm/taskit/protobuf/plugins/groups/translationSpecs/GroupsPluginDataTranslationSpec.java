@@ -25,8 +25,7 @@ import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain GroupsPluginDataInput} and
- * {@linkplain GroupsPluginData}
+ * {@linkplain GroupsPluginDataInput} and {@linkplain GroupsPluginData}
  */
 public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<GroupsPluginDataInput, GroupsPluginData> {
 
@@ -115,9 +114,8 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
         for (GroupId groupId : appObject.getGroupIds()) {
 
             GroupIdInput groupIdInput = this.translationEngine.convertObject(groupId);
-            GroupTypeIdInput groupTypeIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    appObject.getGroupTypeId(groupId),
-                    GroupTypeId.class);
+            GroupTypeIdInput groupTypeIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(appObject.getGroupTypeId(groupId), GroupTypeId.class);
 
             GroupInput groupInput = GroupInput.newBuilder()
                     .setGroupId(groupIdInput)

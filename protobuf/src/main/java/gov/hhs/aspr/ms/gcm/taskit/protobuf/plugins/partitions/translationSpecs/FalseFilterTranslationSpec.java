@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.FalseFilter;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain FalseFilterInput} and
- * {@linkplain FalseFilter}
+ * {@linkplain FalseFilterInput} and {@linkplain FalseFilter}
  */
 public class FalseFilterTranslationSpec extends ProtobufTranslationSpec<FalseFilterInput, FalseFilter> {
 

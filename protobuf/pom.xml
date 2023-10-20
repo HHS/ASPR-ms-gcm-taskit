@@ -3,14 +3,44 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>gov.hhs.aspr.ms.gcm.taskit.protobuf</groupId>
+    <!-- Artifact -->
+    <groupId>gov.hhs.aspr.ms.gcm</groupId>
     <artifactId>gcm-taskit-protobuf</artifactId>
     <version>${revision}</version>
-    <name>gcm :: taskit :: protobuf :: gcm-taskit-protobuf</name>
 
+    <name>Translation and Serialization Toolkit for the General Computational Model</name>
+    <description>A toolkit that aids in the conversion between two Java objects, primiarly for use with coverting between an input Java object and a application Java object, specifically for use with gcm.</description>
+    <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
+
+    <!-- License Information -->
+    <licenses>
+        <license>
+            <name>GNU GENERAL PUBLIC LICENSE v3</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.en.html</url>
+        </license>
+    </licenses>
+
+    <!-- Developers -->
+    <developers>
+        <developer>
+            <name>Zachary Bischoff</name>
+            <organization>Leidos</organization>
+            <email>zachary.bischoff@leidos.com</email>
+            <organizationUrl>https://www.leidos.com</organizationUrl>
+        </developer>
+    </developers>
+
+     <!-- SCM Information -->
+     <scm>
+        <connection>scm:git:git://github.com/HHS/aspr-ms-gcm-taskit.git</connection>
+        <developerConnection>scm:git:ssh://github.com:HHS/aspr-ms-gcm-taskit.git</developerConnection>
+        <url>https://github.com/HHS/aspr-ms-gcm-taskit/tree/main</url>
+    </scm>
+
+    <!-- Properties -->
     <properties>
         <!-- basic project properties -->
-        <revision>2.4.0-SNAPSHOT</revision>
+        <revision>2.4.0</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -25,9 +55,10 @@
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-replacer-plugin.version>1.3.2</maven-replacer-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
 
         <!-- dependency versions -->
-        <taskit-protobuf.version>2.4.0-SNAPSHOT</taskit-protobuf.version>
+        <taskit-protobuf.version>2.4.0</taskit-protobuf.version>
         <proto-definitions.version>1.12.0</proto-definitions.version>
         <gcm.version>4.0.0</gcm.version>
         <protoc.version>3.21.12</protoc.version>
@@ -35,26 +66,17 @@
         <junit-jupiter-engine.version>5.8.2</junit-jupiter-engine.version>
     </properties>
 
-    <!--
-        This element describes all of the dependencies associated with a project.
-        These dependencies are used to construct a classpath for your project during the build process.
-    -->
+    <!-- Dependencies -->
     <dependencies>
-        <!-- core protobuf taskit dependency  -->
         <dependency>
             <groupId>gov.hhs.aspr.ms.taskit</groupId>
             <artifactId>protobuf</artifactId>
             <version>${taskit-protobuf.version}</version>
         </dependency>
-        <!-- gcm dependency -->
         <dependency>
             <groupId>gov.hhs.aspr.ms</groupId>
             <artifactId>gcm</artifactId>
             <version>${gcm.version}</version>
-            <!--
-                    A scope of provided means that the resulting jar file will not include this in its dependencies
-                    instead, must be provided by the project that uses this dependecy
-                 -->
             <scope>provided</scope>
         </dependency>
         <!-- specified solely to alleviate a dependecy version conflict -->
@@ -63,7 +85,6 @@
             <artifactId>error_prone_annotations</artifactId>
             <version>2.5.1</version>
         </dependency>
-        <!-- unit test dependencies -->
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
@@ -84,7 +105,7 @@
         </dependency>
     </dependencies>
 
-
+    <!-- Configure Build -->
     <build>
         <!--
             The plugins here are listed in order of execution to aid in understanding when they will run.
@@ -340,5 +361,52 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <!--Attaches javadoc jar to project -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <configuration>
+                            <doclint>all,-missing</doclint>
+                            <additionalDependencies>
+                                <additionalDependency>
+                                    <groupId>gov.hhs.aspr.ms</groupId>
+                                    <artifactId>util</artifactId>
+                                    <version>${util.version}</version>
+                                </additionalDependency>
+                                <additionalDependency>
+                                    <groupId>org.junit.jupiter</groupId>
+                                    <artifactId>junit-jupiter-api</artifactId>
+                                    <version>${junit-jupiter-engine.version}</version>
+                                </additionalDependency>
+                            </additionalDependencies>
+                            <author>false</author>
+                            <additionalJOptions>
+                                <additionalJOption>-Xmaxerrs</additionalJOption>
+                                <additionalJOption>65536</additionalJOption>
+                                <additionalJOption>-Xmaxwarns</additionalJOption>
+                                <additionalJOption>65536</additionalJOption>
+                            </additionalJOptions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

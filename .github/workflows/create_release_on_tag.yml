@@ -12,7 +12,7 @@ on:
   push:
     tags:
     - 'v*'
-    branches: ["main_temp"]
+    branches: ["main"]
 
 jobs:
   create-release:
@@ -26,7 +26,17 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: HHS/ASPR-ms-taskit
+        path: taskit
+    - name: Checkout Util
+      uses: actions/checkout@v3
+      with:
+        repository: HHS/ASPR-ms-util
         path: util
+    - name: Checkout GCM
+      uses: actions/checkout@v3
+      with:
+        repository: HHS/ASPR-8
+        path: gcm
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -34,7 +44,11 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build Taskit
+      run: mvn clean install -DskipTests --file util/pom.xml
+    - name: Build Taskit
       run: mvn clean install -DskipTests --file taskit/pom.xml
+    - name: Build GCM
+      run: mvn clean install -DskipTests --file gcm/gcm/pom.xml
     - name: Build GCM Taskit
       run: mvn clean install -Prelease --file protobuf/pom.xml
     - name: Get Version

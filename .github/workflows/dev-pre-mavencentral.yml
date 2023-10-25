@@ -15,7 +15,7 @@ on:
     - '**.xml'
     - '**.java'
   pull_request:
-    branches: [ "dev_temp", "main_temp" ]
+    branches: [ "dev", "main" ]
 
 jobs:
   build:

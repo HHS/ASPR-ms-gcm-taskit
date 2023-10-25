@@ -31,7 +31,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator
 
 /**
  * Translator for the Materials Plugin.
- * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * Using this Translator will add all the necessary TanslationSpecs needed
  * to read and write MaterialsPluginData
  */
 public class MaterialsTranslator {

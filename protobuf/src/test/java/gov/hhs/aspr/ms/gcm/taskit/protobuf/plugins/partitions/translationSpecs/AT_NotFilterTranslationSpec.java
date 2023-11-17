@@ -30,7 +30,7 @@ public class AT_NotFilterTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder()
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder()
                         .addTranslationSpec(new TestFilterTranslationSpec())
                         .addTranslationSpec(new TestLabelerTranslationSpec()))
                 .addTranslator(PartitionsTranslator.getTranslator())

@@ -27,7 +27,7 @@ public class AT_PropertyDefinitionTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .build();
 

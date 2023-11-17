@@ -33,7 +33,7 @@ public class AT_ResourceFilterTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())

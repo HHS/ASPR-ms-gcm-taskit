@@ -11,6 +11,7 @@ import gov.hhs.aspr.ms.gcm.plugins.people.datamanagers.PeoplePluginData;
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -28,10 +29,10 @@ public class IT_PeopleTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PeoplePluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PeoplePluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         PeoplePluginData.Builder builder = PeoplePluginData.builder();

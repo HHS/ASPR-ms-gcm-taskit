@@ -32,7 +32,7 @@ public class AT_GroupsForPersonAndGroupTypeFilterTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(GroupsTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator()).addTranslator(PartitionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator()).build();

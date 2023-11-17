@@ -26,7 +26,7 @@ public class AT_ExamplePlanDataTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 

@@ -32,7 +32,7 @@ public class AT_StochasticsPluginDataTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
 

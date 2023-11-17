@@ -28,7 +28,7 @@ public class AT_TestAttributeIdTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder()
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder()
                         .addTranslationSpec(new TestFilterTranslationSpec())
                         .addTranslationSpec(new TestLabelerTranslationSpec()))
                 .addTranslator(PartitionsTranslator.getTranslator())

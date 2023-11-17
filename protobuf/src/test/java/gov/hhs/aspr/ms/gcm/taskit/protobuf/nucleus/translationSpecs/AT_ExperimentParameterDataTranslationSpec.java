@@ -28,7 +28,7 @@ public class AT_ExperimentParameterDataTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 

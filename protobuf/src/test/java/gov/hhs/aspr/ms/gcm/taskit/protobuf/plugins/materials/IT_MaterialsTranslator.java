@@ -17,6 +17,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.gcm.plugins.materials.datamangers.MaterialsPluginData;
@@ -41,15 +42,15 @@ public class IT_MaterialsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), MaterialsPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), MaterialsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         int numBatches = 50;
@@ -76,15 +77,15 @@ public class IT_MaterialsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), BatchStatusReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), BatchStatusReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), BatchStatusReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), BatchStatusReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         BatchStatusReportPluginData.Builder builder = BatchStatusReportPluginData.builder();
@@ -114,15 +115,15 @@ public class IT_MaterialsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
@@ -151,15 +152,15 @@ public class IT_MaterialsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         MaterialsProducerResourceReportPluginData.Builder builder = MaterialsProducerResourceReportPluginData.builder();
@@ -188,15 +189,15 @@ public class IT_MaterialsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), StageReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), StageReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), StageReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), StageReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();

@@ -26,6 +26,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -43,13 +44,13 @@ public class IT_GroupsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), GroupsPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GroupsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -97,13 +98,13 @@ public class IT_GroupsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);

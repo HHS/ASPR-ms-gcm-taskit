@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -25,10 +26,10 @@ public class IT_PropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PropertiesTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PropertyDefinition.class)
+                .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PropertyDefinition.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         PropertyDefinition expectedPropertyDefinition = PropertyDefinition.builder()

@@ -29,6 +29,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionP
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -46,13 +47,13 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -83,13 +84,13 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -132,13 +133,13 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class)
+                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");

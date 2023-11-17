@@ -33,7 +33,7 @@ public class AT_StageReportPluginDataTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())

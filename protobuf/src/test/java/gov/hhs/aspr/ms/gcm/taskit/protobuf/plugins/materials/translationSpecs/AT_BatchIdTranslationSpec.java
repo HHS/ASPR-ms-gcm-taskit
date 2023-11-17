@@ -31,7 +31,7 @@ public class AT_BatchIdTranslationSpec {
     @UnitTestForCoverage
     public void testConvertObject() {
         TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(MaterialsTranslator.getTranslator()).addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())

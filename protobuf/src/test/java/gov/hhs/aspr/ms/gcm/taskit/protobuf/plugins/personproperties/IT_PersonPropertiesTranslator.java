@@ -28,6 +28,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -45,12 +46,12 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 4684903523797799712L;
         int initialPoptulation = 100;
@@ -81,12 +82,12 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 4684903523797799712L;
 
@@ -129,12 +130,12 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 4684903523797799712L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);

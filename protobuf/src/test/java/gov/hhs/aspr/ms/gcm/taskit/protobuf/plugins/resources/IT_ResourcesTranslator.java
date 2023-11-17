@@ -32,6 +32,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.Perso
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourcePropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourceReportPluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -49,12 +50,12 @@ public class IT_ResourcesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(ResourcesTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator()).addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), ResourcesPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), ResourcesPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), ResourcesPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), ResourcesPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 524805676405822016L;
         int initialPopulation = 100;
@@ -84,12 +85,12 @@ public class IT_ResourcesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(ResourcesTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator()).addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonResourceReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), PersonResourceReportPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), PersonResourceReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonResourceReportPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 524805676405822016L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
@@ -132,12 +133,12 @@ public class IT_ResourcesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(ResourcesTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator()).addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         ReportLabel reportLabel = new SimpleReportLabel("resource property report label");
 
@@ -165,12 +166,12 @@ public class IT_ResourcesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
                 .addTranslator(ResourcesTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator()).addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), ResourceReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), ResourceReportPluginData.class).build();
+                .addInputFilePath(filePath.resolve(fileName), ResourceReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), ResourceReportPluginData.class, TranslationEngineType.PROTOBUF).build();
 
         long seed = 524805676405822016L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);

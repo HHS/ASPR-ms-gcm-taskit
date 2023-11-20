@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain SimpleRegionIdInput} and
- * {@linkplain SimpleRegionId}
+ * {@linkplain SimpleRegionIdInput} and {@linkplain SimpleRegionId}
  */
 public class SimpleRegionIdTranslationSpec extends ProtobufTranslationSpec<SimpleRegionIdInput, SimpleRegionId> {
 
@@ -18,7 +17,8 @@ public class SimpleRegionIdTranslationSpec extends ProtobufTranslationSpec<Simpl
 
     @Override
     protected SimpleRegionIdInput convertAppObject(SimpleRegionId appObject) {
-        return SimpleRegionIdInput.newBuilder().setValue(this.translationEngine.getAnyFromObject(appObject.getValue()))
+        return SimpleRegionIdInput.newBuilder()
+                .setValue(this.translationEngine.getAnyFromObject(appObject.getValue()))
                 .build();
     }
 

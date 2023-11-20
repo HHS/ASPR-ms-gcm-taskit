@@ -12,7 +12,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;

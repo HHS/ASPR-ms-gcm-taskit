@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 
 /**
  * TranslationSpec that defines how to convert between

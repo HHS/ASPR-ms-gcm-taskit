@@ -2,14 +2,14 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation
 
 import com.google.protobuf.Any;
 
+import gov.hhs.aspr.ms.gcm.plugins.globalproperties.datamanagers.GlobalPropertiesPluginData;
+import gov.hhs.aspr.ms.gcm.plugins.globalproperties.support.GlobalPropertyId;
+import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.data.input.GlobalPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.datamanagers.GlobalPropertiesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.support.GlobalPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 
 /**
  * TranslationSpec that defines how to convert between

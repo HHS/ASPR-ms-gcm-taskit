@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.data.input.PartitionsPluginDataInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
 
 /**
  * TranslationSpec that defines how to convert between

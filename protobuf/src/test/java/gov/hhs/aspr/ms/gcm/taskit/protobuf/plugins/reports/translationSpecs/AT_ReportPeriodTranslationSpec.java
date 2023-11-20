@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;

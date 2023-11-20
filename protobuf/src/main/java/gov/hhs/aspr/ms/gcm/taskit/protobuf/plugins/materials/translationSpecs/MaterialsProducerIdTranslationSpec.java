@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain MaterialsProducerIdInput} and
- * {@linkplain MaterialsProducerId}
+ * {@linkplain MaterialsProducerIdInput} and {@linkplain MaterialsProducerId}
  */
 public class MaterialsProducerIdTranslationSpec
         extends ProtobufTranslationSpec<MaterialsProducerIdInput, MaterialsProducerId> {

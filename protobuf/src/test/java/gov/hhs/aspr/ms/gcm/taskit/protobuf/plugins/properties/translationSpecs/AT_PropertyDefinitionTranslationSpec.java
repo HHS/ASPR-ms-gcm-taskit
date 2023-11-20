@@ -6,11 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;

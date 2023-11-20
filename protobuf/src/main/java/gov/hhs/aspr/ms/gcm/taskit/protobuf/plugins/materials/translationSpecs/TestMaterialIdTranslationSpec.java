@@ -6,11 +6,9 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain TestMaterialIdInput} and
- * {@linkplain TestMaterialId}
+ * {@linkplain TestMaterialIdInput} and {@linkplain TestMaterialId}
  */
-public class TestMaterialIdTranslationSpec
-        extends ProtobufTranslationSpec<TestMaterialIdInput, TestMaterialId> {
+public class TestMaterialIdTranslationSpec extends ProtobufTranslationSpec<TestMaterialIdInput, TestMaterialId> {
 
     @Override
     protected TestMaterialId convertInputObject(TestMaterialIdInput inputObject) {

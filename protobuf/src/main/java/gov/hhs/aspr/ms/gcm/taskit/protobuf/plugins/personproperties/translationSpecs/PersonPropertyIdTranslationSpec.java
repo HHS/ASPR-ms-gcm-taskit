@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PersonPropertyIdInput} and
- * {@linkplain PersonPropertyId}
+ * {@linkplain PersonPropertyIdInput} and {@linkplain PersonPropertyId}
  */
 public class PersonPropertyIdTranslationSpec extends ProtobufTranslationSpec<PersonPropertyIdInput, PersonPropertyId> {
 
@@ -18,8 +17,7 @@ public class PersonPropertyIdTranslationSpec extends ProtobufTranslationSpec<Per
 
     @Override
     protected PersonPropertyIdInput convertAppObject(PersonPropertyId appObject) {
-        return PersonPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject))
-                .build();
+        return PersonPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

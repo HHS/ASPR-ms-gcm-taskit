@@ -39,9 +39,13 @@ public class AT_GroupPropertyDimensionTranslationSpec {
         GroupPropertyDimensionTranslationSpec translationSpec = new GroupPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        GroupPropertyDimension expectedAppValue = GroupPropertyDimension.builder().setGroupId(new GroupId(0))
-                .setGroupPropertyId(TestGroupPropertyId.GROUP_PROPERTY_1_3_DOUBLE_MUTABLE_NO_TRACK).addValue(10.0)
-                .addValue(1250.2).addValue(15000.5).build();
+        GroupPropertyDimension expectedAppValue = GroupPropertyDimension.builder()
+                .setGroupId(new GroupId(0))
+                .setGroupPropertyId(TestGroupPropertyId.GROUP_PROPERTY_1_3_DOUBLE_MUTABLE_NO_TRACK)
+                .addValue(10.0)
+                .addValue(1250.2)
+                .addValue(15000.5)
+                .build();
 
         GroupPropertyDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
 

@@ -22,8 +22,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain RegionsPluginDataInput} and
- * {@linkplain RegionsPluginData}
+ * {@linkplain RegionsPluginDataInput} and {@linkplain RegionsPluginData}
  */
 public class RegionsPluginDataTranslationSpec
         extends ProtobufTranslationSpec<RegionsPluginDataInput, RegionsPluginData> {
@@ -97,8 +96,7 @@ public class RegionsPluginDataTranslationSpec
             PropertyDefinitionInput propertyDefinitionInput = this.translationEngine
                     .convertObject(appObject.getRegionPropertyDefinition(regionPropertyId));
 
-            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput
-                    .newBuilder()
+            PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                     .setPropertyId(this.translationEngine.getAnyFromObject(regionPropertyId))
                     .setPropertyDefinition(propertyDefinitionInput)
                     .build();
@@ -110,15 +108,13 @@ public class RegionsPluginDataTranslationSpec
             RegionIdInput regionIdInput = this.translationEngine.convertObjectAsSafeClass(regionId, RegionId.class);
 
             for (RegionPropertyId regionPropertyId : appObject.getRegionPropertyValues(regionId).keySet()) {
-                PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput
-                        .newBuilder()
+                PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
                         .setPropertyId(this.translationEngine.getAnyFromObject(regionPropertyId))
                         .setPropertyValue(this.translationEngine
                                 .getAnyFromObject(appObject.getRegionPropertyValues(regionId).get(regionPropertyId)))
                         .build();
 
-                RegionPropertyValueMapInput regionPropertyValueMapInput = RegionPropertyValueMapInput
-                        .newBuilder()
+                RegionPropertyValueMapInput regionPropertyValueMapInput = RegionPropertyValueMapInput.newBuilder()
                         .setRegionId(regionIdInput)
                         .addPropertyValueMap(propertyValueMapInput)
                         .build();
@@ -145,8 +141,7 @@ public class RegionsPluginDataTranslationSpec
                 regionMembershipMap.put(regionIdInput, peopleInRegion);
             }
 
-            RegionPersonInfo.Builder regionPersonInfoBuilder = RegionPersonInfo.newBuilder()
-                    .setPersonId(i);
+            RegionPersonInfo.Builder regionPersonInfoBuilder = RegionPersonInfo.newBuilder().setPersonId(i);
             if (trackRegionArrivalTimes) {
                 // can safely assume this because the person region exists
                 regionPersonInfoBuilder.setArrivalTime(appObject.getPersonRegionArrivalTime(personId).get());

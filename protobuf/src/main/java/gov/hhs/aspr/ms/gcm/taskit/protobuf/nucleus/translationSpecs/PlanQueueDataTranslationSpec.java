@@ -10,8 +10,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PlanQueueDataInput} and
- * {@linkplain PlanQueueData}
+ * {@linkplain PlanQueueDataInput} and {@linkplain PlanQueueData}
  */
 public class PlanQueueDataTranslationSpec extends ProtobufTranslationSpec<PlanQueueDataInput, PlanQueueData> {
 
@@ -43,8 +42,7 @@ public class PlanQueueDataTranslationSpec extends ProtobufTranslationSpec<PlanQu
     protected PlanQueueDataInput convertAppObject(PlanQueueData appObject) {
         PlanQueueDataInput.Builder builder = PlanQueueDataInput.newBuilder();
 
-        builder
-                .setActive(appObject.isActive())
+        builder.setActive(appObject.isActive())
                 .setArrivalId(appObject.getArrivalId())
                 .setPlannerId(appObject.getPlannerId())
                 .setTime(appObject.getTime());

@@ -20,7 +20,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;

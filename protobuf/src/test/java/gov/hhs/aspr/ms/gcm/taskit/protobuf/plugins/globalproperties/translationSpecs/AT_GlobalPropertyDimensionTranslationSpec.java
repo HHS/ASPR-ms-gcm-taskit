@@ -36,9 +36,13 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
         GlobalPropertyDimensionTranslationSpec translationSpec = new GlobalPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        GlobalPropertyDimension expectedAppValue = GlobalPropertyDimension.builder().setAssignmentTime(0)
-                .setGlobalPropertyId(TestGlobalPropertyId.GLOBAL_PROPERTY_3_DOUBLE_MUTABLE).addValue(10.0)
-                .addValue(1250.2).addValue(15000.5).build();
+        GlobalPropertyDimension expectedAppValue = GlobalPropertyDimension.builder()
+                .setAssignmentTime(0)
+                .setGlobalPropertyId(TestGlobalPropertyId.GLOBAL_PROPERTY_3_DOUBLE_MUTABLE)
+                .addValue(10.0)
+                .addValue(1250.2)
+                .addValue(15000.5)
+                .build();
 
         GlobalPropertyDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
 

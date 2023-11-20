@@ -31,7 +31,9 @@ public class AT_SimulationStateTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build();
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslator(NucleusTranslator.getTranslator())
+                .build();
 
         SimulationStateTranslationSpec translationSpec = new SimulationStateTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

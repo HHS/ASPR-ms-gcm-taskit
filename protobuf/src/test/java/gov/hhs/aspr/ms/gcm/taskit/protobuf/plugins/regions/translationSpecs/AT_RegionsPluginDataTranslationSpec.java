@@ -16,7 +16,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -51,8 +50,7 @@ public class AT_RegionsPluginDataTranslationSpec {
             people.add(new PersonId(i));
         }
 
-        RegionsPluginData expectedAppValue = RegionsTestPluginFactory.getStandardRegionsPluginData(people,
-                true, seed);
+        RegionsPluginData expectedAppValue = RegionsTestPluginFactory.getStandardRegionsPluginData(people, true, seed);
 
         RegionsPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
 
@@ -61,8 +59,7 @@ public class AT_RegionsPluginDataTranslationSpec {
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
 
-        expectedAppValue = RegionsTestPluginFactory.getStandardRegionsPluginData(people,
-                false, seed);
+        expectedAppValue = RegionsTestPluginFactory.getStandardRegionsPluginData(people, false, seed);
 
         inputValue = translationSpec.convertAppObject(expectedAppValue);
 

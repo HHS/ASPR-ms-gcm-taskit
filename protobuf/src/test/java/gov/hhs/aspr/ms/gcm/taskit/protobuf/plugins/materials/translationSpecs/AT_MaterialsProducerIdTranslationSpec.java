@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialsProducerId;
+import gov.hhs.aspr.ms.gcm.plugins.materials.testsupport.TestMaterialsProducerId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.MaterialsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.MaterialsProducerIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
@@ -12,10 +14,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialsProducerId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.testsupport.TestMaterialsProducerId;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;

@@ -3,18 +3,6 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 import java.util.List;
 import java.util.Set;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDefinitionMapInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyValueMapInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupToPersonMembershipInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupTypeIdInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.data.input.GroupsPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.PersonToGroupMembershipInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.gcm.plugins.groups.datamanagers.GroupsPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
@@ -22,6 +10,18 @@ import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyValue;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.data.input.GroupsPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDefinitionMapInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyValueMapInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupToPersonMembershipInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupTypeIdInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.PersonToGroupMembershipInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between

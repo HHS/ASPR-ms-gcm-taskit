@@ -25,7 +25,9 @@ public class AT_PlanDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build();
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslator(NucleusTranslator.getTranslator())
+                .build();
 
         PlanDataTranslationSpec translationSpec = new PlanDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

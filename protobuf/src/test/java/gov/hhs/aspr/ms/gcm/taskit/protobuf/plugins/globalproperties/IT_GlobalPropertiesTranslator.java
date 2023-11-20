@@ -43,8 +43,10 @@ public class IT_GlobalPropertiesTranslator {
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(protobufTranslationEngine)
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginData.class, TranslationEngineType.PROTOBUF)
+                .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         GlobalPropertiesPluginData expectedPluginData = GlobalPropertiesTestPluginFactory
@@ -74,11 +76,13 @@ public class IT_GlobalPropertiesTranslator {
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
-                
+
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(protobufTranslationEngine)
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
+                .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);

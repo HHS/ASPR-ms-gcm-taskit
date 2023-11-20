@@ -2,13 +2,13 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs;
 
 import com.google.protobuf.Any;
 
+import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
+import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyDimension;
+import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyDimension;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyId;
 
 public class RegionPropertyDimensionTranslationSpec
         extends ProtobufTranslationSpec<RegionPropertyDimensionInput, RegionPropertyDimension> {

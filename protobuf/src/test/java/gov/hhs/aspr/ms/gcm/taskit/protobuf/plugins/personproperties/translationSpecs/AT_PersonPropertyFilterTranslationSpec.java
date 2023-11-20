@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyFilter;
 import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.TestPersonPropertyId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyFilterInput;
@@ -34,6 +35,7 @@ public class AT_PersonPropertyFilterTranslationSpec {
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
 
         PersonPropertyFilterTranslationSpec translationSpec = new PersonPropertyFilterTranslationSpec();

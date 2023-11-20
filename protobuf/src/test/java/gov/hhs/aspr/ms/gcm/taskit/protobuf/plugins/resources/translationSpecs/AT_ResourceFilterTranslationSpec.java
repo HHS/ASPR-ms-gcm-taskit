@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceFilter;
 import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourceId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
@@ -36,6 +37,7 @@ public class AT_ResourceFilterTranslationSpec {
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
 
         ResourceFilterTranslationSpec translationSpec = new ResourceFilterTranslationSpec();

@@ -31,13 +31,9 @@ public class AT_StochasticsPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         StochasticsPluginDataTranslationSpec translationSpec = new StochasticsPluginDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

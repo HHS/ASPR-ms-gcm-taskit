@@ -28,15 +28,11 @@ public class AT_LabelerTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder()
-                        .addTranslationSpec(new TestFilterTranslationSpec())
-                        .addTranslationSpec(new TestLabelerTranslationSpec()))
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslationSpec(new TestFilterTranslationSpec())
+                .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         LabelerTranslationSpec translationSpec = new LabelerTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

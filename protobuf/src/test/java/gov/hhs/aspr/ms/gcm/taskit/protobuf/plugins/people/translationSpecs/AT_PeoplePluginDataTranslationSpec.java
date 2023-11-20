@@ -28,13 +28,9 @@ public class AT_PeoplePluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         PeoplePluginDataTranslationSpec translationSpec = new PeoplePluginDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

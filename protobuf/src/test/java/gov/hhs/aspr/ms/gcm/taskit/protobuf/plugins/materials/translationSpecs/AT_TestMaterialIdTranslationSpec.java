@@ -30,8 +30,7 @@ public class AT_TestMaterialIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -39,9 +38,6 @@ public class AT_TestMaterialIdTranslationSpec {
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         TestMaterialIdTranslationSpec translationSpec = new TestMaterialIdTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

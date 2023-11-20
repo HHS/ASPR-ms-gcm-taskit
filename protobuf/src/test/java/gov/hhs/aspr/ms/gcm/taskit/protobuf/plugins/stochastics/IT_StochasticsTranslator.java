@@ -32,10 +32,13 @@ public class IT_StochasticsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(StochasticsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), StochasticsPluginData.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(StochasticsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), StochasticsPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;

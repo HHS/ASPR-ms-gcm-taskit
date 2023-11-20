@@ -47,12 +47,14 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(RegionsTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(RegionsTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -84,13 +86,16 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(RegionsTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(RegionsTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -133,13 +138,16 @@ public class IT_RegionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(RegionsTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(RegionsTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");

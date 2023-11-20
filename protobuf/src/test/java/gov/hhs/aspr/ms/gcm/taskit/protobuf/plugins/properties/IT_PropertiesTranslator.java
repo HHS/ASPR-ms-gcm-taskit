@@ -26,9 +26,10 @@ public class IT_PropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(PropertiesTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(
+                        ProtobufTranslationEngine.builder().addTranslator(PropertiesTranslator.getTranslator()).build())
+                .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class,
+                        TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), PropertyDefinition.class, TranslationEngineType.PROTOBUF)
                 .build();
 

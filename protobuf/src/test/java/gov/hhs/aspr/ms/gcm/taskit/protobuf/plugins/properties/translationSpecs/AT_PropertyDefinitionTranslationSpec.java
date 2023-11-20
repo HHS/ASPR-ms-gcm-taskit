@@ -26,13 +26,9 @@ public class AT_PropertyDefinitionTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         PropertyDefinitionTranslationSpec translationSpec = new PropertyDefinitionTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

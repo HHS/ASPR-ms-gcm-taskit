@@ -35,11 +35,14 @@ public class IT_GlobalPropertiesTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class, TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
@@ -66,11 +69,14 @@ public class IT_GlobalPropertiesTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .build();
+                
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();

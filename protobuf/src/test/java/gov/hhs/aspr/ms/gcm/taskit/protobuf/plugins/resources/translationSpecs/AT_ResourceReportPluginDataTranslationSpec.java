@@ -40,17 +40,13 @@ public class AT_ResourceReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         ResourceReportPluginDataTranslationSpec translationSpec = new ResourceReportPluginDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

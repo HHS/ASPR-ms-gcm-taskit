@@ -43,7 +43,7 @@ public class ReportsTranslator {
                         translationEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translatorContext.addParentChildClassRelationship(SimpleReportLabel.class, ReportLabel.class);
+                    translationEngineBuilder.addParentChildClassRelationship(SimpleReportLabel.class, ReportLabel.class);
                 });
 
         return builder;

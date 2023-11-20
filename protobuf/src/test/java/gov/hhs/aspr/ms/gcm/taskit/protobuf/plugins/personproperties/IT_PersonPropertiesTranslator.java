@@ -46,12 +46,17 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class, TranslationEngineType.PROTOBUF).build();
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(PersonPropertiesTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class,
+                        TranslationEngineType.PROTOBUF)
+                .build();
 
         long seed = 4684903523797799712L;
         int initialPoptulation = 100;
@@ -82,12 +87,17 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class, TranslationEngineType.PROTOBUF).build();
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(PersonPropertiesTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
+                .build();
 
         long seed = 4684903523797799712L;
 
@@ -130,12 +140,17 @@ public class IT_PersonPropertiesTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class, TranslationEngineType.PROTOBUF).build();
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(PersonPropertiesTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
+                .build();
 
         long seed = 4684903523797799712L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
@@ -144,7 +159,8 @@ public class IT_PersonPropertiesTranslator {
         ReportPeriod reportPeriod = ReportPeriod.DAILY;
 
         PersonPropertyInteractionReportPluginData.Builder builder = PersonPropertyInteractionReportPluginData.builder()
-                .setReportLabel(reportLabel).setReportPeriod(reportPeriod);
+                .setReportLabel(reportLabel)
+                .setReportPeriod(reportPeriod);
 
         Set<TestPersonPropertyId> expectedPersonPropertyIds = EnumSet.allOf(TestPersonPropertyId.class);
 

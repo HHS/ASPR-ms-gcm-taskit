@@ -26,13 +26,15 @@ public class MT_PersonPropertiesTranslator {
         String fileName = "personPropertiesPluginData.json";
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
-
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine translationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(translationEngine)
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
@@ -47,25 +49,23 @@ public class MT_PersonPropertiesTranslator {
             people.add(new PersonId(i));
         }
 
-        ProtobufTranslationEngine engine = translatorController.getTranslationEngine(ProtobufTranslationEngine.class);
-
         TimeElapser timeElapser = new TimeElapser();
         PersonPropertiesPluginData expectedPluginData = PersonPropertiesTestPluginFactory
                 .getStandardPersonPropertiesPluginData(people, seed);
 
-        System.out.print(timeElapser.getElapsedMilliSeconds() +  ",");
+        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
         timeElapser.reset();
 
-        PersonPropertiesPluginDataInput inputData = engine.convertObject(expectedPluginData);
-        System.out.print(timeElapser.getElapsedMilliSeconds() +  ",");
+        PersonPropertiesPluginDataInput inputData = translationEngine.convertObject(expectedPluginData);
+        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
         timeElapser.reset();
 
         translatorController.writeOutput(inputData);
-        System.out.print(timeElapser.getElapsedMilliSeconds() +  ",");
+        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
         timeElapser.reset();
 
         translatorController.readInput();
-        System.out.print(timeElapser.getElapsedMilliSeconds() +  "\n");
+        System.out.print(timeElapser.getElapsedMilliSeconds() + "\n");
         timeElapser.reset();
     }
 
@@ -77,17 +77,17 @@ public class MT_PersonPropertiesTranslator {
             System.out.print(i + ",");
             test.testPersonPropertiesTranslator(i);
 
-            System.out.print(i*2 + ",");
-            test.testPersonPropertiesTranslator(i*2);
+            System.out.print(i * 2 + ",");
+            test.testPersonPropertiesTranslator(i * 2);
 
-            System.out.print(i*4 + ",");
-            test.testPersonPropertiesTranslator(i*4);
+            System.out.print(i * 4 + ",");
+            test.testPersonPropertiesTranslator(i * 4);
 
-            System.out.print(i*6 + ",");
-            test.testPersonPropertiesTranslator(i*6);
+            System.out.print(i * 6 + ",");
+            test.testPersonPropertiesTranslator(i * 6);
 
-            System.out.print(i*8 + ",");
-            test.testPersonPropertiesTranslator(i*8);
+            System.out.print(i * 8 + ",");
+            test.testPersonPropertiesTranslator(i * 8);
         }
     }
 }

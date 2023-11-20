@@ -43,13 +43,17 @@ public class IT_GroupsTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
+                .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), GroupsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -97,14 +101,19 @@ public class IT_GroupsTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class, TranslationEngineType.PROTOBUF)
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
+                .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);

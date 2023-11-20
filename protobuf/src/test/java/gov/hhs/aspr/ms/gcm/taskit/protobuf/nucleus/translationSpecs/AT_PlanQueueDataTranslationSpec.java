@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
+import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.PlanQueueDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
-import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -29,13 +28,7 @@ public class AT_PlanQueueDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(NucleusTranslator.getTranslator())
-                .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build();
 
         PlanQueueDataTranslationSpec translationSpec = new PlanQueueDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

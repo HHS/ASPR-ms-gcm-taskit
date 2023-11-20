@@ -29,9 +29,10 @@ public class IT_PeopleTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(PeopleTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(
+                        ProtobufTranslationEngine.builder().addTranslator(PeopleTranslator.getTranslator()).build())
+                .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), PeoplePluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 

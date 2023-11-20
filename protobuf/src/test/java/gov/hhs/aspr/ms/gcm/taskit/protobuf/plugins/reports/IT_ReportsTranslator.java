@@ -27,8 +27,8 @@ public class IT_ReportsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslationEngine(
+                        ProtobufTranslationEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), ReportLabel.class, TranslationEngineType.PROTOBUF)
                 .build();

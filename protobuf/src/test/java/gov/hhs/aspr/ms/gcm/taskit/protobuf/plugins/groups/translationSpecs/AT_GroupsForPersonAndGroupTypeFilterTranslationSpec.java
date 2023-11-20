@@ -14,7 +14,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -31,14 +30,13 @@ public class AT_GroupsForPersonAndGroupTypeFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(GroupsTranslator.getTranslator()).addTranslator(PropertiesTranslator.getTranslator())
-                .addTranslator(PeopleTranslator.getTranslator()).addTranslator(PartitionsTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator()).build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslator(GroupsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PartitionsTranslator.getTranslator())
+                .build();
 
         GroupsForPersonAndGroupTypeFilterTranslationSpec translationSpec = new GroupsForPersonAndGroupTypeFilterTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

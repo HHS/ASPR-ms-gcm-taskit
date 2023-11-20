@@ -32,9 +32,10 @@ public class IT_NucleusTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(NucleusTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), SimulationStateInput.class, TranslationEngineType.PROTOBUF)
+                .addTranslationEngine(
+                        ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
+                .addInputFilePath(filePath.resolve(fileName), SimulationStateInput.class,
+                        TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), SimulationState.class, TranslationEngineType.PROTOBUF)
                 .build();
 

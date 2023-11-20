@@ -29,15 +29,11 @@ public class AT_AttributeFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder()
-                        .addTranslationSpec(new TestFilterTranslationSpec())
-                        .addTranslationSpec(new TestLabelerTranslationSpec()))
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslationSpec(new TestFilterTranslationSpec())
+                .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         AttributeFilterTranslationSpec translationSpec = new AttributeFilterTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

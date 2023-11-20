@@ -26,13 +26,9 @@ public class AT_RandomNumberGeneratorIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .addTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         RandomNumberGeneratorIdTranslationSpec translationSpec = new RandomNumberGeneratorIdTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

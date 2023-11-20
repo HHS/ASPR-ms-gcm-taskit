@@ -28,12 +28,16 @@ public class IT_PartitionsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngineBuilder(
-                        ProtobufTranslationEngine.builder().addTranslationSpec(new TestFilterTranslationSpec())
-                                .addTranslationSpec(new TestLabelerTranslationSpec()))
-                .addTranslator(PartitionsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), PartitionsPluginDataInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PartitionsPluginData.class, TranslationEngineType.PROTOBUF).build();
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslationSpec(new TestFilterTranslationSpec())
+                        .addTranslationSpec(new TestLabelerTranslationSpec())
+                        .addTranslator(PartitionsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), PartitionsPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), PartitionsPluginData.class,
+                        TranslationEngineType.PROTOBUF)
+                .build();
 
         PartitionsPluginData expectedPluginData = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
 

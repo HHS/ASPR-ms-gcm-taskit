@@ -13,7 +13,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -30,15 +29,14 @@ public class AT_BatchIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(MaterialsTranslator.getTranslator()).addTranslator(ReportsTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(ResourcesTranslator.getTranslator())
-                .addTranslator(RegionsTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslator(MaterialsTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(ResourcesTranslator.getTranslator())
+                .addTranslator(RegionsTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         BatchIdTranslationSpec translationSpec = new BatchIdTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

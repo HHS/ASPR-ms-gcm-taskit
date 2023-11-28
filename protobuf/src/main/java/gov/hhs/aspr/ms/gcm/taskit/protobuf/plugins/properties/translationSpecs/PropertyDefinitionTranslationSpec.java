@@ -8,8 +8,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain PropertyDefinitionInput} and
- * {@linkplain PropertyDefinition}
+ * {@linkplain PropertyDefinitionInput} and {@linkplain PropertyDefinition}
  */
 public class PropertyDefinitionTranslationSpec
         extends ProtobufTranslationSpec<PropertyDefinitionInput, PropertyDefinition> {

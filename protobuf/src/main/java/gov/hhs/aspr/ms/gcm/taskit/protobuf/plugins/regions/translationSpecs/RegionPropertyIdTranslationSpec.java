@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain RegionPropertyIdInput} and
- * {@linkplain RegionPropertyId}
+ * {@linkplain RegionPropertyIdInput} and {@linkplain RegionPropertyId}
  */
 public class RegionPropertyIdTranslationSpec extends ProtobufTranslationSpec<RegionPropertyIdInput, RegionPropertyId> {
 

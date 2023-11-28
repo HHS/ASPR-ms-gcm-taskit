@@ -51,22 +51,19 @@ public class PersonPropertyReportPluginDataTranslationSpec
                 ReportLabel.class);
         ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
 
-        builder
-                .setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
+        builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
                 .setReportLabel(reportLabelInput)
                 .setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getIncludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    personPropertyId,
-                    PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
             builder.addIncludedProperties(personPropertyIdInput);
         }
 
         for (PersonPropertyId personPropertyId : appObject.getExcludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine.convertObjectAsSafeClass(
-                    personPropertyId,
-                    PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
+                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
             builder.addExcludedProperties(personPropertyIdInput);
         }
 

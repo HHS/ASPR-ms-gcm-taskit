@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.PlannerInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain PlannerInput}

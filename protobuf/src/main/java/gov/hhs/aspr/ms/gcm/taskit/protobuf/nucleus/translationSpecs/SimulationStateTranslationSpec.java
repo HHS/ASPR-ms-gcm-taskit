@@ -12,8 +12,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain SimulationStateInput} and
- * {@linkplain SimulationState}
+ * {@linkplain SimulationStateInput} and {@linkplain SimulationState}
  */
 public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<SimulationStateInput, SimulationState> {
 

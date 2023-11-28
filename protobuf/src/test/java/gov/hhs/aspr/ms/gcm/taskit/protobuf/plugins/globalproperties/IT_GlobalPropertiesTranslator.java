@@ -18,6 +18,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -34,13 +35,18 @@ public class IT_GlobalPropertiesTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginData.class)
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
+                .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         GlobalPropertiesPluginData expectedPluginData = GlobalPropertiesTestPluginFactory
@@ -65,13 +71,18 @@ public class IT_GlobalPropertiesTranslator {
 
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginData.class)
+                .build();
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(protobufTranslationEngine)
+                .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);

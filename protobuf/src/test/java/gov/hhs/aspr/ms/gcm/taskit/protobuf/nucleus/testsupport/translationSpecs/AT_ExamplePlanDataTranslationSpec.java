@@ -6,9 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.input.ExamplePlanDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.input.ExamplePlanDataInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -25,13 +24,9 @@ public class AT_ExamplePlanDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         ExamplePlanDataTranslationSpec translationSpec = new ExamplePlanDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

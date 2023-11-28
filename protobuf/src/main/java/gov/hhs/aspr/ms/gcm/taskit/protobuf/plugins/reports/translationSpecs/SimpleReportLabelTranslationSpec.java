@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain SimpleReportLabelInput} and
- * {@linkplain SimpleReportLabel}
+ * {@linkplain SimpleReportLabelInput} and {@linkplain SimpleReportLabel}
  */
 public class SimpleReportLabelTranslationSpec
         extends ProtobufTranslationSpec<SimpleReportLabelInput, SimpleReportLabel> {
@@ -20,7 +19,8 @@ public class SimpleReportLabelTranslationSpec
     @Override
     protected SimpleReportLabelInput convertAppObject(SimpleReportLabel appObject) {
         return SimpleReportLabelInput.newBuilder()
-                .setValue(this.translationEngine.getAnyFromObject(appObject.getValue())).build();
+                .setValue(this.translationEngine.getAnyFromObject(appObject.getValue()))
+                .build();
     }
 
     @Override

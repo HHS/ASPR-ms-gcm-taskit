@@ -13,7 +13,7 @@ message PersonPropertyIdInput {
 }
 
 message PersonPropertyValueInput {
-    int32 pId = 1;
+    repeated int32 pId = 1;
     optional google.protobuf.Any value = 2;
 }
 
@@ -23,7 +23,7 @@ message PersonPropertyValueMapInput {
 }
 
 message PersonPropertyTimeInput {
-    int32 pId = 1;
+    repeated int32 pId = 1;
     double propertyValueTime = 2;
 }
 

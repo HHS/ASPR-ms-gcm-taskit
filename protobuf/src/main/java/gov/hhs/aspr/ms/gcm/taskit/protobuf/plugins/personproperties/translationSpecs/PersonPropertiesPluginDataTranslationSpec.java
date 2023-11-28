@@ -1,8 +1,10 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationSpecs;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.google.protobuf.Any;
 
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
@@ -30,9 +32,14 @@ public class PersonPropertiesPluginDataTranslationSpec
     protected PersonPropertiesPluginData convertInputObject(PersonPropertiesPluginDataInput inputObject) {
         PersonPropertiesPluginData.Builder builder = PersonPropertiesPluginData.builder();
 
-        for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getPersonPropertyDefinitionsList()) {
+        Map<Any, PersonPropertyId> personPropIdMap = new LinkedHashMap<>();
+
+        for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject
+                .getPersonPropertyDefinitionsList()) {
             PersonPropertyId propertyId = this.translationEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
+            personPropIdMap.put(propertyDefinitionMapInput.getPropertyId(), propertyId);
+
             PropertyDefinition propertyDefinition = this.translationEngine
                     .convertObject(propertyDefinitionMapInput.getPropertyDefinition());
 
@@ -41,26 +48,31 @@ public class PersonPropertiesPluginDataTranslationSpec
                     propertyDefinitionMapInput.getPropertyTrackingPolicy());
         }
 
-        for (PersonPropertyValueMapInput personPropertyValueMapInput : inputObject.getPersonPropertyValuesList()) {
-            PersonPropertyId propertyId = this.translationEngine
-                    .convertObject(personPropertyValueMapInput.getPersonPropertyId());
+        for (PersonPropertyValueMapInput personPropertyValueMapInput : inputObject
+                .getPersonPropertyValuesList()) {
+            PersonPropertyId propertyId = personPropIdMap
+                    .get(personPropertyValueMapInput.getPersonPropertyId().getId());
             for (PersonPropertyValueInput personPropertyValueInput : personPropertyValueMapInput
                     .getPropertyValuesList()) {
-                PersonId personId = new PersonId(personPropertyValueInput.getPId());
-                Object value = this.translationEngine.getObjectFromAny(personPropertyValueInput.getValue());
-                builder.setPersonPropertyValue(personId, propertyId, value);
+                for (int pId : personPropertyValueInput.getPIdList()) {
+                    builder.setPersonPropertyValue(new PersonId(pId), propertyId,
+                            this.translationEngine.getObjectFromAny(personPropertyValueInput.getValue()));
+                }
             }
         }
 
         for (PersonPropertyTimeMapInput personPropertyTimeMapInput : inputObject.getPersonPropertyTimesList()) {
-            PersonPropertyId propertyId = this.translationEngine
-                    .convertObject(personPropertyTimeMapInput.getPersonPropertyId());
+            PersonPropertyId propertyId = personPropIdMap.get(personPropertyTimeMapInput.getPersonPropertyId().getId());
             for (PersonPropertyTimeInput personPropertyTimeInput : personPropertyTimeMapInput.getPropertyTimesList()) {
-                PersonId personId = new PersonId(personPropertyTimeInput.getPId());
-
-                builder.setPersonPropertyTime(personId, propertyId, personPropertyTimeInput.getPropertyValueTime());
+                for (int pId : personPropertyTimeInput.getPIdList()) {
+                    builder.setPersonPropertyTime(new PersonId(pId), propertyId,
+                            personPropertyTimeInput.getPropertyValueTime());
+                }
             }
+
+            personPropertyTimeMapInput = null;
         }
+
 
         return builder.build();
     }
@@ -95,21 +107,23 @@ public class PersonPropertiesPluginDataTranslationSpec
 
         // Person Prop Values
         for (PersonPropertyId personPropertyId : personPropertyValues.keySet()) {
-            List<PersonPropertyValueInput.Builder> personPropertyInputBuilders = new ArrayList<>();
+            Map<Object, PersonPropertyValueInput.Builder> personPropertyInputBuildersMap = new LinkedHashMap<>();
 
             List<Object> propertyValues = personPropertyValues.get(personPropertyId);
-            for (int i = 0; i < propertyValues.size(); i++) {
-                personPropertyInputBuilders.add(null);
-            }
 
             for (int i = 0; i < propertyValues.size(); i++) {
                 if (propertyValues.get(i) != null) {
-                    PersonPropertyValueInput.Builder personPropertyValueInputBuilder = PersonPropertyValueInput
-                            .newBuilder()
-                            .setPId(i)
-                            .setValue(this.translationEngine.getAnyFromObject(propertyValues.get(i)));
+                    PersonPropertyValueInput.Builder personPropertyValueInputBuilder = personPropertyInputBuildersMap
+                            .get(propertyValues.get(i));
 
-                    personPropertyInputBuilders.set(i, personPropertyValueInputBuilder);
+                    if (personPropertyValueInputBuilder == null) {
+                        personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder()
+                                .setValue(this.translationEngine.getAnyFromObject(propertyValues.get(i)));
+
+                        personPropertyInputBuildersMap.put(propertyValues.get(i), personPropertyValueInputBuilder);
+                    }
+
+                    personPropertyValueInputBuilder.addPId(i);
                 }
             }
 
@@ -117,7 +131,8 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .setPersonPropertyId((PersonPropertyIdInput) this.translationEngine
                             .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class));
 
-            for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyInputBuilders) {
+            for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyInputBuildersMap
+                    .values()) {
                 if (personPropertyValueInputBuilder != null) {
                     valueMapInputBuilder.addPropertyValues(personPropertyValueInputBuilder.build());
                 }
@@ -128,21 +143,25 @@ public class PersonPropertiesPluginDataTranslationSpec
 
         // Person Prop Times
         for (PersonPropertyId personPropertyId : personPropertyTimes.keySet()) {
-            List<PersonPropertyTimeInput.Builder> personPropertyInputBuilders = new ArrayList<>();
+
+            Map<Double, PersonPropertyTimeInput.Builder> personPropertyInputBuildersMap = new LinkedHashMap<>();
 
             List<Double> propertyTimes = personPropertyTimes.get(personPropertyId);
-            for (int i = 0; i < propertyTimes.size(); i++) {
-                personPropertyInputBuilders.add(null);
-            }
 
             for (int i = 0; i < propertyTimes.size(); i++) {
                 if (propertyTimes.get(i) != null) {
-                    PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder = PersonPropertyTimeInput
-                            .newBuilder()
-                            .setPId(i)
-                            .setPropertyValueTime(propertyTimes.get(i));
+                    PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder = personPropertyInputBuildersMap
+                            .get(propertyTimes.get(i));
 
-                    personPropertyInputBuilders.set(i, personPropertyTimeInputBuilder);
+                    if (personPropertyTimeInputBuilder == null) {
+                        personPropertyTimeInputBuilder = PersonPropertyTimeInput.newBuilder()
+                                .setPropertyValueTime(propertyTimes.get(i));
+
+                        personPropertyInputBuildersMap.put(propertyTimes.get(i), personPropertyTimeInputBuilder);
+                    }
+
+                    personPropertyTimeInputBuilder.addPId(i);
+
                 }
             }
 
@@ -150,7 +169,8 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .setPersonPropertyId((PersonPropertyIdInput) this.translationEngine
                             .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class));
 
-            for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyInputBuilders) {
+            for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyInputBuildersMap
+                    .values()) {
                 if (personPropertyTimeInputBuilder != null) {
                     timeMapInputBuilder.addPropertyTimes(personPropertyTimeInputBuilder.build());
                 }

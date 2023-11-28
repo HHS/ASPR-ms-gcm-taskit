@@ -47,7 +47,7 @@ jobs:
     - name: Build Util
       run: mvn clean install -DskipTests --file util/pom.xml
     - name: Build GCM
-      run: mvn clean install -DskipTests --file gcm/pom.xml
+      run: mvn clean install -DskipTests --file gcm/gcm/pom.xml
     - name: Build Taskit
       run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit

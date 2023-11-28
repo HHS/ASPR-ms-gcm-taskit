@@ -19,7 +19,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for Nucleus
- * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * Using this Translator will add all the necessary TanslationSpecs needed
  * to read and write the classes within Nucleus
  */
 public class NucleusTranslator {

@@ -20,7 +20,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the PersonProperties Plugin.
- * <li>Using this Translator will add all the necessary TanslationSpecs needed
+ * Using this Translator will add all the necessary TanslationSpecs needed
  * to read and write PersonPropertiesPluginData
  */
 public class PersonPropertiesTranslator {

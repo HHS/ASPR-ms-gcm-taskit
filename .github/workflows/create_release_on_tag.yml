@@ -32,6 +32,11 @@ jobs:
       with:
         repository: HHS/ASPR-ms-util
         path: util
+    - name: Checkout GCM
+      uses: actions/checkout@v3
+      with:
+        repository: HHS/ASPR-8
+        path: gcm
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -40,6 +45,8 @@ jobs:
         cache: maven
     - name: Build Util
       run: mvn clean install -DskipTests --file util/pom.xml
+    - name: Build GCM
+      run: mvn clean install -DskipTests --file gcm/pom.xml
     - name: Build Taskit
       run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit

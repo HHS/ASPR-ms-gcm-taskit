@@ -8,14 +8,13 @@ import java.time.LocalDate;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
 import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -32,13 +31,9 @@ public class AT_SimulationStateTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         SimulationStateTranslationSpec translationSpec = new SimulationStateTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

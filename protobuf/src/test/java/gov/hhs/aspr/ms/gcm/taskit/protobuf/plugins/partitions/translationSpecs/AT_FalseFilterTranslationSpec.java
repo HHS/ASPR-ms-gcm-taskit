@@ -5,13 +5,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.FalseFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.FalseFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestLabelerTranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.FalseFilter;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -27,15 +26,11 @@ public class AT_FalseFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder()
-                        .addTranslationSpec(new TestFilterTranslationSpec())
-                        .addTranslationSpec(new TestLabelerTranslationSpec()))
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslationSpec(new TestFilterTranslationSpec())
+                .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         FalseFilterTranslationSpec translationSpec = new FalseFilterTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.TestLabeler;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.input.TestLabelerInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -25,15 +24,11 @@ public class AT_TestLabelerTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder()
-                        .addTranslationSpec(new TestFilterTranslationSpec())
-                        .addTranslationSpec(new TestLabelerTranslationSpec()))
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+                .addTranslationSpec(new TestFilterTranslationSpec())
+                .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         TestLabelerTranslationSpec translationSpec = new TestLabelerTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

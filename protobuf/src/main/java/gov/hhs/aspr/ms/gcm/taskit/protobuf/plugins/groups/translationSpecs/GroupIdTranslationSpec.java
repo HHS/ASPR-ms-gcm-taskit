@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain GroupIdInput}

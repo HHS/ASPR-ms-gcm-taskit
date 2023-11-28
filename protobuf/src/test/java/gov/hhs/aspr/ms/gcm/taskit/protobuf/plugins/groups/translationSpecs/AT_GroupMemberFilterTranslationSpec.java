@@ -5,16 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupMemberFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.GroupsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupMemberFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupMemberFilter;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
 import util.annotations.UnitTestMethod;
@@ -30,17 +29,13 @@ public class AT_GroupMemberFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(PartitionsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
+                .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
 
         GroupMemberFilterTranslationSpec translationSpec = new GroupMemberFilterTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

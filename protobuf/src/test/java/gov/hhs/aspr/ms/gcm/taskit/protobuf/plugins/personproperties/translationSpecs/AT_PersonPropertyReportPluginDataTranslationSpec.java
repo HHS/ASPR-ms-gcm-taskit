@@ -20,7 +20,6 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestConstructor;
 import util.annotations.UnitTestForCoverage;
@@ -38,14 +37,12 @@ public class AT_PersonPropertyReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testConvertObject() {
-        TranslationController translationController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
+        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
-                .addTranslator(PropertiesTranslator.getTranslator()).addTranslator(PeopleTranslator.getTranslator())
-                .addTranslator(ReportsTranslator.getTranslator()).build();
-
-        ProtobufTranslationEngine protobufTranslationEngine = translationController
-                .getTranslationEngine(ProtobufTranslationEngine.class);
+                .addTranslator(PropertiesTranslator.getTranslator())
+                .addTranslator(PeopleTranslator.getTranslator())
+                .addTranslator(ReportsTranslator.getTranslator())
+                .build();
 
         PersonPropertyReportPluginDataTranslationSpec translationSpec = new PersonPropertyReportPluginDataTranslationSpec();
         translationSpec.init(protobufTranslationEngine);

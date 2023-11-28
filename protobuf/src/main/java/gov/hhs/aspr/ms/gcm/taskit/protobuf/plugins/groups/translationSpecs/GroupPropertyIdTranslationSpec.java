@@ -6,8 +6,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
- * {@linkplain GroupPropertyIdInput} and
- * {@linkplain GroupPropertyId}
+ * {@linkplain GroupPropertyIdInput} and {@linkplain GroupPropertyId}
  */
 public class GroupPropertyIdTranslationSpec extends ProtobufTranslationSpec<GroupPropertyIdInput, GroupPropertyId> {
 
@@ -18,8 +17,7 @@ public class GroupPropertyIdTranslationSpec extends ProtobufTranslationSpec<Grou
 
     @Override
     protected GroupPropertyIdInput convertAppObject(GroupPropertyId appObject) {
-        return GroupPropertyIdInput.newBuilder()
-                .setId(this.translationEngine.getAnyFromObject(appObject)).build();
+        return GroupPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

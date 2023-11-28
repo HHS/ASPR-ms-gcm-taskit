@@ -15,6 +15,7 @@ import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.StochasticsTestPlugin
 import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
+import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
@@ -31,10 +32,13 @@ public class IT_StochasticsTranslator {
         TestResourceHelper.createTestOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
-                .setTranslationEngineBuilder(ProtobufTranslationEngine.builder())
-                .addTranslator(StochasticsTranslator.getTranslator())
-                .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class)
-                .addOutputFilePath(filePath.resolve(fileName), StochasticsPluginData.class)
+                .addTranslationEngine(ProtobufTranslationEngine.builder()
+                        .addTranslator(StochasticsTranslator.getTranslator())
+                        .build())
+                .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), StochasticsPluginData.class,
+                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;

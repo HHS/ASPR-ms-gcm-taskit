@@ -1,9 +1,5 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties;
 
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +14,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationS
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationSpecs.TestPersonPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the PersonProperties Plugin.

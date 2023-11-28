@@ -1,15 +1,15 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
+import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
+import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPropertyMap;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupTypeIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
-import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 
 /**
  * TranslationSpec that defines how to convert between

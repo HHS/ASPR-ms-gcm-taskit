@@ -1,9 +1,5 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions;
 
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +18,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.Simp
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.TestRegionIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.TestRegionPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
  * Translator for the Regions Plugin.

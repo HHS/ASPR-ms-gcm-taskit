@@ -3,14 +3,14 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportLabelTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportPeriodTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.SimpleReportLabelTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 
 /**
  * Translator for the Reports Plugin.
@@ -43,7 +43,8 @@ public class ReportsTranslator {
                         translationEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translatorContext.addParentChildClassRelationship(SimpleReportLabel.class, ReportLabel.class);
+                    translationEngineBuilder.addParentChildClassRelationship(SimpleReportLabel.class,
+                            ReportLabel.class);
                 });
 
         return builder;

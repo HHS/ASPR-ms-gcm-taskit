@@ -19,75 +19,104 @@ import util.time.TimeElapser;
 
 public class MT_PersonPropertiesTranslator {
 
+    long seed = 4684903523797799712L;
+    String times = "";
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());
     Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    ProtobufTranslationEngine protobufTranslationEngine;
+    TimeElapser timeElapser = new TimeElapser();
+    PersonPropertiesPluginData pluginData;
+    PersonPropertiesPluginDataInput inputPluginData;
+    TranslationController translationController;
 
-    public void testPersonPropertiesTranslator(int population) {
-        String fileName = "personPropertiesPluginData.json";
-
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
-        ProtobufTranslationEngine translationEngine = ProtobufTranslationEngine.builder()
+    private MT_PersonPropertiesTranslator() {
+        protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
+    }
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(translationEngine)
+    private void createPluginData(int population) {
+        String fileName = "personPropertiesPluginData_mt-" + population + ".json";
+
+        TestResourceHelper.createTestOutputFile(filePath, fileName);
+
+        this.translationController = TranslationController.builder()
+                .addTranslationEngine(this.protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
                 .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
                 .build();
 
-        long seed = 4684903523797799712L;
-        int initialPoptulation = population;
-
         List<PersonId> people = new ArrayList<>();
-        for (int i = 0; i < initialPoptulation; i++) {
+        for (int i = 0; i < population; i++) {
             people.add(new PersonId(i));
         }
 
-        TimeElapser timeElapser = new TimeElapser();
-        PersonPropertiesPluginData expectedPluginData = PersonPropertiesTestPluginFactory
-                .getStandardPersonPropertiesPluginData(people, seed);
+        this.timeElapser.reset();
+        // generate data
+        this.pluginData = PersonPropertiesTestPluginFactory.getStandardPersonPropertiesPluginData(people, seed);
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.times.concat(elapsedTime + ",");
+    }
 
-        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
-        timeElapser.reset();
+    public void convertPluginDataToInput() {
+        this.timeElapser.reset();
+        // convert data
+        this.inputPluginData = this.protobufTranslationEngine.convertObject(this.pluginData);
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.times.concat(elapsedTime + ",");
 
-        PersonPropertiesPluginDataInput inputData = translationEngine.convertObject(expectedPluginData);
-        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
-        timeElapser.reset();
+        this.pluginData = null;
+        System.gc();
+    }
 
-        translatorController.writeOutput(inputData);
-        System.out.print(timeElapser.getElapsedMilliSeconds() + ",");
-        timeElapser.reset();
+    private void writeOutput() {
+        this.timeElapser.reset();
 
-        translatorController.readInput();
-        System.out.print(timeElapser.getElapsedMilliSeconds() + "\n");
-        timeElapser.reset();
+        this.translationController.writeOutput(this.inputPluginData);
+
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.times.concat(elapsedTime + ",");
+        this.inputPluginData = null;
+        System.gc();
+    }
+
+    private void readInput() {
+        this.timeElapser.reset();
+
+        this.translationController.readInput();
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.times.concat(Double.toString(elapsedTime));
+    }
+
+    private void appendToTimeString(Object object) {
+        this.times.concat(object.toString());
+    }
+
+    private void clearTimesString() {
+        this.times = "";
     }
 
     public static void main(String[] args) {
         MT_PersonPropertiesTranslator test = new MT_PersonPropertiesTranslator();
 
         System.out.println("Population,Generating Data,Converting Data,Writing Data,Reading and Converting Data");
-        for (int i = 1; i <= 1000000; i *= 10) {
-            System.out.print(i + ",");
-            test.testPersonPropertiesTranslator(i);
 
-            System.out.print(i * 2 + ",");
-            test.testPersonPropertiesTranslator(i * 2);
-
-            System.out.print(i * 4 + ",");
-            test.testPersonPropertiesTranslator(i * 4);
-
-            System.out.print(i * 6 + ",");
-            test.testPersonPropertiesTranslator(i * 6);
-
-            System.out.print(i * 8 + ",");
-            test.testPersonPropertiesTranslator(i * 8);
+        for (int i = 0; i < 1_000_000; i += 5000) {
+            if (i == 0)
+                continue;
+            test.appendToTimeString(new String(i + ","));
+            test.createPluginData(i);
+            test.convertPluginDataToInput();
+            test.writeOutput();
+            test.readInput();
+            System.out.println(test.times);
+            test.clearTimesString();
         }
     }
+
 }

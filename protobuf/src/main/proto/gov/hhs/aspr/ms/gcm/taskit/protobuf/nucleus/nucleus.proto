@@ -4,7 +4,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
 option java_multiple_files = true;
 option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input";
 
-import "date.proto";
+import "google/type/date.proto";
 import "google/protobuf/any.proto";
 
 

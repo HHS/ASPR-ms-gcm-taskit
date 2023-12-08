@@ -30,8 +30,8 @@
         </developer>
     </developers>
 
-     <!-- SCM Information -->
-     <scm>
+    <!-- SCM Information -->
+    <scm>
         <connection>scm:git:git://github.com/HHS/aspr-ms-gcm-taskit.git</connection>
         <developerConnection>scm:git:ssh://github.com:HHS/aspr-ms-gcm-taskit.git</developerConnection>
         <url>https://github.com/HHS/aspr-ms-gcm-taskit/tree/main</url>
@@ -40,7 +40,7 @@
     <!-- Properties -->
     <properties>
         <!-- basic project properties -->
-        <revision>2.5.0</revision>
+        <revision>2.6.1</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -58,10 +58,9 @@
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
 
         <!-- dependency versions -->
-        <taskit-protobuf.version>3.0.0</taskit-protobuf.version>
-        <proto-definitions.version>1.12.0</proto-definitions.version>
+        <taskit-protobuf.version>3.1.1</taskit-protobuf.version>
         <gcm.version>4.0.0</gcm.version>
-        <protoc.version>3.21.12</protoc.version>
+        <protoc.version>3.24.4</protoc.version>
         <jacoco-maven-plugin.version>0.8.9</jacoco-maven-plugin.version>
         <junit-jupiter-engine.version>5.8.2</junit-jupiter-engine.version>
     </properties>
@@ -70,7 +69,7 @@
     <dependencies>
         <dependency>
             <groupId>gov.hhs.aspr.ms.taskit</groupId>
-            <artifactId>protobuf</artifactId>
+            <artifactId>taskit-protobuf</artifactId>
             <version>${taskit-protobuf.version}</version>
         </dependency>
         <dependency>
@@ -107,6 +106,14 @@
 
     <!-- Configure Build -->
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/proto</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <!--
             The plugins here are listed in order of execution to aid in understanding when they will run.
             Look up "maven lifecycle phases" and compare those to the phases in each execution for a more
@@ -146,11 +153,12 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>gov.hhs.aspr.ms.taskit</groupId>
-                                    <artifactId>protobuf</artifactId>
+                                    <artifactId>taskit-protobuf</artifactId>
                                     <version>${taskit-protobuf.version}</version>
                                     <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.outputDirectory}/gov/hhs/aspr/ms/taskit/protobuf</outputDirectory>
+                                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                                     <includes>**/*.proto</includes>
+                                    <excludes>**/testsupport/*.proto</excludes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -256,8 +264,9 @@
                     <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
                     <protoSourceRoot>${basedir}/src/main/proto/gov/hhs/aspr/ms/gcm/taskit/protobuf</protoSourceRoot>
                     <additionalProtoPathElements>
-                        <additionalProtoPathElement>${project.build.outputDirectory}/gov/hhs/aspr/ms/taskit/protobuf</additionalProtoPathElement>
+                        <additionalProtoPathElement>${project.build.outputDirectory}</additionalProtoPathElement>
                     </additionalProtoPathElements>
+                    <attachProtoSources>false</attachProtoSources>
                 </configuration>
             </plugin>
 

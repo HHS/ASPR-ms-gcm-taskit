@@ -12,21 +12,21 @@ import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
 import util.random.RandomGeneratorProvider;
+import util.resourcehelper.TestResourceHelper;
 
 public class IT_PeopleTranslator {
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path filePath = TestResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testPeopleTranslator() {
         String fileName = "peoplePluginData.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(

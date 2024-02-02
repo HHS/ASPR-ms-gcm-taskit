@@ -29,21 +29,21 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
 import util.random.RandomGeneratorProvider;
+import util.resourcehelper.TestResourceHelper;
 
 public class IT_PersonPropertiesTranslator {
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path filePath = TestResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testPersonPropertiesTranslator() {
         String fileName = "personPropertiesPluginData.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -84,7 +84,7 @@ public class IT_PersonPropertiesTranslator {
     public void testPersonPropertyReportTranslatorSpec() {
         String fileName = "propertyReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -137,7 +137,7 @@ public class IT_PersonPropertiesTranslator {
     public void testPersonInteractionReportTranslatorSpec() {
         String fileName = "interactionReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()

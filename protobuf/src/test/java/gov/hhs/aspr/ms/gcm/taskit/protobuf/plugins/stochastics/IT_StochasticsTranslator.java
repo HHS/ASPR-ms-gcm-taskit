@@ -16,20 +16,20 @@ import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.TestRandomGeneratorId
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
+import util.resourcehelper.TestResourceHelper;
 
 public class IT_StochasticsTranslator {
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path filePath = TestResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testStochasticsTranslator() {
         String fileName = "stochasticsPluginData.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()

@@ -10,7 +10,7 @@ import gov.hhs.aspr.ms.gcm.plugins.resources.datamanagers.ResourcesPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceInitialization;
 import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourcePropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.util.properties.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;

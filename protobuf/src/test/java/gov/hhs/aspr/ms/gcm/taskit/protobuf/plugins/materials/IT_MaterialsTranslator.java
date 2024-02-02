@@ -26,20 +26,20 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import util.annotations.UnitTestForCoverage;
+import util.resourcehelper.TestResourceHelper;
 
 public class IT_MaterialsTranslator {
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path filePath = TestResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testMaterialsTranslator() {
         String fileName = "materialsPluginData.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -77,7 +77,7 @@ public class IT_MaterialsTranslator {
     public void testBatchStatusReportPluginDataTranslatorSpec() {
         String fileName = "batchStatusReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -118,7 +118,7 @@ public class IT_MaterialsTranslator {
     public void testMaterialsProducerPropertyReportPluginDataTranslatorSpec() {
         String fileName = "materialsProducerPropertyReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -158,7 +158,7 @@ public class IT_MaterialsTranslator {
     public void testMaterialsProducerResourceReportPluginDataTranslatorSpec() {
         String fileName = "materialsProducerResourceReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -198,7 +198,7 @@ public class IT_MaterialsTranslator {
     public void testStageReportPluginDataTranslatorSpec() {
         String fileName = "stageReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        TestResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()

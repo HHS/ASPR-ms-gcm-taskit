@@ -46,9 +46,9 @@
         <maven.compiler.target>17</maven.compiler.target>
 
         <!-- protobuf specific plugins versions -->
-        <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
-        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
-        <build-helper-maven-plugin.version>3.3.0</build-helper-maven-plugin.version>
+        <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
+        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
+        <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
 
         <!-- standard plugins versions -->

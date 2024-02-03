@@ -34,6 +34,3 @@ updates:
         patterns:
           - "jacoco-maven-plugin"
           - "junit-jupiter-engine"
-      other:
-        patterns:
-          - "*"

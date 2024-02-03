@@ -10,27 +10,25 @@ updates:
     schedule:
       interval: "weekly"
     target-branch: "dev"
+    open-pull-requests-limit: 10
     groups:
       protobuf-plugins:
         patterns:
-          - "os-maven-plugin*"
-          - "maven-dependency-plugin*"
-          - "build-helper-maven-plugin*"
-          - "protobuf-maven-plugin*"
+          - "kr.motd.maven:os-maven-plugin"
+          - "org.apache.maven.plugins:maven-dependency-plugin"
+          - "org.codehaus.mojo:build-helper-maven-plugin"
+          - "org.xolstice.maven.plugins:protobuf-maven-plugin"
       standard-plugins:
         patterns:
-          - "flatten-maven-plugin*"
-          - "maven-surefire-plugin*"
-          - "maven-failsafe-plugin*"
-          - "maven-source-plugin*"
-          - "maven-replacer-plugin*"
-          - "maven-javadoc-plugin*"
+          - "org.codehaus.mojo:flatten-maven-plugin"
+          - "org.apache.maven.plugins*"
+          - "com.google.code.maven-replacer-plugin:maven-replacer-plugin"
       dependencies:
         patterns:
-          - "taskit-protobuf*"
-          - "gcm*"
-          - "protoc*"
+          - "gov.hhs.aspr.ms.taskit:taskit-protobuf"
+          - "gov.hhs.aspr.ms:gcm"
+          - "com.google.protobuf:protoc"
       test-dependencies:
         patterns:
-          - "jacoco-maven-plugin*"
-          - "junit-jupiter-engine*"
+          - "org.jacoco*"
+          - "org.junit.jupiter*"

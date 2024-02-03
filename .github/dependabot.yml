@@ -13,24 +13,24 @@ updates:
     groups:
       protobuf-plugins:
         patterns:
-          - "os-maven-plugin"
-          - "maven-dependency-plugin"
-          - "build-helper-maven-plugin"
-          - "protobuf-maven-plugin"
+          - "os-maven-plugin*"
+          - "maven-dependency-plugin*"
+          - "build-helper-maven-plugin*"
+          - "protobuf-maven-plugin*"
       standard-plugins:
         patterns:
-          - "flatten-maven-plugin"
-          - "maven-surefire-plugin"
-          - "maven-failsafe-plugin"
-          - "maven-source-plugin"
-          - "maven-replacer-plugin"
-          - "maven-javadoc-plugin"
+          - "flatten-maven-plugin*"
+          - "maven-surefire-plugin*"
+          - "maven-failsafe-plugin*"
+          - "maven-source-plugin*"
+          - "maven-replacer-plugin*"
+          - "maven-javadoc-plugin*"
       dependencies:
         patterns:
-          - "taskit-protobuf"
-          - "gcm"
-          - "protoc"
+          - "taskit-protobuf*"
+          - "gcm*"
+          - "protoc*"
       test-dependencies:
         patterns:
-          - "jacoco-maven-plugin"
-          - "junit-jupiter-engine"
+          - "jacoco-maven-plugin*"
+          - "junit-jupiter-engine*"

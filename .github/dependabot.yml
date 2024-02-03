@@ -1,0 +1,39 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  - package-ecosystem: "maven" # See documentation for possible values
+    directory: "/protobuf" # Location of package manifests
+    schedule:
+      interval: "weekly"
+    target-branch: "dev"
+    groups:
+      protobuf-plugins:
+        patterns:
+          - "os-maven-plugin"
+          - "maven-dependency-plugin"
+          - "build-helper-maven-plugin"
+          - "protobuf-maven-plugin"
+      standard-plugins:
+        patterns:
+          - "flatten-maven-plugin"
+          - "maven-surefire-plugin"
+          - "maven-failsafe-plugin"
+          - "maven-source-plugin"
+          - "maven-replacer-plugin"
+          - "maven-javadoc-plugin"
+      dependencies:
+        patterns:
+          - "taskit-protobuf"
+          - "gcm"
+          - "protoc"
+      test-dependencies:
+        patterns:
+          - "jacoco-maven-plugin"
+          - "junit-jupiter-engine"
+      other:
+        patterns:
+          - "*"

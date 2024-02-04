@@ -9,9 +9,9 @@ import gov.hhs.aspr.ms.gcm.plugins.stochastics.support.WellState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.StochasticsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.WellStateInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestConstructor;
-import util.annotations.UnitTestForCoverage;
-import util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
 public class AT_WellStateTranslationSpec {
 

@@ -15,10 +15,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestConstructor;
-import util.annotations.UnitTestForCoverage;
-import util.annotations.UnitTestMethod;
-import util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 
 public class AT_SimulationStateTranslationSpec {
 

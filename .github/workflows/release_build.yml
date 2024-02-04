@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Create GCM Taskit Release
+name: GCM Taskit Release Build
 
 on: 
   push:
@@ -21,28 +21,44 @@ jobs:
       contents: write
     steps:
     - name: Checkout GCM Taskit
-      uses: actions/checkout@v3
-    - name: Checkout Taskit
-      uses: actions/checkout@v3
-      with:
-        repository: HHS/ASPR-ms-taskit
-        path: taskit
-    - name: Checkout Util
-      uses: actions/checkout@v3
-      with:
-        repository: HHS/ASPR-ms-util
-        path: util
-    - name: Checkout GCM
-      uses: actions/checkout@v3
-      with:
-        repository: HHS/ASPR-8
-        path: gcm
+      uses: actions/checkout@v4
+
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+
+    - name: Get Taskit and GCM Versions
+      run: |
+        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit-protobuf.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"
+        echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"
+
+    - name: Checkout Taskit
+      uses: actions/checkout@v4
+      with:
+        repository: HHS/ASPR-ms-taskit
+        path: taskit
+        ref: ${{ (endsWith(env.taskit_version, 'SNAPSHOT') && 'dev') || env.taskit_version }}
+    - name: Checkout GCM
+      uses: actions/checkout@v4
+      with:
+        repository: HHS/ASPR-8
+        path: gcm
+        ref: ${{ (endsWith(env.gcm_version, 'SNAPSHOT') && 'dev') || env.gcm_version }}
+
+    - name: Get Util Version
+      run: |
+        echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/gcm/pom.xml)" >> "$GITHUB_ENV"
+
+    - name: Checkout Util
+      uses: actions/checkout@v4
+      with:
+        repository: HHS/ASPR-ms-util
+        path: util
+        ref: ${{ (endsWith(env.util_version, 'SNAPSHOT') && 'dev') || env.util_version }}
+  
     - name: Build Util
       run: mvn clean install -DskipTests --file util/pom.xml
     - name: Build GCM
@@ -51,6 +67,7 @@ jobs:
       run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit
       run: mvn clean install -Prelease --file protobuf/pom.xml
+
     - name: Get Version
       run: |
         echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"

@@ -14,15 +14,15 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import gov.hhs.aspr.ms.util.resourcehelper.TestResourceHelper;
+import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.time.TimeElapser;
 
 public class MT_PersonPropertiesTranslator {
 
     long seed = 4684903523797799712L;
     String times = "";
-    Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeOutputDir(basePath, "test-output");
+    Path basePath = ResourceHelper.getResourceDir(this.getClass());
+    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
     ProtobufTranslationEngine protobufTranslationEngine;
     TimeElapser timeElapser = new TimeElapser();
     PersonPropertiesPluginData pluginData;
@@ -41,7 +41,7 @@ public class MT_PersonPropertiesTranslator {
     private void createPluginData(int population) {
         String fileName = "personPropertiesPluginData_mt-" + population + ".json";
 
-        TestResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createOutputFile(filePath, fileName);
 
         this.translationController = TranslationController.builder()
                 .addTranslationEngine(this.protobufTranslationEngine)

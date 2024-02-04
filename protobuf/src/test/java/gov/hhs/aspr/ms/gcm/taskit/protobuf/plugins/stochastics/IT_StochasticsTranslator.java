@@ -17,8 +17,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.Stocha
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestForCoverage;
-import util.resourcehelper.TestResourceHelper;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.resourcehelper.TestResourceHelper;
 
 public class IT_StochasticsTranslator {
     Path basePath = TestResourceHelper.getResourceDir(this.getClass());

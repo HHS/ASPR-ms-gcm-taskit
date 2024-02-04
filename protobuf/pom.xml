@@ -156,7 +156,7 @@
                 <version>${maven-dependency-plugin.version}</version>
                 <executions>
                     <execution>
-                        <?m2e execute onConfiguration onIncremental?>
+                        <?m2e execute onConfiguration?>
                         <id>unpack-protos</id>
                         <phase>generate-sources</phase>
                         <goals>

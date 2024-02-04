@@ -14,6 +14,7 @@ on:
     paths:
     - '**.xml'
     - '**.java'
+    - '**.yml'
   pull_request:
     branches: [ "dev" ]
 

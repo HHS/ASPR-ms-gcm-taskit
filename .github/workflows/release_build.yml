@@ -31,8 +31,8 @@ jobs:
 
     - name: Get Taskit and GCM Versions
       run: |
-        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit-protobuf.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"
-        echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"
+        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+        echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
 
     - name: Checkout Taskit
       uses: actions/checkout@v4
@@ -49,7 +49,7 @@ jobs:
 
     - name: Get Util Version
       run: |
-        echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/gcm/pom.xml)" >> "$GITHUB_ENV"
+        echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/pom.xml)" >> "$GITHUB_ENV"
 
     - name: Checkout Util
       uses: actions/checkout@v4
@@ -61,19 +61,19 @@ jobs:
     - name: Build Util
       run: mvn clean install -DskipTests --file util/pom.xml
     - name: Build GCM
-      run: mvn clean install -DskipTests --file gcm/gcm/pom.xml
+      run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
     - name: Build Taskit
       run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit
-      run: mvn clean install -Prelease --file protobuf/pom.xml
+      run: mvn clean install -Prelease --file pom.xml
 
     - name: Get Version
       run: |
-        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file protobuf/pom.xml)" >> "$GITHUB_ENV"
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
     - name: Make Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "protobuf/target/gcm-taskit-protobuf-${{ env.version }}.jar,protobuf/target/gcm-taskit-protobuf-${{ env.version }}-sources.jar,protobuf/target/gcm-taskit-protobuf-${{ env.version }}-javadoc.jar"
+        artifacts: "protobuf/target/gcm-taskit-protobuf-${{ env.version }}*.jar"
         prerelease: ${{ endsWith(env.version, '-SNAPSHOT') || contains(env.version, '-RC') }}
         name: "v${{ env.version }}"
         tag: "v${{ env.version }}"

@@ -5,19 +5,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.nio.file.Path;
 import java.time.LocalDate;
 
-import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
-import gov.hhs.aspr.ms.gcm.nucleus.Planner;
+import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
-import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_NucleusTranslator {
@@ -39,38 +36,12 @@ public class IT_NucleusTranslator {
                 .addOutputFilePath(filePath.resolve(fileName), SimulationState.class, TranslationEngineType.PROTOBUF)
                 .build();
 
-        RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6625494580697137579L);
-
-        long arrivalId = randomGenerator.nextLong();
-        SimulationState.Builder builder = SimulationState.builder();
-
-        for (int i = 0; i < 10; i++) {
-            ExamplePlanData examplePlanData = new ExamplePlanData(i * 15);
-            Planner planner = Planner.DATA_MANAGER;
-            double time = i + 10.0;
-            Object key = "key" + i;
-            int plannerId = 0;
-            arrivalId += 1;
-
-            PlanQueueData.Builder planQueueBuilder = PlanQueueData.builder();
-
-            planQueueBuilder.setArrivalId(arrivalId)
-                    .setKey(key)
-                    .setPlanData(examplePlanData)
-                    .setPlanner(planner)
-                    .setPlannerId(plannerId)
-                    .setTime(time);
-
-            builder.addPlanQueueData(planQueueBuilder.build());
-        }
         double startTime = 5;
-        long planningQueueArrivalId = arrivalId + 1;
 
-        builder.setStartTime(startTime)
-                .setPlanningQueueArrivalId(planningQueueArrivalId)
-                .setBaseDate(LocalDate.of(2023, 4, 12));
-
-        SimulationState exptectedSimulationState = builder.build();
+        SimulationState exptectedSimulationState = SimulationState.builder()
+                .setStartTime(startTime)
+                .setBaseDate(LocalDate.of(2023, 4, 12))
+                .build();
 
         translatorController.writeOutput(exptectedSimulationState);
 
@@ -79,6 +50,43 @@ public class IT_NucleusTranslator {
         SimulationState actualSimulationState = translatorController.getFirstObject(SimulationState.class);
 
         assertEquals(exptectedSimulationState, actualSimulationState);
+    }
+
+    @Test
+    @UnitTestForCoverage
+    public void testExperimentParameterDataTranslator() {
+        String fileName = "experimentParameterData.json";
+
+        ResourceHelper.createOutputFile(filePath, fileName);
+
+        TranslationController translatorController = TranslationController.builder()
+                .addTranslationEngine(
+                        ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
+                .addInputFilePath(filePath.resolve(fileName), ExperimentParameterDataInput.class,
+                        TranslationEngineType.PROTOBUF)
+                .addOutputFilePath(filePath.resolve(fileName), ExperimentParameterData.class,
+                        TranslationEngineType.PROTOBUF)
+                .build();
+
+        ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
+                .setThreadCount(8)
+                .setRecordState(false)
+                .setHaltOnException(true)
+                .setContinueFromProgressLog(false);
+
+        for (int i = 0; i < 10; i++) {
+            builder.addExplicitScenarioId(i);
+        }
+
+        ExperimentParameterData expectedExperimentParameterData = builder.build();
+
+        translatorController.writeOutput(expectedExperimentParameterData);
+
+        translatorController.readInput();
+
+        ExperimentParameterData actualExperimentParameterData = translatorController.getFirstObject(ExperimentParameterData.class);
+
+        assertEquals(expectedExperimentParameterData, actualExperimentParameterData);
     }
 
 }

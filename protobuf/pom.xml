@@ -10,7 +10,7 @@
     </parent>
 
     <!-- Artifact -->
-    <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
+    <groupId>gov.hhs.aspr.ms.gcm.gcm-taskit</groupId>
     <artifactId>gcm-taskit-protobuf</artifactId>
 
     <!-- Properties -->

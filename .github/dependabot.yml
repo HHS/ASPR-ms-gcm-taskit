@@ -32,3 +32,6 @@ updates:
         patterns:
           - "org.jacoco*"
           - "org.junit.jupiter*"
+    ignore:
+      - dependency-name: "org.codehaus.plexus:plexus-utils"
+        update-types: ["version-update:semver-major","version-update:semver-minor"]

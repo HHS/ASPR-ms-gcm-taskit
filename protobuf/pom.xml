@@ -31,7 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>gov.hhs.aspr.ms.taskit</groupId>
-            <artifactId>taskit-protobuf</artifactId>
+            <artifactId>protobuf</artifactId>
             <version>${taskit.version}</version>
         </dependency>
         <dependency>
@@ -92,7 +92,7 @@
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>gov.hhs.aspr.ms.taskit</groupId>
-                                    <artifactId>taskit-protobuf</artifactId>
+                                    <artifactId>protobuf</artifactId>
                                     <version>${taskit-protobuf.version}</version>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.outputDirectory}</outputDirectory>

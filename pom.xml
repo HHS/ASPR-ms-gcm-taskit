@@ -40,7 +40,7 @@
 
     <!-- Properties -->
     <properties>
-        <revision>2.6.3-SNAPSHOT</revision>
+        <revision>2.7.0-SNAPSHOT</revision>
         
         <!-- basic project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Artifact -->
-    <groupId>gov.hhs.aspr.ms.gcm</groupId>
-    <artifactId>gcm-taskit</artifactId>
+    <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
+    <artifactId>parent</artifactId>
     <version>${revision}</version>
 
     <name>Translation and Serialization Toolkit for the General Computational Model</name>
@@ -51,6 +51,8 @@
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
         <maven-source-plugin.version>3.3.0</maven-source-plugin.version>
+        <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
 
         <!-- dependency versions -->
@@ -148,6 +150,16 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
                 </plugin>
@@ -222,6 +234,26 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!-- for skipping parent install-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+
+            <!-- for skipping parent deployment -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <inherited>false</inherited>
             </plugin>
         </plugins>
     </build>

@@ -4,14 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>gov.hhs.aspr.ms.gcm</groupId>
-        <artifactId>gcm-taskit</artifactId>
+        <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
+        <artifactId>parent</artifactId>
         <version>${revision}</version>
     </parent>
 
     <!-- Artifact -->
-    <groupId>gov.hhs.aspr.ms.gcm.gcm-taskit</groupId>
-    <artifactId>gcm-taskit-protobuf</artifactId>
+    <artifactId>protobuf</artifactId>
+    <name>GCM : Taskit: Protobuf</name>
+    <description>Protobuf Taskit implementation for GCM</description>
 
     <!-- Properties -->
     <properties>

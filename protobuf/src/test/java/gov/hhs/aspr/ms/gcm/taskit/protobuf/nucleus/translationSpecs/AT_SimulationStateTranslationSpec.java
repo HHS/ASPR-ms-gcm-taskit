@@ -5,20 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.time.LocalDate;
 
-import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
-import gov.hhs.aspr.ms.gcm.nucleus.Planner;
 import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExamplePlanData;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
-import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 
 public class AT_SimulationStateTranslationSpec {
 
@@ -38,38 +33,12 @@ public class AT_SimulationStateTranslationSpec {
         SimulationStateTranslationSpec translationSpec = new SimulationStateTranslationSpec();
         translationSpec.init(protobufTranslationEngine);
 
-        RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6625494580697137579L);
-
-        long arrivalId = randomGenerator.nextLong();
-        SimulationState.Builder builder = SimulationState.builder();
-
-        for (int i = 0; i < 10; i++) {
-            ExamplePlanData examplePlanData = new ExamplePlanData(i * 15);
-            Planner planner = Planner.DATA_MANAGER;
-            double time = i + 10.0;
-            Object key = "key" + i;
-            int plannerId = 0;
-            arrivalId += 1;
-
-            PlanQueueData.Builder planQueueBuilder = PlanQueueData.builder();
-
-            planQueueBuilder.setArrivalId(arrivalId)
-                    .setKey(key)
-                    .setPlanData(examplePlanData)
-                    .setPlanner(planner)
-                    .setPlannerId(plannerId)
-                    .setTime(time);
-
-            builder.addPlanQueueData(planQueueBuilder.build());
-        }
         double startTime = 5;
-        long planningQueueArrivalId = arrivalId + 1;
 
-        builder.setStartTime(startTime)
-                .setPlanningQueueArrivalId(planningQueueArrivalId)
-                .setBaseDate(LocalDate.of(2023, 4, 12));
-
-        SimulationState expectedAppValue = builder.build();
+        SimulationState expectedAppValue = SimulationState.builder()
+                .setStartTime(startTime)
+                .setBaseDate(LocalDate.of(2023, 4, 12))
+                .build();
 
         SimulationStateInput inputValue = translationSpec.convertAppObject(expectedAppValue);
 
@@ -77,12 +46,9 @@ public class AT_SimulationStateTranslationSpec {
 
         assertEquals(expectedAppValue, actualAppValue);
 
-        expectedAppValue = SimulationState.builder()
-                .setStartTime(startTime)
-                .setPlanningQueueArrivalId(planningQueueArrivalId)
-                .build();
+        expectedAppValue = SimulationState.builder().setStartTime(startTime).build();
 
-        inputValue = inputValue.toBuilder().clearBaseDate().clearPlanQueueDatas().build();
+        inputValue = inputValue.toBuilder().clearBaseDate().build();
 
         actualAppValue = translationSpec.convertInputObject(inputValue);
 

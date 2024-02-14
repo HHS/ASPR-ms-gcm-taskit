@@ -10,14 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.PlanQueueDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.translationSpecs.ExamplePlanDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlanDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlanQueueDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlannerTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.SimulationStateTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
@@ -73,22 +66,12 @@ public class AT_NucleusTranslator {
                     ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
                             .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
 
-                    translationEngineBuilder.addTranslationSpec(new SimulationStateTranslationSpec())
-                            .addTranslationSpec(new ExamplePlanDataTranslationSpec())
-                            .addTranslationSpec(new PlanQueueDataTranslationSpec())
-                            .addTranslationSpec(new PlannerTranslationSpec())
-                            .addTranslationSpec(new PlanDataTranslationSpec())
-                            .addTranslationSpec(new ExamplePlanDataTranslationSpec());
+                    for (TranslationSpec<?, ?> translationSpec : NucleusTranslator.getTranslationSpecs()) {
+                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    }
 
-                    translationEngineBuilder
-                            .addFieldToIncludeDefaultValue(
-                                    SimulationStateInput.getDescriptor().findFieldByName("startTime"))
-                            .addFieldToIncludeDefaultValue(PlanQueueDataInput.getDescriptor().findFieldByName("time"))
-                            .addFieldToIncludeDefaultValue(
-                                    PlanQueueDataInput.getDescriptor().findFieldByName("plannerId"))
-                            .addFieldToIncludeDefaultValue(PlanQueueDataInput.getDescriptor().findFieldByName("active"))
-                            .addFieldToIncludeDefaultValue(ExperimentParameterDataInput.getDescriptor()
-                                    .findFieldByName("experimentProgressLogPath"));
+                    translationEngineBuilder.addFieldToIncludeDefaultValue(
+                            SimulationStateInput.getDescriptor().findFieldByName("startTime"));
                 })
                 .build();
 

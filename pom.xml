@@ -7,11 +7,11 @@
     <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
     <artifactId>parent</artifactId>
     <version>${revision}</version>
+    <packaging>pom</packaging>
 
     <name>Translation and Serialization Toolkit for the General Computational Model</name>
     <description>A toolkit that aids in the conversion between two Java objects, primiarly for use with coverting between an input Java object and a application Java object, specifically for use with gcm.</description>
     <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
-    <packaging>pom</packaging>
 
     <!-- License Information -->
     <licenses>
@@ -40,8 +40,9 @@
 
     <!-- Properties -->
     <properties>
-        <!-- basic project properties -->
         <revision>2.6.3-SNAPSHOT</revision>
+        
+        <!-- basic project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

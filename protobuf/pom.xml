@@ -10,6 +10,7 @@
     </parent>
 
     <!-- Artifact -->
+    <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
     <artifactId>protobuf</artifactId>
     <name>GCM : Taskit: Protobuf</name>
     <description>Protobuf Taskit implementation for GCM</description>

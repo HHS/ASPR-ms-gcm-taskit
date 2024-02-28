@@ -9,7 +9,7 @@
     <version>${revision}</version>
     <packaging>pom</packaging>
 
-    <name>Translation and Serialization Toolkit for the General Computational Model</name>
+    <name>GCM : Taskit</name>
     <description>A toolkit that aids in the conversion between two Java objects, primiarly for use with coverting between an input Java object and a application Java object, specifically for use with gcm.</description>
     <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
 

@@ -4,9 +4,7 @@ import java.time.LocalDate;
 
 import com.google.type.Date;
 
-import gov.hhs.aspr.ms.gcm.nucleus.PlanQueueData;
 import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.PlanQueueDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
@@ -27,13 +25,6 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
             builder.setBaseDate(LocalDate);
         }
 
-        builder.setPlanningQueueArrivalId(inputObject.getPlanningQueueArrivalId());
-
-        for (PlanQueueDataInput planQueueDataInput : inputObject.getPlanQueueDatasList()) {
-            PlanQueueData planQueueData = this.translationEngine.convertObject(planQueueDataInput);
-
-            builder.addPlanQueueData(planQueueData);
-        }
         return builder.build();
     }
 
@@ -45,14 +36,6 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
 
         Date date = this.translationEngine.convertObject(appObject.getBaseDate());
         builder.setBaseDate(date);
-
-        builder.setPlanningQueueArrivalId(appObject.getPlanningQueueArrivalId());
-
-        for (PlanQueueData planQueueData : appObject.getPlanQueueDatas()) {
-            PlanQueueDataInput planQueueDataInput = this.translationEngine.convertObject(planQueueData);
-
-            builder.addPlanQueueDatas(planQueueDataInput);
-        }
 
         return builder.build();
     }

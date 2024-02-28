@@ -13,9 +13,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.testsupport.input.TestResourceIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestConstructor;
-import util.annotations.UnitTestForCoverage;
-import util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
 public class AT_TestResourceIdTranslationSpec {
 

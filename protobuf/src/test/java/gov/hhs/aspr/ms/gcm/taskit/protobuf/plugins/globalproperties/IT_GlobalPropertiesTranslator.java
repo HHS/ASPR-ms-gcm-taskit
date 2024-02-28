@@ -19,21 +19,21 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestForCoverage;
-import util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_GlobalPropertiesTranslator {
-    Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path basePath = ResourceHelper.getResourceDir(this.getClass());
+    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testGlobalPropertiesPluginDataIntegration() {
         String fileName = "globalPropertiesPluginData.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        ResourceHelper.createOutputFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
@@ -69,7 +69,7 @@ public class IT_GlobalPropertiesTranslator {
     public void testGlobalPropertyReportPluginDataIntegration() {
         String fileName = "propertyReport.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        ResourceHelper.createOutputFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())

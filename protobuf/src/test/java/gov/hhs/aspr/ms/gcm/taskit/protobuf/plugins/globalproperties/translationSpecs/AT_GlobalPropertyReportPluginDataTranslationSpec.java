@@ -15,10 +15,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestConstructor;
-import util.annotations.UnitTestForCoverage;
-import util.annotations.UnitTestMethod;
-import util.random.RandomGeneratorProvider;
+import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 
 public class AT_GlobalPropertyReportPluginDataTranslationSpec {
 

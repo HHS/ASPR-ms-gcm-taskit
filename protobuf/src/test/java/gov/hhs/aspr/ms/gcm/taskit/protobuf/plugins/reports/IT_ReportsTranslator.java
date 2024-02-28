@@ -11,20 +11,20 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TestResourceHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
-import util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_ReportsTranslator {
-    Path basePath = TestResourceHelper.getResourceDir(this.getClass());
-    Path filePath = TestResourceHelper.makeTestOutputDir(basePath);
+    Path basePath = ResourceHelper.getResourceDir(this.getClass());
+    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testReportLabelTranslatorSpec() {
         String fileName = "reportLabel.json";
 
-        TestResourceHelper.createTestOutputFile(filePath, fileName);
+        ResourceHelper.createOutputFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(

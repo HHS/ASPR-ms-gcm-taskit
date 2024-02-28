@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.Translator;
-import util.annotations.UnitTestForCoverage;
-import util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
 public class AT_ReportsTranslator {
 

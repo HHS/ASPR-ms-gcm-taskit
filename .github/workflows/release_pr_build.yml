@@ -29,7 +29,7 @@ jobs:
 
     - name: Get Taskit and GCM Versions
       run: |
-        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit-protobuf.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
         echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
 
     - name: Checkout Taskit

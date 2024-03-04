@@ -30,12 +30,12 @@ public class IT_ReportsTranslator {
                 .addTranslationEngine(
                         ProtobufTranslationEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), ReportLabel.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         ReportLabel expecetdReportLabel = new SimpleReportLabel("report label");
 
-        translatorController.writeOutput(expecetdReportLabel);
+        translatorController.writeOutput(expecetdReportLabel, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 

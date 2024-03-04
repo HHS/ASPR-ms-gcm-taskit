@@ -52,8 +52,6 @@ public class IT_MaterialsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         int numBatches = 50;
@@ -63,7 +61,8 @@ public class IT_MaterialsTranslator {
 
         MaterialsPluginData expectedPluginData = MaterialsTestPluginFactory.getStandardMaterialsPluginData(numBatches,
                 numStages, numBatchesInStage, seed);
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
         MaterialsPluginData actualPluginData = translatorController.getFirstObject(MaterialsPluginData.class);
@@ -90,8 +89,6 @@ public class IT_MaterialsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), BatchStatusReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), BatchStatusReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         BatchStatusReportPluginData.Builder builder = BatchStatusReportPluginData.builder();
@@ -102,7 +99,8 @@ public class IT_MaterialsTranslator {
 
         BatchStatusReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 
@@ -131,8 +129,6 @@ public class IT_MaterialsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
@@ -142,7 +138,8 @@ public class IT_MaterialsTranslator {
 
         MaterialsProducerPropertyReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 
@@ -171,8 +168,6 @@ public class IT_MaterialsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         MaterialsProducerResourceReportPluginData.Builder builder = MaterialsProducerResourceReportPluginData.builder();
@@ -183,7 +178,8 @@ public class IT_MaterialsTranslator {
 
         MaterialsProducerResourceReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         MaterialsProducerResourceReportPluginData actualPluginData = translatorController
@@ -211,8 +207,6 @@ public class IT_MaterialsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), StageReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), StageReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
@@ -223,7 +217,8 @@ public class IT_MaterialsTranslator {
 
         StageReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         StageReportPluginData actualPluginData = translatorController.getFirstObject(StageReportPluginData.class);

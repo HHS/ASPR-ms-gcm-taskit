@@ -54,7 +54,6 @@ public class IT_GroupsTranslator {
                 .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GroupsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -80,7 +79,8 @@ public class IT_GroupsTranslator {
 
             expectedPluginDatas.add(expectedPluginData);
 
-            translatorController.writeOutput(expectedPluginData);
+            translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                    TranslationEngineType.PROTOBUF);
             translatorController.readInput();
         }
 
@@ -112,8 +112,6 @@ public class IT_GroupsTranslator {
                 .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);
@@ -136,7 +134,8 @@ public class IT_GroupsTranslator {
 
         GroupPropertyReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 

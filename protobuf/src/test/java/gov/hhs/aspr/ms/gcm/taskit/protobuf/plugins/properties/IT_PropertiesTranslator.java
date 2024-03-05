@@ -30,7 +30,6 @@ public class IT_PropertiesTranslator {
                         ProtobufTranslationEngine.builder().addTranslator(PropertiesTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PropertyDefinition.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         PropertyDefinition expectedPropertyDefinition = PropertyDefinition.builder()
@@ -39,7 +38,8 @@ public class IT_PropertiesTranslator {
                 .setType(String.class)
                 .build();
 
-        translatorController.writeOutput(expectedPropertyDefinition);
+        translatorController.writeOutput(expectedPropertyDefinition, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PropertyDefinition actualPropertyDefiniton = translatorController.getFirstObject(PropertyDefinition.class);

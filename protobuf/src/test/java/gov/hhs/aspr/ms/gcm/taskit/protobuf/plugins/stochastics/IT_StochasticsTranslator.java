@@ -37,8 +37,6 @@ public class IT_StochasticsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), StochasticsPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -64,7 +62,8 @@ public class IT_StochasticsTranslator {
 
         StochasticsPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         StochasticsPluginData actualPluginData = translatorController.getFirstObject(StochasticsPluginData.class);

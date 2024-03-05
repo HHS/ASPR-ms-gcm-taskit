@@ -54,8 +54,6 @@ public class IT_PersonPropertiesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -69,7 +67,8 @@ public class IT_PersonPropertiesTranslator {
         PersonPropertiesPluginData expectedPluginData = PersonPropertiesTestPluginFactory
                 .getStandardPersonPropertiesPluginData(people, seed);
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertiesPluginData actualPluginData = translatorController
@@ -94,8 +93,6 @@ public class IT_PersonPropertiesTranslator {
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class,
                         TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -122,7 +119,8 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyReportPluginData expectedPluginData = personPropertyReportPluginDataBuilder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyReportPluginData actualPluginData = translatorController
@@ -148,8 +146,6 @@ public class IT_PersonPropertiesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -172,7 +168,8 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyInteractionReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyInteractionReportPluginData actualPluginData = translatorController

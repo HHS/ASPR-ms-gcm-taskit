@@ -35,13 +35,12 @@ public class IT_PartitionsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PartitionsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PartitionsPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         PartitionsPluginData expectedPluginData = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 

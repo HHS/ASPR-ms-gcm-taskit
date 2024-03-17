@@ -4,7 +4,9 @@ import gov.hhs.aspr.ms.gcm.plugins.materials.reports.StageReportPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.StageReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -16,6 +18,10 @@ public class StageReportPluginDataTranslationSpec
 
     @Override
     protected StageReportPluginData convertInputObject(StageReportPluginDataInput inputObject) {
+        if (!StageReportPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
 
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
@@ -27,6 +33,8 @@ public class StageReportPluginDataTranslationSpec
     @Override
     protected StageReportPluginDataInput convertAppObject(StageReportPluginData appObject) {
         StageReportPluginDataInput.Builder builder = StageReportPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);

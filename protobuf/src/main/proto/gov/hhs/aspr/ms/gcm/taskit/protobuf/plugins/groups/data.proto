@@ -15,4 +15,5 @@ message GroupsPluginDataInput {
     repeated GroupPropertyDefinitionMapInput groupPropertyDefinitions = 5;
     repeated GroupPropertyValueMapInput groupPropertyValues = 6;
     int32 nextGroupIdValue = 7;
+    string version = 8;
 }

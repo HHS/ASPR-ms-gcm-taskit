@@ -10,4 +10,5 @@ import "plugins/stochastics/support.proto";
 message StochasticsPluginDataInput {
     WellStateInput wellState = 1;
     repeated RandomNumberGeneratorMapInput randomNumberGeneratorIds = 2;
+    string version = 3;
 }

@@ -12,4 +12,5 @@ message PersonPropertiesPluginDataInput {
     repeated PropertyDefinitionMapInput personPropertyDefinitions = 1;
     repeated PersonPropertyValueMapInput personPropertyValues = 2;
     repeated PersonPropertyTimeMapInput personPropertyTimes = 3;
+    string version = 4;
 }

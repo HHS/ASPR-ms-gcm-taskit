@@ -9,16 +9,20 @@ import "plugins/reports/support.proto";
 
 message BatchStatusReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
+    string version = 2;
 }
 
 message MaterialsProducerPropertyReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
+    string version = 2;
 }
 
 message MaterialsProducerResourceReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
+    string version = 2;
 }
 
 message StageReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
+    string version = 2;
 }

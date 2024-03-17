@@ -23,9 +23,8 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the Regions Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write RegionsPlugin
+ * Translator for the Regions Plugin. Using this Translator will add all the
+ * necessary TanslationSpecs needed to read and write the RegionsPlugin
  */
 public class RegionsTranslator {
 
@@ -50,6 +49,10 @@ public class RegionsTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the RegionsPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(RegionsTranslatorId.TRANSLATOR_ID)
@@ -72,6 +75,10 @@ public class RegionsTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * RegionsPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

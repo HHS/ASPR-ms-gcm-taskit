@@ -7,7 +7,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.Stocha
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.WellStateInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -19,6 +21,10 @@ public class StochasticsPluginDataTranslationSpec
 
     @Override
     protected StochasticsPluginData convertInputObject(StochasticsPluginDataInput inputObject) {
+        if (!StochasticsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         StochasticsPluginData.Builder builder = StochasticsPluginData.builder();
 
         WellState wellState = this.translationEngine.convertObject(inputObject.getWellState());
@@ -38,6 +44,8 @@ public class StochasticsPluginDataTranslationSpec
     @Override
     protected StochasticsPluginDataInput convertAppObject(StochasticsPluginData appObject) {
         StochasticsPluginDataInput.Builder builder = StochasticsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         WellStateInput wellStateInput = this.translationEngine.convertObject(appObject.getWellState());
         builder.setWellState(wellStateInput);

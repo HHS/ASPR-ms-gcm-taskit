@@ -21,7 +21,7 @@ public class AT_GlobalPropertyIdTranslationSpec {
     @Test
     @UnitTestConstructor(target = GlobalPropertyIdTranslationSpec.class, args = {})
     public void testConstructor() {
-        assertNotNull(new GlobalPropertiesPluginDataTranslationSpec());
+        assertNotNull(new GlobalPropertyIdTranslationSpec());
     }
 
     @Test

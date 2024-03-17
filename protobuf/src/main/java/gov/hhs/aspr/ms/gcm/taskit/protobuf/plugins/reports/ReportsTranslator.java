@@ -13,9 +13,8 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the Reports Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write ReportsPlugin
+ * Translator for the Reports Plugin. Using this Translator will add all the
+ * necessary TanslationSpecs needed to read and write the ReportsPlugin
  */
 public class ReportsTranslator {
 
@@ -32,6 +31,10 @@ public class ReportsTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the ReportsPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(ReportsTranslatorId.TRANSLATOR_ID)
@@ -50,6 +53,10 @@ public class ReportsTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * ReportsPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

@@ -21,7 +21,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.PersonTo
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -31,6 +33,10 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
     @Override
     protected GroupsPluginData convertInputObject(GroupsPluginDataInput inputObject) {
+        if (!GroupsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         GroupsPluginData.Builder builder = GroupsPluginData.builder();
 
         // Add groups
@@ -102,6 +108,8 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
     @Override
     protected GroupsPluginDataInput convertAppObject(GroupsPluginData appObject) {
         GroupsPluginDataInput.Builder builder = GroupsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         // add group type ids
         for (GroupTypeId groupTypeId : appObject.getGroupTypeIds()) {

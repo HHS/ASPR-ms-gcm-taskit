@@ -10,4 +10,5 @@ import "plugins/properties/support.proto";
 message GlobalPropertiesPluginDataInput {
     repeated PropertyDefinitionMapInput globalPropertyDefinitinions = 1;
     repeated PropertyValueMapInput globalPropertyValues = 2;
+    string version = 3;
 }

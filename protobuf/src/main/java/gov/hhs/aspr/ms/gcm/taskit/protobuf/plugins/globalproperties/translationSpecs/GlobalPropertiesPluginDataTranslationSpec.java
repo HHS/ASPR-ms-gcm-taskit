@@ -9,7 +9,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.data.input.G
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -21,6 +23,10 @@ public class GlobalPropertiesPluginDataTranslationSpec
 
     @Override
     protected GlobalPropertiesPluginData convertInputObject(GlobalPropertiesPluginDataInput inputObject) {
+        if (!GlobalPropertiesPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         GlobalPropertiesPluginData.Builder builder = GlobalPropertiesPluginData.builder();
 
         for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getGlobalPropertyDefinitinionsList()) {
@@ -48,6 +54,8 @@ public class GlobalPropertiesPluginDataTranslationSpec
     @Override
     protected GlobalPropertiesPluginDataInput convertAppObject(GlobalPropertiesPluginData appObject) {
         GlobalPropertiesPluginDataInput.Builder builder = GlobalPropertiesPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         for (GlobalPropertyId globalPropertyId : appObject.getGlobalPropertyDefinitions().keySet()) {
             PropertyDefinition propertyDefinition = appObject.getGlobalPropertyDefinition(globalPropertyId);

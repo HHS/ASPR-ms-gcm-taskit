@@ -15,9 +15,9 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the GlobalProperties Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write GlobalPropertiesPluginData
+ * Translator for the GlobalProperties Plugin. Using this Translator will add
+ * all the necessary TanslationSpecs needed to read and write
+ * the GlobalPropertiesPlugin
  */
 public class GlobalPropertiesTranslator {
 
@@ -38,8 +38,8 @@ public class GlobalPropertiesTranslator {
 
     /**
      * Returns a Translator Builder that already includes the necessary
-     * TranslationSpecs needed to read and write GlobalPropertiesPluginData and its
-     * respective reports - GlobalPropertyReportPluginData
+     * TranslationSpecs needed to read and write the GlobalPropertiesPluginData and its
+     * respective reports
      */
     private static Translator.Builder builder() {
 
@@ -60,9 +60,8 @@ public class GlobalPropertiesTranslator {
     }
 
     /**
-     * Returns a GlobalPropertiesTranslator that includes TranslationSpecs for the
-     * GlobalPropertiesPluginData.
-     * Equivalent to calling builder(false).build()
+     * Returns a Translator that includes TranslationSpecs for the
+     * GlobalPropertiesPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

@@ -22,4 +22,5 @@ message MaterialsPluginDataInput {
     repeated MaterialsProducerStagesInput materialsProducerStages = 12;
     int32 nextBatchRecordId = 13;
 	int32 nextStageRecordId = 14;
+    string version = 15;
 }

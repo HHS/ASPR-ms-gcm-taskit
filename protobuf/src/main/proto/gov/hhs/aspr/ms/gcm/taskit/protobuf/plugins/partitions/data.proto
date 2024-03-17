@@ -7,4 +7,5 @@ option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.da
 
 message PartitionsPluginDataInput {
     bool supportRunContinuity = 1;
+    string version = 2;
 }

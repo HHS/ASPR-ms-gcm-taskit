@@ -14,10 +14,12 @@ message PersonResourceReportPluginDataInput {
     repeated ResourceIdInput includedProperties = 3;
     repeated ResourceIdInput excludedProperties = 4;
     bool defaultInclusionPolicy = 5;
+    string version = 6;
 }
 
 message ResourcePropertyReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
+    string version = 2;
 }
 
 message ResourceReportPluginDataInput {
@@ -26,4 +28,5 @@ message ResourceReportPluginDataInput {
     repeated ResourceIdInput includedProperties = 3;
     repeated ResourceIdInput excludedProperties = 4;
     bool defaultInclusionPolicy = 5;
+    string version = 6;
 }

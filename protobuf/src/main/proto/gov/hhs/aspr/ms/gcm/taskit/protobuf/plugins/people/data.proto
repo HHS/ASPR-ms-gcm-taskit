@@ -10,4 +10,5 @@ import "plugins/people/support.proto";
 message PeoplePluginDataInput {
     repeated PersonRangeInput personRanges = 1;
     optional int32 personCount = 2;
+    string version = 3;
 }

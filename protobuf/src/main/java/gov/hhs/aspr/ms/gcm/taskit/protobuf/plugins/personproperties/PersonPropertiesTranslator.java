@@ -19,9 +19,9 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the PersonProperties Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write PersonPropertiesPluginData
+ * Translator for the PersonProperties Plugin. Using this Translator will add
+ * all the necessary TanslationSpecs needed to read and write the
+ * PersonPropertiesPluginData
  */
 public class PersonPropertiesTranslator {
 
@@ -42,6 +42,10 @@ public class PersonPropertiesTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the PersonPropertiesPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(PersonPropertiesTranslatorId.TRANSLATOR_ID)
@@ -64,6 +68,10 @@ public class PersonPropertiesTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * PersonPropertiesPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

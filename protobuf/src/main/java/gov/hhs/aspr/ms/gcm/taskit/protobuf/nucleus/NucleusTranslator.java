@@ -34,6 +34,10 @@ public class NucleusTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the classes within Nucleus
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
@@ -52,6 +56,10 @@ public class NucleusTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * classes within Nucleus
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

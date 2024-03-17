@@ -25,9 +25,8 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the Groups Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write GroupsPluginData
+ * Translator for the Groups Plugin. Using this Translator will add all the
+ * necessary TanslationSpecs needed to read and write the GroupsPlugin.
  */
 public class GroupsTranslator {
 
@@ -54,6 +53,10 @@ public class GroupsTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the GroupsPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(GroupsTranslatorId.TRANSLATOR_ID)
@@ -75,6 +78,10 @@ public class GroupsTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * GroupsPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

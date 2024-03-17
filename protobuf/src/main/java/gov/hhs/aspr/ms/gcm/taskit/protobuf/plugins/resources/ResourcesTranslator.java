@@ -22,9 +22,8 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the Resources Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write ResourcesPlugin
+ * Translator for the Resources Plugin. Using this Translator will add all the
+ * necessary TanslationSpecs needed to read and write the ResourcesPlugin
  */
 public class ResourcesTranslator {
 
@@ -48,6 +47,10 @@ public class ResourcesTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the ResourcesPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(ResourcesTranslatorId.TRANSLATOR_ID)
@@ -68,6 +71,10 @@ public class ResourcesTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * ResourcesPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

@@ -2,6 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +15,12 @@ import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.StochasticsTestPlugin
 import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.StochasticsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 public class AT_StochasticsPluginDataTranslationSpec {
 
@@ -66,6 +69,14 @@ public class AT_StochasticsPluginDataTranslationSpec {
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
+
+        // preconditions
+        // version is not supported
+        ContractException contractException = assertThrows(ContractException.class, () -> {
+            translationSpec.convertInputObject(StochasticsPluginDataInput.newBuilder().setVersion("badversion").build());
+        });
+
+        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

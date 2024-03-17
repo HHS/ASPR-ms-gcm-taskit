@@ -20,7 +20,7 @@ public class AT_TestGlobalPropertyIdTranslationSpec {
     @Test
     @UnitTestConstructor(target = TestGlobalPropertyIdTranslationSpec.class, args = {})
     public void testConstructor() {
-        assertNotNull(new GlobalPropertiesPluginDataTranslationSpec());
+        assertNotNull(new TestGlobalPropertyIdTranslationSpec());
     }
 
     @Test

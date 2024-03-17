@@ -58,7 +58,7 @@
 
         <!-- dependency versions -->
         <taskit.version>4.0.0-SNAPSHOT</taskit.version>
-        <gcm.version>4.1.0</gcm.version>
+        <gcm.version>4.2.0-SNAPSHOT</gcm.version>
         <jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
         <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
     </properties>

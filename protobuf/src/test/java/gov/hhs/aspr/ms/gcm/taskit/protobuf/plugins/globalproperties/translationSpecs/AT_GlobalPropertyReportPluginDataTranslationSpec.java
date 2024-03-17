@@ -28,7 +28,7 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
     @Test
     @UnitTestConstructor(target = GlobalPropertyReportPluginDataTranslationSpec.class, args = {})
     public void testConstructor() {
-        assertNotNull(new GlobalPropertiesPluginDataTranslationSpec());
+        assertNotNull(new GlobalPropertyReportPluginDataTranslationSpec());
     }
 
     @Test

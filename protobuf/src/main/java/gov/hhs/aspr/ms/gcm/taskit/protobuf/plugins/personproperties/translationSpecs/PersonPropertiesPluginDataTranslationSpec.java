@@ -18,7 +18,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyValueMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -30,12 +32,15 @@ public class PersonPropertiesPluginDataTranslationSpec
 
     @Override
     protected PersonPropertiesPluginData convertInputObject(PersonPropertiesPluginDataInput inputObject) {
+        if (!PersonPropertiesPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         PersonPropertiesPluginData.Builder builder = PersonPropertiesPluginData.builder();
 
         Map<Any, PersonPropertyId> personPropIdMap = new LinkedHashMap<>();
 
-        for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject
-                .getPersonPropertyDefinitionsList()) {
+        for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getPersonPropertyDefinitionsList()) {
             PersonPropertyId propertyId = this.translationEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
             personPropIdMap.put(propertyDefinitionMapInput.getPropertyId(), propertyId);
@@ -48,8 +53,7 @@ public class PersonPropertiesPluginDataTranslationSpec
                     propertyDefinitionMapInput.getPropertyTrackingPolicy());
         }
 
-        for (PersonPropertyValueMapInput personPropertyValueMapInput : inputObject
-                .getPersonPropertyValuesList()) {
+        for (PersonPropertyValueMapInput personPropertyValueMapInput : inputObject.getPersonPropertyValuesList()) {
             PersonPropertyId propertyId = personPropIdMap
                     .get(personPropertyValueMapInput.getPersonPropertyId().getId());
             for (PersonPropertyValueInput personPropertyValueInput : personPropertyValueMapInput
@@ -73,13 +77,14 @@ public class PersonPropertiesPluginDataTranslationSpec
             personPropertyTimeMapInput = null;
         }
 
-
         return builder.build();
     }
 
     @Override
     protected PersonPropertiesPluginDataInput convertAppObject(PersonPropertiesPluginData appObject) {
         PersonPropertiesPluginDataInput.Builder builder = PersonPropertiesPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         Map<PersonPropertyId, PropertyDefinition> personPropertyDefinitions = appObject.getPropertyDefinitions();
         Map<PersonPropertyId, Boolean> personPropertyTimeTrackingPolicies = appObject.getPropertyTrackingPolicies();

@@ -4,7 +4,9 @@ import gov.hhs.aspr.ms.gcm.plugins.materials.reports.MaterialsProducerPropertyRe
 import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.MaterialsProducerPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -17,6 +19,10 @@ public class MaterialsProducerPropertyReportPluginDataTranslationSpec extends
     @Override
     protected MaterialsProducerPropertyReportPluginData convertInputObject(
             MaterialsProducerPropertyReportPluginDataInput inputObject) {
+        if (!MaterialsProducerPropertyReportPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
 
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
@@ -30,6 +36,8 @@ public class MaterialsProducerPropertyReportPluginDataTranslationSpec extends
             MaterialsProducerPropertyReportPluginData appObject) {
         MaterialsProducerPropertyReportPluginDataInput.Builder builder = MaterialsProducerPropertyReportPluginDataInput
                 .newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);

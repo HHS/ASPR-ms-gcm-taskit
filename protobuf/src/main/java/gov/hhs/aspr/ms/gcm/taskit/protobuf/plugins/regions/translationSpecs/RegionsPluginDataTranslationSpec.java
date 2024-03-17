@@ -18,7 +18,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionI
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput.RegionPersonInfo;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -29,6 +31,10 @@ public class RegionsPluginDataTranslationSpec
 
     @Override
     protected RegionsPluginData convertInputObject(RegionsPluginDataInput inputObject) {
+        if (!RegionsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         RegionsPluginData.Builder builder = RegionsPluginData.builder();
 
         // add regions
@@ -84,6 +90,8 @@ public class RegionsPluginDataTranslationSpec
     @Override
     protected RegionsPluginDataInput convertAppObject(RegionsPluginData appObject) {
         RegionsPluginDataInput.Builder builder = RegionsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         // add regions
         for (RegionId regionId : appObject.getRegionIds()) {

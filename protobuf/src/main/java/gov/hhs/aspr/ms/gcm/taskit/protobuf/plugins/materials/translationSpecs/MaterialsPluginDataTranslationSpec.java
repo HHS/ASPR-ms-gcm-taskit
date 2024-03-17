@@ -30,7 +30,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.Prop
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceInitializationInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -41,6 +43,10 @@ public class MaterialsPluginDataTranslationSpec
 
     @Override
     protected MaterialsPluginData convertInputObject(MaterialsPluginDataInput inputObject) {
+        if (!MaterialsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         MaterialsPluginData.Builder builder = MaterialsPluginData.builder();
 
         builder.setNextBatchRecordId(inputObject.getNextBatchRecordId());
@@ -184,6 +190,8 @@ public class MaterialsPluginDataTranslationSpec
     @Override
     protected MaterialsPluginDataInput convertAppObject(MaterialsPluginData appObject) {
         MaterialsPluginDataInput.Builder builder = MaterialsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         builder.setNextBatchRecordId(appObject.getNextBatchRecordId());
         builder.setNextStageRecordId(appObject.getNextStageRecordId());

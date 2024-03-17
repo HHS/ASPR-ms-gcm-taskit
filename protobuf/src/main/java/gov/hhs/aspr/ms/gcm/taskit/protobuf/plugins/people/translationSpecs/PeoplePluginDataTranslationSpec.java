@@ -4,7 +4,9 @@ import gov.hhs.aspr.ms.gcm.plugins.people.datamanagers.PeoplePluginData;
 import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.support.input.PersonRangeInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -14,6 +16,10 @@ public class PeoplePluginDataTranslationSpec extends ProtobufTranslationSpec<Peo
 
     @Override
     protected PeoplePluginData convertInputObject(PeoplePluginDataInput inputObject) {
+        if (!PeoplePluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         PeoplePluginData.Builder builder = PeoplePluginData.builder();
 
         for (PersonRangeInput personRangeInput : inputObject.getPersonRangesList()) {
@@ -31,6 +37,8 @@ public class PeoplePluginDataTranslationSpec extends ProtobufTranslationSpec<Peo
     @Override
     protected PeoplePluginDataInput convertAppObject(PeoplePluginData appObject) {
         PeoplePluginDataInput.Builder builder = PeoplePluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         for (PersonRange personRange : appObject.getPersonRanges()) {
             PersonRangeInput personRangeInput = this.translationEngine.convertObject(personRange);

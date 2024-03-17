@@ -6,7 +6,9 @@ import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -18,6 +20,10 @@ public class RegionTransferReportPluginDataTranslationSpec
 
     @Override
     protected RegionTransferReportPluginData convertInputObject(RegionTransferReportPluginDataInput inputObject) {
+        if (!RegionTransferReportPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         RegionTransferReportPluginData.Builder builder = RegionTransferReportPluginData.builder();
 
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
@@ -31,6 +37,8 @@ public class RegionTransferReportPluginDataTranslationSpec
     @Override
     protected RegionTransferReportPluginDataInput convertAppObject(RegionTransferReportPluginData appObject) {
         RegionTransferReportPluginDataInput.Builder builder = RegionTransferReportPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);

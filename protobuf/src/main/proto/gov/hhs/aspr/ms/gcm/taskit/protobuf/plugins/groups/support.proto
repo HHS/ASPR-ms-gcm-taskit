@@ -26,13 +26,13 @@ message GroupPropertyIdInput {
 }
 
 message PersonToGroupMembershipInput {
-    int32 personId = 1;
-    repeated int32 groupIds = 2;
+    int32 pId = 1;
+    repeated int32 gIds = 2;
 }
 
 message GroupToPersonMembershipInput {
-    int32 groupId = 1;
-    repeated int32 personIds = 2;
+    int32 gId = 1;
+    repeated int32 pIds = 2;
 }
 
 message GroupPropertyDefinitionMapInput {
@@ -41,23 +41,23 @@ message GroupPropertyDefinitionMapInput {
 }
 
 message GroupPropertyValueMapInput {
-   GroupIdInput groupId = 1;
-   repeated PropertyValueMapInput propertyValueMap = 2;
+    int32 gId = 1;
+    repeated PropertyValueMapInput propertyValueMap = 2;
 }
 
 message GroupInput {
-    GroupIdInput groupId = 1;
+    int32 gId = 1;
     GroupTypeIdInput groupTypeId = 2;
 }
 
 message GroupPropertyDimensionInput {
-    GroupIdInput groupId = 1;
+    int32 gId = 1;
     GroupPropertyIdInput groupPropertyId = 2;
     repeated google.protobuf.Any values = 3;
 }
 
 message GroupMemberFilterInput {
-    GroupIdInput groupId = 1;
+    int32 gId = 1;
 }
 
 message GroupTypesForPersonFilterInput {

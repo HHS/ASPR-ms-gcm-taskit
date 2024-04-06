@@ -5,7 +5,6 @@ import com.google.protobuf.Any;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyDimension;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
@@ -18,7 +17,7 @@ public class GroupPropertyDimensionTranslationSpec
         GroupPropertyDimension.Builder builder = GroupPropertyDimension.builder();
 
         GroupPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getGroupPropertyId());
-        GroupId groupId = this.translationEngine.convertObject(inputObject.getGroupId());
+        GroupId groupId = new GroupId(inputObject.getGId());
 
         builder.setGroupPropertyId(globalPropertyId).setGroupId(groupId);
 
@@ -36,9 +35,8 @@ public class GroupPropertyDimensionTranslationSpec
 
         GroupPropertyIdInput globalPropertyIdInput = this.translationEngine
                 .convertObjectAsSafeClass(appObject.getGroupPropertyId(), GroupPropertyId.class);
-        GroupIdInput groupIdInput = this.translationEngine.convertObject(appObject.getGroupId());
 
-        builder.setGroupPropertyId(globalPropertyIdInput).setGroupId(groupIdInput);
+        builder.setGroupPropertyId(globalPropertyIdInput).setGId(appObject.getGroupId().getValue());
 
         for (Object objValue : appObject.getValues()) {
             builder.addValues(this.translationEngine.getAnyFromObject(objValue));

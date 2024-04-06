@@ -1,6 +1,6 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
-import java.util.List;
+import java.util.*;
 import java.util.Set;
 
 import gov.hhs.aspr.ms.gcm.plugins.groups.datamanagers.GroupsPluginData;
@@ -70,15 +70,16 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
         // add group property values
         for (GroupPropertyValueMapInput groupPropertyValueMapInput : inputObject.getGroupPropertyValuesList()) {
-            GroupId groupId = new GroupId(groupPropertyValueMapInput.getGId());
-            for (PropertyValueMapInput propertyValueMapInput : groupPropertyValueMapInput.getPropertyValueMapList()) {
+            PropertyValueMapInput propertyValueMapInput = groupPropertyValueMapInput.getPropertyValueMap();
+
+            for (int groupId : groupPropertyValueMapInput.getGIdsList()) {
 
                 GroupPropertyId groupPropertyId = this.translationEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyId());
                 Object propertyValue = this.translationEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
-                builder.setGroupPropertyValue(groupId, groupPropertyId, propertyValue);
+                builder.setGroupPropertyValue(new GroupId(groupId), groupPropertyId, propertyValue);
             }
 
         }
@@ -161,23 +162,39 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
             builder.addGroupPropertyDefinitions(groupPropDefMapInputBuilder.build());
         }
         // add group property values
-        for (GroupId groupId : appObject.getGroupIds()) {
-            GroupPropertyValueMapInput.Builder groupPropValMapBuilder = GroupPropertyValueMapInput.newBuilder();
+        Map<GroupPropertyValue, List<Integer>> propValueToGroupIdsMap = new LinkedHashMap<>();
 
-            groupPropValMapBuilder.setGId(groupId.getValue());
+        for (GroupId groupId : appObject.getGroupIds()) {
+
+            // groupPropValMapBuilder.setGId(groupId.getValue());
 
             List<GroupPropertyValue> groupPropertyValues = appObject.getGroupPropertyValues(groupId);
 
             for (GroupPropertyValue groupPropertyValue : groupPropertyValues) {
-                Object propertyValue = groupPropertyValue.value();
+                List<Integer> groupIds = propValueToGroupIdsMap.get(groupPropertyValue);
 
-                PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
-                        .setPropertyValue(this.translationEngine.getAnyFromObject(propertyValue))
-                        .setPropertyId(this.translationEngine.getAnyFromObject(groupPropertyValue.groupPropertyId()))
-                        .build();
+                if (groupIds == null) {
+                    groupIds = new ArrayList<>();
+                    propValueToGroupIdsMap.put(groupPropertyValue, groupIds);
+                }
 
-                groupPropValMapBuilder.addPropertyValueMap(propertyValueMapInput);
+                groupIds.add(groupId.getValue());
             }
+        }
+
+        for (GroupPropertyValue groupPropertyValue : propValueToGroupIdsMap.keySet()) {
+            GroupPropertyValueMapInput.Builder groupPropValMapBuilder = GroupPropertyValueMapInput.newBuilder();
+
+            Object propertyValue = groupPropertyValue.value();
+            List<Integer> groupIds = propValueToGroupIdsMap.get(groupPropertyValue);
+            Collections.sort(groupIds);
+
+            PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
+                    .setPropertyValue(this.translationEngine.getAnyFromObject(propertyValue))
+                    .setPropertyId(this.translationEngine.getAnyFromObject(groupPropertyValue.groupPropertyId()))
+                    .build();
+
+            groupPropValMapBuilder.setPropertyValueMap(propertyValueMapInput).addAllGIds(groupIds);
 
             builder.addGroupPropertyValues(groupPropValMapBuilder.build());
         }

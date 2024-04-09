@@ -1,7 +1,6 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import java.util.*;
-import java.util.Set;
 
 import gov.hhs.aspr.ms.gcm.plugins.groups.datamanagers.GroupsPluginData;
 import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
@@ -41,9 +40,10 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
         // Add groups
         for (GroupInput groupInput : inputObject.getGroupsList()) {
             GroupTypeId groupTypeId = this.translationEngine.convertObject(groupInput.getGroupTypeId());
-            GroupId groupId = new GroupId(groupInput.getGId());
+            for (Integer gId : groupInput.getGIdList()) {
+                builder.addGroup(new GroupId(gId), groupTypeId);
+            }
 
-            builder.addGroup(groupId, groupTypeId);
         }
 
         // Add group type ids
@@ -118,16 +118,30 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
             builder.addGroupTypeIds(groupTypeIdInput);
         }
 
+        Map<GroupTypeIdInput, List<Integer>> groupMap = new LinkedHashMap<>();
         // add groups
         for (GroupId groupId : appObject.getGroupIds()) {
 
             GroupTypeIdInput groupTypeIdInput = this.translationEngine
                     .convertObjectAsSafeClass(appObject.getGroupTypeId(groupId), GroupTypeId.class);
 
-            GroupInput groupInput = GroupInput.newBuilder()
-                    .setGId(groupId.getValue())
-                    .setGroupTypeId(groupTypeIdInput)
-                    .build();
+            List<Integer> groups = groupMap.get(groupTypeIdInput);
+
+            if (groups == null) {
+                groups = new ArrayList<>();
+                groupMap.put(groupTypeIdInput, groups);
+            }
+
+            groups.add(groupId.getValue());
+            //
+            // .build();
+
+            //
+        }
+
+        for (GroupTypeIdInput groupTypeIdInput : groupMap.keySet()) {
+            List<Integer> gIds = groupMap.get(groupTypeIdInput);
+            GroupInput groupInput = GroupInput.newBuilder().setGroupTypeId(groupTypeIdInput).addAllGId(gIds).build();
 
             builder.addGroups(groupInput);
         }

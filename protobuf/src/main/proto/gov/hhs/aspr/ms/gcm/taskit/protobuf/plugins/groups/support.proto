@@ -46,8 +46,8 @@ message GroupPropertyValueMapInput {
 }
 
 message GroupInput {
-    int32 gId = 1;
-    GroupTypeIdInput groupTypeId = 2;
+    GroupTypeIdInput groupTypeId = 1;
+    repeated int32 gId = 2;
 }
 
 message GroupPropertyDimensionInput {

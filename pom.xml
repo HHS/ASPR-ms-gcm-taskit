@@ -29,6 +29,12 @@
             <email>zachary.bischoff@leidos.com</email>
             <organizationUrl>https://www.leidos.com</organizationUrl>
         </developer>
+        <developer>
+            <name>Shawn Hatch</name>
+            <organization>Leidos</organization>
+            <email>shawn.hatch@leidos.com</email>
+            <organizationUrl>https://www.leidos.com</organizationUrl>
+        </developer>
     </developers>
 
     <!-- SCM Information -->

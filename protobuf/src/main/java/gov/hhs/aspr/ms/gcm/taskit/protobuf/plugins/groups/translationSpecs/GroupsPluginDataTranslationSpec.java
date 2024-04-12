@@ -133,10 +133,6 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
             }
 
             groups.add(groupId.getValue());
-            //
-            // .build();
-
-            //
         }
 
         for (GroupTypeIdInput groupTypeIdInput : groupMap.keySet()) {

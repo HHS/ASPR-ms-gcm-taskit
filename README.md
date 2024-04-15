@@ -4,7 +4,7 @@
 [![GitHub Workflow Status (with event)][dev-build-shield]][dev-build-url]
 [![GitHub Workflow Status (with event)][build-shield]][build-url]
 
-# Translation And Serialization Toolkit (Taskit) for the General Computational Model (GCM)
+# GCM Taskit
 An implementation of [Taskit](https://github.com/HHS/ASPR-ms-taskit) for use with [GCM](https://github.com/HHS/ASPR-8).
 
 Currently there is only 1 supported serialzation format, and that is protobuf. Other formats such as binary will follow in the future.

@@ -14,6 +14,7 @@
     <artifactId>protobuf</artifactId>
     <name>GCM : Taskit: Protobuf</name>
     <description>Protobuf Taskit implementation for GCM</description>
+    <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
 
     <!-- Properties -->
     <properties>

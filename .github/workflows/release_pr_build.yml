@@ -38,6 +38,16 @@ jobs:
         path: gcm
         ref: ${{ env.gcm_version }}
 
+    - name: Get Version
+      run: |
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+    
+    - name: Version Is Snapshot
+      if: ${{ endsWith(env.version, 'SNAPSHOT') }}
+      run: |
+        echo "Version is a SNAPSHOT version. Update version to proper version."
+        exit 1 
+
     - name: Build GCM
       run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
     - name: Build GCM Taskit

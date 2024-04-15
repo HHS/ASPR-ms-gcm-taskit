@@ -10,8 +10,9 @@ name: GCM Taskit Release Build
 
 on: 
   push:
-    tags:
-    - 'v*'
+    paths-ignore:
+      - 'README.md'
+      - 'LICENSE'
     branches: ["main"]
 
 jobs:
@@ -31,39 +32,17 @@ jobs:
 
     - name: Get Taskit and GCM Versions
       run: |
-        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
         echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
 
-    - name: Checkout Taskit
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-ms-taskit
-        path: taskit
-        ref: ${{ (endsWith(env.taskit_version, 'SNAPSHOT') && 'dev') || env.taskit_version }}
     - name: Checkout GCM
       uses: actions/checkout@v4
       with:
         repository: HHS/ASPR-8
         path: gcm
-        ref: ${{ (endsWith(env.gcm_version, 'SNAPSHOT') && 'dev') || env.gcm_version }}
+        ref: ${{ env.gcm_version }}
 
-    - name: Get Util Version
-      run: |
-        echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/pom.xml)" >> "$GITHUB_ENV"
-
-    - name: Checkout Util
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-ms-util
-        path: util
-        ref: ${{ (endsWith(env.util_version, 'SNAPSHOT') && 'dev') || env.util_version }}
-  
-    - name: Build Util
-      run: mvn clean install -DskipTests --file util/pom.xml
     - name: Build GCM
       run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
-    - name: Build Taskit
-      run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit
       run: mvn clean install -Prelease --file pom.xml
 
@@ -73,8 +52,7 @@ jobs:
     - name: Make Release
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "protobuf/target/protobuf-${{ env.version }}*.jar"
-        prerelease: ${{ endsWith(env.version, '-SNAPSHOT') || contains(env.version, '-RC') }}
+        artifacts: "protobuf/target/protobuf-${{ env.version }}*"
         name: "v${{ env.version }}"
         tag: "v${{ env.version }}"
         generateReleaseNotes: true

@@ -13,7 +13,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  main-build:
+  release-pr-build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -27,40 +27,18 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Get Taskit and GCM Versions
+    - name: Get GCM Version
       run: |
-        echo "taskit_version=v$(mvn help:evaluate -Dexpression=taskit.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
         echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
-
-    - name: Checkout Taskit
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-ms-taskit
-        path: taskit
-        ref: ${{ (endsWith(env.taskit_version, 'SNAPSHOT') && 'dev') || env.taskit_version }}
+    
     - name: Checkout GCM
       uses: actions/checkout@v4
       with:
         repository: HHS/ASPR-8
         path: gcm
-        ref: ${{ (endsWith(env.gcm_version, 'SNAPSHOT') && 'dev') || env.gcm_version }}
+        ref: ${{ env.gcm_version }}
 
-    - name: Get Util Version
-      run: |
-        echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/pom.xml)" >> "$GITHUB_ENV"
-
-    - name: Checkout Util
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-ms-util
-        path: util
-        ref: ${{ (endsWith(env.util_version, 'SNAPSHOT') && 'dev') || env.util_version }}
-  
-    - name: Build Util
-      run: mvn clean install -DskipTests --file util/pom.xml
     - name: Build GCM
       run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
-    - name: Build Taskit
-      run: mvn clean install -DskipTests --file taskit/pom.xml
     - name: Build GCM Taskit
       run: mvn clean install -Prelease --file pom.xml

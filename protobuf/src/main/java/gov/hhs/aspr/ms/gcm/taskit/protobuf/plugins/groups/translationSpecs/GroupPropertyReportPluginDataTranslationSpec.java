@@ -1,9 +1,9 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.reports.GroupPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupTypeId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPropertyMap;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import gov.hhs.aspr.ms.gcm.nucleus.Dimension;
-import gov.hhs.aspr.ms.gcm.nucleus.DimensionContext;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.Dimension;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.DimensionContext;
 
 public class ExampleDimension implements Dimension {
     String levelName;

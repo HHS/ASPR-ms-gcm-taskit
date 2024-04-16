@@ -1,6 +1,6 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.SimpleRegionPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.SimpleRegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.SimpleRegionPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 

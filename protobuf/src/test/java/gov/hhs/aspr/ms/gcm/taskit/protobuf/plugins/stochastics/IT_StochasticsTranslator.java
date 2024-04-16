@@ -6,13 +6,13 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.datamanagers.StochasticsDataManager;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.datamanagers.StochasticsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.support.RandomNumberGeneratorId;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.support.Well;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.support.WellState;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.StochasticsTestPluginFactory;
-import gov.hhs.aspr.ms.gcm.plugins.stochastics.testsupport.TestRandomGeneratorId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.datamanagers.StochasticsDataManager;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.datamanagers.StochasticsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.RandomNumberGeneratorId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.Well;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.WellState;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.StochasticsTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;

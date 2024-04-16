@@ -3,8 +3,8 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportLabelTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportPeriodTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.SimpleReportLabelTranslationSpec;

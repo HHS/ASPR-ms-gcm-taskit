@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceInitialization;
-import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceInitialization;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.testsupport.TestResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;

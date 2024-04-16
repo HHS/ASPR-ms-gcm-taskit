@@ -10,12 +10,12 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.reports.PersonPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.TestPersonPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.reports.PersonPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.TestPersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyReportPluginDataInput;

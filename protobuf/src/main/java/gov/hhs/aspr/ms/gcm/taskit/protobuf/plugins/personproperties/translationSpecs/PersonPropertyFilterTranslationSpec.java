@@ -2,9 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translation
 
 import com.google.protobuf.Any;
 
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyFilter;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Equality;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyFilter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;

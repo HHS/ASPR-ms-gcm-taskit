@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.DimensionContext;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.DimensionContext;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 

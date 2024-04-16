@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.Filter;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.NotFilter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.NotFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.NotFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.TestFilter;

@@ -2,13 +2,13 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import java.util.*;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.datamanagers.GroupsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyValue;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.datamanagers.GroupsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyValue;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupTypeId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.data.input.GroupsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDefinitionMapInput;

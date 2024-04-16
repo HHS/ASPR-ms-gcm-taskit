@@ -1,9 +1,9 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.resources.reports.ResourceReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.reports.ResourceReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourceReportPluginDataInput;

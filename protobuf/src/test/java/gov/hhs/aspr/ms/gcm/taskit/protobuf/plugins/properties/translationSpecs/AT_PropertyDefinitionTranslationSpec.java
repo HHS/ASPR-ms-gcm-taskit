@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;

@@ -5,11 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.datamanagers.RegionsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.datamanagers.RegionsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;

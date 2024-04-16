@@ -2,9 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation
 
 import com.google.protobuf.Any;
 
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.datamanagers.GlobalPropertiesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.support.GlobalPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.datamanagers.GlobalPropertiesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.data.input.GlobalPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;

@@ -6,10 +6,10 @@ import java.util.Map;
 
 import com.google.protobuf.Any;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyTimeInput;

@@ -7,8 +7,8 @@ import java.nio.file.Path;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.datamanagers.PeoplePluginData;
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonRange;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.datamanagers.PeoplePluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
 import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;

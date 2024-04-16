@@ -1,6 +1,6 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 

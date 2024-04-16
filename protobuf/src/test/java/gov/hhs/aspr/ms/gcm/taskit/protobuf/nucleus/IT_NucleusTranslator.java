@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
-import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;

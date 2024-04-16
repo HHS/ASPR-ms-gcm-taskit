@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.google.type.Date;
 
-import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;

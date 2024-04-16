@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceFilter;
-import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Equality;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceFilter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.testsupport.TestResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;

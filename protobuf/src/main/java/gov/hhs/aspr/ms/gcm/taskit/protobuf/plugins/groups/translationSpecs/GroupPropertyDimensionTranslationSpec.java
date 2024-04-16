@@ -2,9 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import com.google.protobuf.Any;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyDimension;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;

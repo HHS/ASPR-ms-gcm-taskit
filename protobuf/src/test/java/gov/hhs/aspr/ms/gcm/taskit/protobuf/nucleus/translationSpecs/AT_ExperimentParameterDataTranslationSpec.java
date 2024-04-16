@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;

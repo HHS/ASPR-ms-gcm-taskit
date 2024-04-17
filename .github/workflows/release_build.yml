@@ -16,7 +16,7 @@ on:
     branches: ["main"]
 
 jobs:
-  create-release:
+  release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -49,6 +49,7 @@ jobs:
     - name: Get Version
       run: |
         echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+        
     - name: Make Release
       uses: ncipollo/release-action@v1
       with:

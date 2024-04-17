@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Development Build Pre Maven Central
+name: GCM Taskit Development Build
 
 on:
   push:
@@ -15,7 +15,7 @@ on:
     branches-ignore: ["main"]
 
 jobs:
-  build:
+  dev-build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout GCM Taskit

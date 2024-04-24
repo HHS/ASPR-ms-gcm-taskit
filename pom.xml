@@ -185,6 +185,12 @@
                     <groupId>org.sonatype.central</groupId>
                     <artifactId>central-publishing-maven-plugin</artifactId>
                     <version>${central-publishing-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <tokenAuth>true</tokenAuth>
+                        <deploymentName>ASPR MS GCM Taskit</deploymentName>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -280,16 +286,7 @@
                 <inherited>false</inherited>
             </plugin>
 
-            <plugin>
-                <groupId>org.sonatype.central</groupId>
-                <artifactId>central-publishing-maven-plugin</artifactId>
-                <extensions>true</extensions>
-                <configuration>
-                    <publishingServerId>central</publishingServerId>
-                    <tokenAuth>true</tokenAuth>
-                    <deploymentName>ASPR MS GCM Taskit</deploymentName>
-                </configuration>
-            </plugin>
+
         </plugins>
     </build>
 

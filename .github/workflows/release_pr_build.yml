@@ -27,18 +27,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Get GCM Version
+    - name: Get Version
       run: |
-        echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
+        echo "version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
     
-    - name: Checkout GCM
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-8
-        path: gcm
-        ref: ${{ env.gcm_version }}
+    - name: Version Is Snapshot
+      if: ${{ endsWith(env.version, 'SNAPSHOT') }}
+      run: |
+        echo "Version is a SNAPSHOT version. Update version to proper version."
+        exit 1 
 
-    - name: Build GCM
-      run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
     - name: Build GCM Taskit
-      run: mvn clean install -Prelease --file pom.xml
+      run: mvn clean install -Pjavadoc,jacoco --file pom.xml

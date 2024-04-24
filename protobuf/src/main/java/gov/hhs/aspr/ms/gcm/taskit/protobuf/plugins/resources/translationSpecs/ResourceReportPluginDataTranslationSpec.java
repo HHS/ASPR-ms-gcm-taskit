@@ -1,14 +1,16 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.resources.reports.ResourceReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.reports.ResourceReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourceReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceIdInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -20,6 +22,10 @@ public class ResourceReportPluginDataTranslationSpec
 
     @Override
     protected ResourceReportPluginData convertInputObject(ResourceReportPluginDataInput inputObject) {
+        if (!ResourceReportPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         ResourceReportPluginData.Builder builder = ResourceReportPluginData.builder();
 
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
@@ -45,6 +51,8 @@ public class ResourceReportPluginDataTranslationSpec
     @Override
     protected ResourceReportPluginDataInput convertAppObject(ResourceReportPluginData appObject) {
         ResourceReportPluginDataInput.Builder builder = ResourceReportPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);

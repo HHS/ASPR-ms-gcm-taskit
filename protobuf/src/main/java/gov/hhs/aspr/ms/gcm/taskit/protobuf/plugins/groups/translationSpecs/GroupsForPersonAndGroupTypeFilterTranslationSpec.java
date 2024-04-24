@@ -1,8 +1,8 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupsForPersonAndGroupTypeFilter;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.Equality;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupTypeId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupsForPersonAndGroupTypeFilter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupTypeIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupsForPersonAndGroupTypeFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;

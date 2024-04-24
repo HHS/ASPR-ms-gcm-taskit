@@ -15,6 +15,7 @@ message GroupPropertyReportPropertyMap {
 message GroupPopulationReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
     ReportPeriodInput reportPeriod = 2;
+    string version = 3;
 }
 
 message GroupPropertyReportPluginDataInput {
@@ -23,4 +24,5 @@ message GroupPropertyReportPluginDataInput {
     repeated GroupPropertyReportPropertyMap includedProperties = 3;
     repeated GroupPropertyReportPropertyMap excludedProperties = 4;
     bool defaultInclusionPolicy = 5;
+    string version = 6;
 }

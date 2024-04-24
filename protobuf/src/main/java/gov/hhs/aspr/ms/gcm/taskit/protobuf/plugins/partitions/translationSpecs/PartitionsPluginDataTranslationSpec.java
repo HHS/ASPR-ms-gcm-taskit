@@ -1,8 +1,10 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.partitions.datamanagers.PartitionsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.datamanagers.PartitionsPluginData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.data.input.PartitionsPluginDataInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -13,6 +15,10 @@ public class PartitionsPluginDataTranslationSpec
 
     @Override
     protected PartitionsPluginData convertInputObject(PartitionsPluginDataInput inputObject) {
+        if (!PartitionsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         PartitionsPluginData.Builder builder = PartitionsPluginData.builder();
 
         builder.setRunContinuitySupport(inputObject.getSupportRunContinuity());
@@ -24,7 +30,7 @@ public class PartitionsPluginDataTranslationSpec
     protected PartitionsPluginDataInput convertAppObject(PartitionsPluginData appObject) {
         PartitionsPluginDataInput.Builder builder = PartitionsPluginDataInput.newBuilder();
 
-        builder.setSupportRunContinuity(appObject.supportsRunContinuity());
+        builder.setVersion(appObject.getVersion()).setSupportRunContinuity(appObject.supportsRunContinuity());
 
         return builder.build();
     }

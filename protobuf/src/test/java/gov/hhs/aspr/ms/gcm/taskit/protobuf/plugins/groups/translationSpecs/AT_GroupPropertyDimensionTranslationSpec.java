@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyDimension;
-import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.TestGroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.GroupsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;

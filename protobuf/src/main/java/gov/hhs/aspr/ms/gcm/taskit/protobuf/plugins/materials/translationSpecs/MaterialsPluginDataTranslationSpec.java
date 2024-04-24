@@ -3,15 +3,15 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translationSpecs;
 import java.util.Map;
 import java.util.Set;
 
-import gov.hhs.aspr.ms.gcm.plugins.materials.datamangers.MaterialsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.BatchId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.BatchPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialsProducerId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.MaterialsProducerPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.materials.support.StageId;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.datamangers.MaterialsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.BatchId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.BatchPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.MaterialId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.MaterialsProducerId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.MaterialsProducerPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.StageId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.data.input.MaterialsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.BatchIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.BatchInput;
@@ -30,7 +30,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.Prop
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceInitializationInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -41,6 +43,10 @@ public class MaterialsPluginDataTranslationSpec
 
     @Override
     protected MaterialsPluginData convertInputObject(MaterialsPluginDataInput inputObject) {
+        if (!MaterialsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         MaterialsPluginData.Builder builder = MaterialsPluginData.builder();
 
         builder.setNextBatchRecordId(inputObject.getNextBatchRecordId());
@@ -184,6 +190,8 @@ public class MaterialsPluginDataTranslationSpec
     @Override
     protected MaterialsPluginDataInput convertAppObject(MaterialsPluginData appObject) {
         MaterialsPluginDataInput.Builder builder = MaterialsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         builder.setNextBatchRecordId(appObject.getNextBatchRecordId());
         builder.setNextStageRecordId(appObject.getNextStageRecordId());

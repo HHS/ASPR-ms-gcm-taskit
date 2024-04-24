@@ -4,9 +4,11 @@ import java.time.LocalDate;
 
 import com.google.type.Date;
 
-import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -16,6 +18,10 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
 
     @Override
     protected SimulationState convertInputObject(SimulationStateInput inputObject) {
+        if (!SimulationState.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         SimulationState.Builder builder = SimulationState.builder();
 
         builder.setStartTime(inputObject.getStartTime());
@@ -30,9 +36,9 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
 
     @Override
     protected SimulationStateInput convertAppObject(SimulationState appObject) {
-        SimulationStateInput.Builder builder = SimulationStateInput.newBuilder();
-
-        builder.setStartTime(appObject.getStartTime());
+        SimulationStateInput.Builder builder = SimulationStateInput.newBuilder()
+                .setStartTime(appObject.getStartTime())
+                .setVersion(appObject.getVersion());
 
         Date date = this.translationEngine.convertObject(appObject.getBaseDate());
         builder.setBaseDate(date);

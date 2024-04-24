@@ -4,10 +4,10 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.FilterSensitivity;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.PartitionsContext;
-import gov.hhs.aspr.ms.gcm.plugins.partitions.support.filters.Filter;
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.FilterSensitivity;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.PartitionsContext;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
 
 public class TestFilter extends Filter {
     private int filterId;

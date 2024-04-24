@@ -11,15 +11,15 @@ import java.util.Random;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.datamanagers.GroupsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.GroupsTestPluginFactory;
-import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.TestGroupPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.testsupport.TestGroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.datamanagers.GroupsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.reports.GroupPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.GroupsTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupTypeId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.data.input.GroupsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
@@ -54,7 +54,6 @@ public class IT_GroupsTranslator {
                 .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GroupsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -80,7 +79,8 @@ public class IT_GroupsTranslator {
 
             expectedPluginDatas.add(expectedPluginData);
 
-            translatorController.writeOutput(expectedPluginData);
+            translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                    TranslationEngineType.PROTOBUF);
             translatorController.readInput();
         }
 
@@ -112,8 +112,6 @@ public class IT_GroupsTranslator {
                 .addTranslationEngine(protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);
@@ -136,7 +134,8 @@ public class IT_GroupsTranslator {
 
         GroupPropertyReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 

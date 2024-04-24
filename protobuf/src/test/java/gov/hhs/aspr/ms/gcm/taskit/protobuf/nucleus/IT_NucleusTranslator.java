@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
-import gov.hhs.aspr.ms.gcm.nucleus.SimulationState;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.taskit.core.TranslationController;
@@ -33,7 +33,6 @@ public class IT_NucleusTranslator {
                         ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), SimulationStateInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), SimulationState.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         double startTime = 5;
@@ -43,7 +42,8 @@ public class IT_NucleusTranslator {
                 .setBaseDate(LocalDate.of(2023, 4, 12))
                 .build();
 
-        translatorController.writeOutput(exptectedSimulationState);
+        translatorController.writeOutput(exptectedSimulationState, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 
@@ -64,8 +64,6 @@ public class IT_NucleusTranslator {
                         ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ExperimentParameterDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), ExperimentParameterData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
@@ -80,11 +78,13 @@ public class IT_NucleusTranslator {
 
         ExperimentParameterData expectedExperimentParameterData = builder.build();
 
-        translatorController.writeOutput(expectedExperimentParameterData);
+        translatorController.writeOutput(expectedExperimentParameterData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         translatorController.readInput();
 
-        ExperimentParameterData actualExperimentParameterData = translatorController.getFirstObject(ExperimentParameterData.class);
+        ExperimentParameterData actualExperimentParameterData = translatorController
+                .getFirstObject(ExperimentParameterData.class);
 
         assertEquals(expectedExperimentParameterData, actualExperimentParameterData);
     }

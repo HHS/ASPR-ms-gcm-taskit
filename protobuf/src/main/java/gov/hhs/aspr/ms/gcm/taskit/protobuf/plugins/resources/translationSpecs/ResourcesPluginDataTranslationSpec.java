@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
-import gov.hhs.aspr.ms.gcm.plugins.resources.datamanagers.ResourcesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceInitialization;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourcePropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.datamanagers.ResourcesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceInitialization;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourcePropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
@@ -26,7 +26,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.Resou
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceInitializationInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourcePropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourcePropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -37,6 +39,10 @@ public class ResourcesPluginDataTranslationSpec
 
     @Override
     protected ResourcesPluginData convertInputObject(ResourcesPluginDataInput inputObject) {
+        if (!ResourcesPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         ResourcesPluginData.Builder builder = ResourcesPluginData.builder();
 
         for (ResourceIdMapInput resourceIdInput : inputObject.getResourceIdsList()) {
@@ -115,6 +121,8 @@ public class ResourcesPluginDataTranslationSpec
     @Override
     protected ResourcesPluginDataInput convertAppObject(ResourcesPluginData appObject) {
         ResourcesPluginDataInput.Builder builder = ResourcesPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         Map<ResourceId, Double> resourceDefaultTimes = appObject.getResourceDefaultTimes();
         Map<ResourceId, Map<ResourcePropertyId, PropertyDefinition>> resourcePropDefs = appObject

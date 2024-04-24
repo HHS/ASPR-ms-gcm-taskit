@@ -1,15 +1,17 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.reports.GroupPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupTypeId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.reports.GroupPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupTypeId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPropertyMap;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupTypeIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -21,6 +23,10 @@ public class GroupPropertyReportPluginDataTranslationSpec
 
     @Override
     protected GroupPropertyReportPluginData convertInputObject(GroupPropertyReportPluginDataInput inputObject) {
+        if (!GroupPropertyReportPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         GroupPropertyReportPluginData.Builder builder = GroupPropertyReportPluginData.builder();
 
         ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
@@ -53,6 +59,8 @@ public class GroupPropertyReportPluginDataTranslationSpec
     @Override
     protected GroupPropertyReportPluginDataInput convertAppObject(GroupPropertyReportPluginData appObject) {
         GroupPropertyReportPluginDataInput.Builder builder = GroupPropertyReportPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
                 ReportLabel.class);

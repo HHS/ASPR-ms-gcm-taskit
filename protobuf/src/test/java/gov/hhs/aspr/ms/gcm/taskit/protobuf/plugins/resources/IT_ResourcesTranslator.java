@@ -12,17 +12,17 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.resources.datamanagers.ResourcesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.reports.PersonResourceReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.reports.ResourcePropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.reports.ResourceReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.resources.support.ResourceId;
-import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.ResourcesTestPluginFactory;
-import gov.hhs.aspr.ms.gcm.plugins.resources.testsupport.TestResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.datamanagers.ResourcesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.reports.PersonResourceReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.reports.ResourcePropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.reports.ResourceReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.testsupport.ResourcesTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.testsupport.TestResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
@@ -59,8 +59,6 @@ public class IT_ResourcesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), ResourcesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), ResourcesPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -74,7 +72,8 @@ public class IT_ResourcesTranslator {
         ResourcesPluginData expectedPluginData = ResourcesTestPluginFactory.getStandardResourcesPluginData(people,
                 seed);
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         ResourcesPluginData actualPluginData = translatorController.getFirstObject(ResourcesPluginData.class);
@@ -99,8 +98,6 @@ public class IT_ResourcesTranslator {
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonResourceReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonResourceReportPluginData.class,
                         TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -127,7 +124,8 @@ public class IT_ResourcesTranslator {
 
         PersonResourceReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonResourceReportPluginData actualPluginData = translatorController
@@ -154,8 +152,6 @@ public class IT_ResourcesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), ResourcePropertyReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("resource property report label");
@@ -166,7 +162,8 @@ public class IT_ResourcesTranslator {
 
         ResourcePropertyReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         ResourcePropertyReportPluginData actualPluginData = translatorController
@@ -193,8 +190,6 @@ public class IT_ResourcesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), ResourceReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), ResourceReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -220,7 +215,8 @@ public class IT_ResourcesTranslator {
 
         ResourceReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         ResourceReportPluginData actualPluginData = translatorController.getFirstObject(ResourceReportPluginData.class);

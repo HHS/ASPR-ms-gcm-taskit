@@ -9,9 +9,8 @@ import gov.hhs.aspr.ms.taskit.core.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
 
 /**
- * Translator for the Properties Plugin.
- * Using this Translator will add all the necessary TanslationSpecs needed
- * to read and write PropertiesPlugin (PropertyDefiniton, TimeTrackingPolicy)
+ * Translator for the Properties Plugin. Using this Translator will add all the
+ * necessary TanslationSpecs needed to read and write the PropertiesPlugin
  */
 public class PropertiesTranslator {
 
@@ -26,6 +25,10 @@ public class PropertiesTranslator {
         return list;
     }
 
+    /**
+     * Returns a Translator Builder that already includes the necessary
+     * TranslationSpecs needed to read and write the PropertiesPlugin
+     */
     private static Translator.Builder builder() {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(PropertiesTranslatorId.TRANSLATOR_ID)
@@ -41,6 +44,10 @@ public class PropertiesTranslator {
         return builder;
     }
 
+    /**
+     * Returns a Translator that includes TranslationSpecs for the
+     * PropertiesPlugin.
+     */
     public static Translator getTranslator() {
         return builder().build();
     }

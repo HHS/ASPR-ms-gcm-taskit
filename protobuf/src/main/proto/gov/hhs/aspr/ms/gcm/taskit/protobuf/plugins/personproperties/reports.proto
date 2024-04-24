@@ -14,10 +14,12 @@ message PersonPropertyReportPluginDataInput {
     repeated PersonPropertyIdInput includedProperties = 3;
     repeated PersonPropertyIdInput excludedProperties = 4;
     bool defaultInclusionPolicy = 5;
+    string version = 6;
 }
 
 message PersonPropertyInteractionReportPluginDataInput {
     ReportLabelInput reportLabel = 1;
     ReportPeriodInput reportPeriod = 2;
     repeated PersonPropertyIdInput personPropertyIds = 3;
+    string version = 4;
 }

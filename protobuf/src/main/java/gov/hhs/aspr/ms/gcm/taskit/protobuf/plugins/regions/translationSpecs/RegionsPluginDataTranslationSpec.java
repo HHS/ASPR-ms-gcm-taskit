@@ -5,11 +5,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.datamanagers.RegionsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.datamanagers.RegionsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
@@ -18,7 +18,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionI
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput.RegionPersonInfo;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyValueMapInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -29,6 +31,10 @@ public class RegionsPluginDataTranslationSpec
 
     @Override
     protected RegionsPluginData convertInputObject(RegionsPluginDataInput inputObject) {
+        if (!RegionsPluginData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         RegionsPluginData.Builder builder = RegionsPluginData.builder();
 
         // add regions
@@ -84,6 +90,8 @@ public class RegionsPluginDataTranslationSpec
     @Override
     protected RegionsPluginDataInput convertAppObject(RegionsPluginData appObject) {
         RegionsPluginDataInput.Builder builder = RegionsPluginDataInput.newBuilder();
+
+        builder.setVersion(appObject.getVersion());
 
         // add regions
         for (RegionId regionId : appObject.getRegionIds()) {

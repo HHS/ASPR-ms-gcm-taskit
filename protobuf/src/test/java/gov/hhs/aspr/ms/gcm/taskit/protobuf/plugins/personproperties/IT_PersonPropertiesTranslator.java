@@ -11,16 +11,16 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.reports.PersonPropertyInteractionReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.reports.PersonPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.support.PersonPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.PersonPropertiesTestPluginFactory;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.TestPersonPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.reports.PersonPropertyInteractionReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.reports.PersonPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.PersonPropertiesTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.TestPersonPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyInteractionReportPluginDataInput;
@@ -54,8 +54,6 @@ public class IT_PersonPropertiesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -69,7 +67,8 @@ public class IT_PersonPropertiesTranslator {
         PersonPropertiesPluginData expectedPluginData = PersonPropertiesTestPluginFactory
                 .getStandardPersonPropertiesPluginData(people, seed);
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertiesPluginData actualPluginData = translatorController
@@ -94,8 +93,6 @@ public class IT_PersonPropertiesTranslator {
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginData.class,
                         TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -122,7 +119,8 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyReportPluginData expectedPluginData = personPropertyReportPluginDataBuilder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyReportPluginData actualPluginData = translatorController
@@ -148,8 +146,6 @@ public class IT_PersonPropertiesTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -172,7 +168,8 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyInteractionReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyInteractionReportPluginData actualPluginData = translatorController

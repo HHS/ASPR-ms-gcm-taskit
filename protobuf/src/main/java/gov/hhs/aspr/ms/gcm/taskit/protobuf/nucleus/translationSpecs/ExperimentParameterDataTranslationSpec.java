@@ -2,9 +2,11 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
 
 import java.nio.file.Path;
 
-import gov.hhs.aspr.ms.gcm.nucleus.ExperimentParameterData;
+import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
+import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -16,6 +18,10 @@ public class ExperimentParameterDataTranslationSpec
 
     @Override
     protected ExperimentParameterData convertInputObject(ExperimentParameterDataInput inputObject) {
+        if (!ExperimentParameterData.checkVersionSupported(inputObject.getVersion())) {
+            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+        }
+
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
                 .setThreadCount(inputObject.getThreadCount())
                 .setRecordState(inputObject.getStartRecordingIsScheduled())
@@ -44,7 +50,8 @@ public class ExperimentParameterDataTranslationSpec
                 .setStartRecordingIsScheduled(appObject.stateRecordingIsScheduled())
                 .setHaltOnException(appObject.haltOnException())
                 .setContinueFromProgressLog(appObject.continueFromProgressLog())
-                .addAllExplictScenarioIds(appObject.getExplicitScenarioIds());
+                .addAllExplictScenarioIds(appObject.getExplicitScenarioIds())
+                .setVersion(appObject.getVersion());
 
         if (appObject.getExperimentProgressLogPath().isPresent()) {
             Path path = appObject.getExperimentProgressLogPath().get();

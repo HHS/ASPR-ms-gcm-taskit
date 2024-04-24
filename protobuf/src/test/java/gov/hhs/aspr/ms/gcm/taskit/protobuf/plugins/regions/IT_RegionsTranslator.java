@@ -12,16 +12,16 @@ import java.util.Set;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.datamanagers.RegionsPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.regions.reports.RegionPropertyReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.regions.reports.RegionTransferReportPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.regions.support.RegionPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.regions.testsupport.RegionsTestPluginFactory;
-import gov.hhs.aspr.ms.gcm.plugins.regions.testsupport.TestRegionPropertyId;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportLabel;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.ReportPeriod;
-import gov.hhs.aspr.ms.gcm.plugins.reports.support.SimpleReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.datamanagers.RegionsPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.reports.RegionPropertyReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.reports.RegionTransferReportPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.RegionsTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPluginDataInput;
@@ -55,7 +55,6 @@ public class IT_RegionsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), RegionsPluginData.class, TranslationEngineType.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -69,7 +68,8 @@ public class IT_RegionsTranslator {
         RegionsPluginData expectedPluginData = RegionsTestPluginFactory.getStandardRegionsPluginData(people, true,
                 seed);
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         RegionsPluginData actualPluginData = translatorController.getFirstObject(RegionsPluginData.class);
@@ -93,8 +93,6 @@ public class IT_RegionsTranslator {
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginData.class,
                         TranslationEngineType.PROTOBUF)
                 .build();
 
@@ -120,7 +118,8 @@ public class IT_RegionsTranslator {
 
         RegionPropertyReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         RegionPropertyReportPluginData actualPluginData = translatorController
@@ -146,8 +145,6 @@ public class IT_RegionsTranslator {
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), RegionTransferReportPluginData.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
@@ -159,7 +156,8 @@ public class IT_RegionsTranslator {
 
         RegionTransferReportPluginData expectedPluginData = builder.build();
 
-        translatorController.writeOutput(expectedPluginData);
+        translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
         translatorController.readInput();
 
         RegionTransferReportPluginData actualPluginData = translatorController

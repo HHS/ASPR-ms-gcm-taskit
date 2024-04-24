@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.plugins.globalproperties.testsupport.TestGlobalPropertyId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.testsupport.input.TestGlobalPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
@@ -20,7 +20,7 @@ public class AT_TestGlobalPropertyIdTranslationSpec {
     @Test
     @UnitTestConstructor(target = TestGlobalPropertyIdTranslationSpec.class, args = {})
     public void testConstructor() {
-        assertNotNull(new GlobalPropertiesPluginDataTranslationSpec());
+        assertNotNull(new TestGlobalPropertyIdTranslationSpec());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
-import gov.hhs.aspr.ms.gcm.plugins.groups.support.GroupMemberFilter;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupMemberFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupMemberFilterInput;
 import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 
@@ -10,13 +10,12 @@ public class GroupMemberFilterTranslationSpec
 
     @Override
     protected GroupMemberFilter convertInputObject(GroupMemberFilterInput inputObject) {
-        return new GroupMemberFilter(this.translationEngine.convertObject(inputObject.getGroupId()));
+        return new GroupMemberFilter(new GroupId(inputObject.getGId()));
     }
 
     @Override
     protected GroupMemberFilterInput convertAppObject(GroupMemberFilter appObject) {
-        GroupIdInput groupIdInput = this.translationEngine.convertObject(appObject.getGroupId());
-        return GroupMemberFilterInput.newBuilder().setGroupId(groupIdInput).build();
+        return GroupMemberFilterInput.newBuilder().setGId(appObject.getGroupId().getValue()).build();
     }
 
     @Override

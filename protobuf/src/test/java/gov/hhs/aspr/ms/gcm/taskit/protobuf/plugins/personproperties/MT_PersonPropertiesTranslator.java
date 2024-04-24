@@ -4,9 +4,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.hhs.aspr.ms.gcm.plugins.people.support.PersonId;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
-import gov.hhs.aspr.ms.gcm.plugins.personproperties.testsupport.PersonPropertiesTestPluginFactory;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.PersonPropertiesTestPluginFactory;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
@@ -47,8 +47,6 @@ public class MT_PersonPropertiesTranslator {
                 .addTranslationEngine(this.protobufTranslationEngine)
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
                         TranslationEngineType.PROTOBUF)
-                .addOutputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
                 .build();
 
         List<PersonId> people = new ArrayList<>();
@@ -74,10 +72,12 @@ public class MT_PersonPropertiesTranslator {
         System.gc();
     }
 
-    private void writeOutput() {
+    private void writeOutput(int population) {
+        String fileName = "personPropertiesPluginData_mt-" + population + ".json";
         this.timeElapser.reset();
 
-        this.translationController.writeOutput(this.inputPluginData);
+        this.translationController.writeOutput(this.inputPluginData, filePath.resolve(fileName),
+                TranslationEngineType.PROTOBUF);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(elapsedTime + ",");
@@ -112,7 +112,7 @@ public class MT_PersonPropertiesTranslator {
             test.appendToTimeString(new String(i + ","));
             test.createPluginData(i);
             test.convertPluginDataToInput();
-            test.writeOutput();
+            test.writeOutput(i);
             test.readInput();
             System.out.println(test.times);
             test.clearTimesString();

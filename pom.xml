@@ -11,7 +11,7 @@
 
     <name>GCM : Taskit</name>
     <description>A toolkit that aids in the conversion between two Java objects, primiarly for use with coverting between an input Java object and a application Java object, specifically for use with gcm.</description>
-    <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
+    <url>https://github.com/HHS/ASPR-ms-gcm-taskit</url>
 
     <!-- License Information -->
     <licenses>
@@ -43,14 +43,14 @@
 
     <!-- SCM Information -->
     <scm>
-        <connection>scm:git:git://github.com/HHS/aspr-ms-gcm-taskit.git</connection>
-        <developerConnection>scm:git:ssh://github.com:HHS/aspr-ms-gcm-taskit.git</developerConnection>
-        <url>https://github.com/HHS/aspr-ms-gcm-taskit/tree/main</url>
+        <connection>scm:git:git://github.com/HHS/ASPR-ms-gcm-taskit.git</connection>
+        <developerConnection>scm:git:ssh://github.com:HHS/ASPR-ms-gcm-taskit.git</developerConnection>
+        <url>https://github.com/HHS/ASPR-ms-gcm-taskit/tree/main</url>
     </scm>
 
     <!-- Properties -->
     <properties>
-        <revision>2.8.0-SNAPSHOT</revision>
+        <revision>2.8.0</revision>
 
         <!-- basic project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -62,13 +62,15 @@
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <maven-failsafe-plugin.version>3.2.5</maven-failsafe-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-install-plugin.version>3.1.1</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>3.2.2</maven-gpg-plugin.version>
         <central-publishing-maven-plugin.version>0.4.0</central-publishing-maven-plugin.version>
 
         <!-- dependency versions -->
         <taskit.version>4.0.0</taskit.version>
-        <gcm.version>4.2.0-SNAPSHOT</gcm.version>
+        <gcm.version>4.2.0</gcm.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
     </properties>
@@ -161,6 +163,16 @@
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${maven-javadoc-plugin.version}</version>
                 </plugin>
@@ -248,6 +260,26 @@
                 </executions>
             </plugin>
 
+            <!-- for skipping parent install-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+
+            <!-- for skipping parent deployment -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
@@ -255,7 +287,7 @@
                 <configuration>
                     <publishingServerId>central</publishingServerId>
                     <tokenAuth>true</tokenAuth>
-                    <deploymentName>ASPR MS Taskit</deploymentName>
+                    <deploymentName>ASPR MS GCM Taskit</deploymentName>
                 </configuration>
             </plugin>
         </plugins>
@@ -272,18 +304,6 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
                             <doclint>all,-missing</doclint>
-                            <additionalDependencies>
-                                <additionalDependency>
-                                    <groupId>gov.hhs.aspr.ms</groupId>
-                                    <artifactId>util</artifactId>
-                                    <version>${util.version}</version>
-                                </additionalDependency>
-                                <additionalDependency>
-                                    <groupId>org.junit.jupiter</groupId>
-                                    <artifactId>junit-jupiter-api</artifactId>
-                                    <version>${junit-jupiter-engine.version}</version>
-                                </additionalDependency>
-                            </additionalDependencies>
                             <author>false</author>
                             <additionalJOptions>
                                 <additionalJOption>-Xmaxerrs</additionalJOption>

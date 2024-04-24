@@ -9,10 +9,22 @@ An implementation of [Taskit](https://github.com/HHS/ASPR-ms-taskit) for use wit
 
 Currently there is only 1 supported serialzation format, and that is protobuf. Other formats such as binary will follow in the future.
 
+As of v2.8.0, this project is in Maven Central
+
 ## License
 Distributed under the GPLv3 License. See [LICENSE](LICENSE) for more information.
 
 Please read the [HHS vulnerability discloure](https://www.hhs.gov/vulnerability-disclosure-policy/index.html).
+
+## Usage 
+To use this project in your project, simply add the following dependency to your `dependencies` section of your pom.xml file.
+```
+<dependency>
+    <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
+    <artifactId>protobuf</artifactId>
+    <version>2.8.0</version>
+</dependency>
+```
 
 ## Overview
 This taskit implementation is built as follows:
@@ -42,7 +54,7 @@ Just the following classes support serialization
 - GCM located [here](https://github.com/HHS/ASPR8)
 - Taskit located [here](https://github.com/HHS/ASPR-ms-taskit)
 
-*NOTE that both Taskit and Modeling Util are in maven central, so there is no need to clone and build those repos
+*NOTE that Modeling Utils, GCM and Taskit are in maven central, so there is no need to clone and build those repos
 
 ### Building
 To build this project:

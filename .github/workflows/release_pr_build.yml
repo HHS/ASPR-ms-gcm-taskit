@@ -37,19 +37,5 @@ jobs:
         echo "Version is a SNAPSHOT version. Update version to proper version."
         exit 1 
 
-    - name: Get GCM Version
-      run: |
-        echo "gcm_version=v$(mvn help:evaluate -Dexpression=gcm.version -q -DforceStdout --file pom.xml)" >> "$GITHUB_ENV"
-    
-    - name: Checkout GCM
-      uses: actions/checkout@v4
-      with:
-        repository: HHS/ASPR-8
-        path: gcm
-        ref: ${{ env.gcm_version }}
-
-    - name: Build GCM
-      run: mvn clean install -DskipTests --file gcm/simulation/pom.xml
-      
     - name: Build GCM Taskit
       run: mvn clean install -Pjavadoc,jacoco --file pom.xml

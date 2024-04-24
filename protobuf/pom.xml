@@ -10,12 +10,18 @@
     </parent>
 
     <!-- Artifact -->
-    <groupId>gov.hhs.aspr.ms.gcm.taskit</groupId>
     <artifactId>protobuf</artifactId>
     <name>GCM : Taskit: Protobuf</name>
     <description>Protobuf Taskit implementation for GCM</description>
-    <url>https://github.com/HHS/aspr-ms-gcm-taskit</url>
+    <url>https://github.com/HHS/ASPR-ms-gcm-taskit</url>
 
+    <!-- SCM Information -->
+    <scm>
+        <connection>scm:git:git://github.com/HHS/ASPR-ms-gcm-taskit.git</connection>
+        <developerConnection>scm:git:ssh://github.com:HHS/ASPR-ms-gcm-taskit.git</developerConnection>
+        <url>https://github.com/HHS/ASPR-ms-gcm-taskit/tree/main</url>
+    </scm>
+    
     <!-- Properties -->
     <properties>
         <!-- protobuf specific plugins versions -->
@@ -95,7 +101,7 @@
                                 <artifactItem>
                                     <groupId>gov.hhs.aspr.ms.taskit</groupId>
                                     <artifactId>protobuf</artifactId>
-                                    <version>${taskit-protobuf.version}</version>
+                                    <version>${taskit.version}</version>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                                     <includes>**/*.proto</includes>

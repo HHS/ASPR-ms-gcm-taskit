@@ -53,7 +53,7 @@ jobs:
         ref: dev
 
     - name: Get Util Version
-      # if: ${{ endsWith(env.gcm_version, 'SNAPSHOT') }}
+      if: ${{ endsWith(env.gcm_version, 'SNAPSHOT') }}
       run: |
         echo "util_version=v$(mvn help:evaluate -Dexpression=util.version -q -DforceStdout --file gcm/pom.xml)" >> "$GITHUB_ENV"
 

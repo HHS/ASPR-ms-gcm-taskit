@@ -22,7 +22,7 @@ public class MT_PersonPropertiesTranslator {
     long seed = 4684903523797799712L;
     String times = "";
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
+    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
     ProtobufTranslationEngine protobufTranslationEngine;
     TimeElapser timeElapser = new TimeElapser();
     PersonPropertiesPluginData pluginData;
@@ -41,7 +41,7 @@ public class MT_PersonPropertiesTranslator {
     private void createPluginData(int population) {
         String fileName = "personPropertiesPluginData_mt-" + population + ".json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         this.translationController = TranslationController.builder()
                 .addTranslationEngine(this.protobufTranslationEngine)

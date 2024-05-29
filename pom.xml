@@ -110,7 +110,6 @@
         <dependency>
             <groupId>gov.hhs.aspr.ms.gcm</groupId>
             <artifactId>simulation</artifactId>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.jacoco</groupId>

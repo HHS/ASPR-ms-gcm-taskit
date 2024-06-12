@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.RandomNumberGeneratorIdTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.SimpleRandomNumberGeneratorIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.StochasticsPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.TestRandomGeneratorIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.WellStateTranslationSpec;
@@ -27,6 +28,8 @@ public class StochasticsTranslator {
         list.add(new WellStateTranslationSpec());
         list.add(new RandomNumberGeneratorIdTranslationSpec());
         list.add(new TestRandomGeneratorIdTranslationSpec());
+        list.add(new SimpleRandomNumberGeneratorIdTranslationSpec());
+        
 
         return list;
     }

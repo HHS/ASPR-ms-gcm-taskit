@@ -11,6 +11,11 @@ message RandomNumberGeneratorIdInput {
     google.protobuf.Any id = 1;
 }
 
+message SimpleRandomNumberGeneratorIdInput {
+    google.protobuf.Any value = 1;
+}
+
+
 message WellStateInput {
     int64 seed = 1;
     optional int32 index = 2;

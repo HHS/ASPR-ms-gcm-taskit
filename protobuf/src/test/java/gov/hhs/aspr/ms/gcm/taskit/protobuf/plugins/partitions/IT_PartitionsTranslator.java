@@ -18,14 +18,14 @@ import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_PartitionsTranslator {
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
+    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testGroupsTranslator() {
         String fileName = "partitionsPluginData.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()

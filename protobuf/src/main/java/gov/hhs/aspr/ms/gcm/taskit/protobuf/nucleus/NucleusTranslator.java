@@ -3,6 +3,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
 import java.util.ArrayList;
 import java.util.List;
 
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.translationSpecs.ExampleDimensionTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.DimensionTranslationSpec;
@@ -51,6 +52,19 @@ public class NucleusTranslator {
 
                     translationEngineBuilder.addFieldToIncludeDefaultValue(
                             SimulationStateInput.getDescriptor().findFieldByName("startTime"));
+                    
+                    translationEngineBuilder.addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("threadCount"))
+                    .addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("startRecordingIsScheduled"))
+                    .addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("simulationHaltTime"))
+                    .addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("haltOnException"))
+                    .addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("experimentProgressLogPath"))
+                    .addFieldToIncludeDefaultValue(
+                            ExperimentParameterDataInput.getDescriptor().findFieldByName("continueFromProgressLog"));                    
                 });
 
         return builder;

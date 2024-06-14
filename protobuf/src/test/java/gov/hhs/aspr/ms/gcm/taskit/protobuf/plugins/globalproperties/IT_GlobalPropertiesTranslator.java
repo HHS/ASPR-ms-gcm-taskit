@@ -26,14 +26,14 @@ import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_GlobalPropertiesTranslator {
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
+    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testGlobalPropertiesPluginDataIntegration() {
         String fileName = "globalPropertiesPluginData.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
@@ -68,7 +68,7 @@ public class IT_GlobalPropertiesTranslator {
     public void testGlobalPropertyReportPluginDataIntegration() {
         String fileName = "propertyReport.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())

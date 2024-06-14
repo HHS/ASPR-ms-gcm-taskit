@@ -34,14 +34,14 @@ import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_GroupsTranslator {
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
+    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testGroupsTranslator() {
         String fileName = "groupsPluginData.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
@@ -99,7 +99,7 @@ public class IT_GroupsTranslator {
     public void testGroupPropertyReportTranslatorSpec() {
         String fileName = "propertyReport.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())

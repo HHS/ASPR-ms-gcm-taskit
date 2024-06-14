@@ -37,14 +37,14 @@ import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_RegionsTranslator {
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.makeOutputDir(basePath, "test-output");
+    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
 
     @Test
     @UnitTestForCoverage
     public void testRegionsTranslator() {
         String fileName = "regionsPluginData.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -83,7 +83,7 @@ public class IT_RegionsTranslator {
     public void testRegionPropertyReportTranslatorSpec() {
         String fileName = "propertyReport.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()
@@ -134,7 +134,7 @@ public class IT_RegionsTranslator {
     public void testRegionTransferReportTranslatorSpec() {
         String fileName = "transferReport.json";
 
-        ResourceHelper.createOutputFile(filePath, fileName);
+        ResourceHelper.createFile(filePath, fileName);
 
         TranslationController translatorController = TranslationController.builder()
                 .addTranslationEngine(ProtobufTranslationEngine.builder()

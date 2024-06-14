@@ -80,9 +80,9 @@ jobs:
 
       - name: Increment GCM Pipeline Version
         run: |
-          gcm_pipeline_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
-          echo GCM Pipeline Version: $gcm_pipeline_version
-          parts=( ${gcm_pipeline_version//./ } )
+          current_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout --file pom.xml)
+          echo GCM Pipeline Version: $current_version
+          parts=( ${current_version//./ } )
           bv=$((parts[2] + 1))
           new_version="${parts[0]}.${parts[1]}.${bv}"
           echo New GCM Pipeline Version: $new_version

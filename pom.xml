@@ -190,6 +190,8 @@
                         <publishingServerId>central</publishingServerId>
                         <tokenAuth>true</tokenAuth>
                         <deploymentName>ASPR MS GCM Taskit</deploymentName>
+                        <autoPublish>true</autoPublish>
+                        <waitUntil>published</waitUntil>
                     </configuration>
                 </plugin>
             </plugins>

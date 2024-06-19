@@ -138,9 +138,9 @@ public class PersonPropertiesPluginDataTranslationSpec
 
             for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyInputBuildersMap
                     .values()) {
-                if (personPropertyValueInputBuilder != null) {
-                    valueMapInputBuilder.addPropertyValues(personPropertyValueInputBuilder.build());
-                }
+
+                valueMapInputBuilder.addPropertyValues(personPropertyValueInputBuilder.build());
+
             }
 
             builder.addPersonPropertyValues(valueMapInputBuilder.build());
@@ -176,9 +176,9 @@ public class PersonPropertiesPluginDataTranslationSpec
 
             for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyInputBuildersMap
                     .values()) {
-                if (personPropertyTimeInputBuilder != null) {
-                    timeMapInputBuilder.addPropertyTimes(personPropertyTimeInputBuilder.build());
-                }
+
+                timeMapInputBuilder.addPropertyTimes(personPropertyTimeInputBuilder.build());
+
             }
 
             builder.addPersonPropertyTimes(timeMapInputBuilder.build());

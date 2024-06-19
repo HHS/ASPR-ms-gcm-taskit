@@ -50,7 +50,7 @@
 
     <!-- Properties -->
     <properties>
-        <revision>2.8.4</revision>
+        <revision>2.8.5</revision>
 
         <!-- basic project properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -70,7 +70,7 @@
 
         <!-- dependency versions -->
         <taskit.version>4.1.0</taskit.version>
-        <gcm.version>4.2.2</gcm.version>
+        <gcm.version>4.2.3</gcm.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <junit-jupiter-engine.version>5.10.2</junit-jupiter-engine.version>
     </properties>

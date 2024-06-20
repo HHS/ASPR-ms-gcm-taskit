@@ -95,6 +95,7 @@
                             <includes>**/*.proto</includes>
                             <excludes>**/testsupport/*.proto</excludes>
                             <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <includeArtifactIds>protobuf</includeArtifactIds>
                             <includeTypes>jar</includeTypes>
                         </configuration>
                     </execution>

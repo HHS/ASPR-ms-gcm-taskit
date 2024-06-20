@@ -89,20 +89,13 @@
                         <id>unpack-protos</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>gov.hhs.aspr.ms.gcm</groupId>
-                                    <artifactId>simulation</artifactId>
-                                    <version>${gcm.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                                    <includes>**/*.proto</includes>
-                                    <excludes>**/testsupport/*.proto</excludes>
-                                </artifactItem>
-                            </artifactItems>
+                            <includes>**/*.proto</includes>
+                            <excludes>**/testsupport/*.proto</excludes>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <includeTypes>jar</includeTypes>
                         </configuration>
                     </execution>
                 </executions>

@@ -38,11 +38,6 @@
     <!-- Dependencies -->
     <dependencies>
         <dependency>
-            <groupId>gov.hhs.aspr.ms.taskit</groupId>
-            <artifactId>protobuf</artifactId>
-            <version>${taskit.version}</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protoc</artifactId>
             <version>${protoc.version}</version>
@@ -99,9 +94,9 @@
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>gov.hhs.aspr.ms.taskit</groupId>
-                                    <artifactId>protobuf</artifactId>
-                                    <version>${taskit.version}</version>
+                                    <groupId>gov.hhs.aspr.ms.gcm</groupId>
+                                    <artifactId>simulation</artifactId>
+                                    <version>${gcm.version}</version>
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${project.build.outputDirectory}</outputDirectory>
                                     <includes>**/*.proto</includes>

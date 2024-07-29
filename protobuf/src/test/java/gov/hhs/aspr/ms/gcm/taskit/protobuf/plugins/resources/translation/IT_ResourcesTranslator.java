@@ -72,11 +72,11 @@ public class IT_ResourcesTranslator {
         ResourcesPluginData expectedPluginData = ResourcesTestPluginFactory.getStandardResourcesPluginData(people,
                 seed);
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        ResourcesPluginData actualPluginData = taskitEngineManager.getFirstObject(ResourcesPluginData.class);
+        ResourcesPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(ResourcesPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -124,11 +124,11 @@ public class IT_ResourcesTranslator {
 
         PersonResourceReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        PersonResourceReportPluginData actualPluginData = taskitEngineManager
+        PersonResourceReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(PersonResourceReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -162,11 +162,11 @@ public class IT_ResourcesTranslator {
 
         ResourcePropertyReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        ResourcePropertyReportPluginData actualPluginData = taskitEngineManager
+        ResourcePropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(ResourcePropertyReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -215,11 +215,11 @@ public class IT_ResourcesTranslator {
 
         ResourceReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        ResourceReportPluginData actualPluginData = taskitEngineManager.getFirstObject(ResourceReportPluginData.class);
+        ResourceReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(ResourceReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

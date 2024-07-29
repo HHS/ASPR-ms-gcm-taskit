@@ -65,11 +65,11 @@ public class IT_StochasticsTranslator {
 
         StochasticsPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        StochasticsPluginData actualPluginData = taskitEngineManager.getFirstObject(StochasticsPluginData.class);
+        StochasticsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(StochasticsPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

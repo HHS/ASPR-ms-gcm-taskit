@@ -68,11 +68,11 @@ public class IT_RegionsTranslator {
         RegionsPluginData expectedPluginData = RegionsTestPluginFactory.getStandardRegionsPluginData(people, true,
                 seed);
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        RegionsPluginData actualPluginData = taskitEngineManager.getFirstObject(RegionsPluginData.class);
+        RegionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(RegionsPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -118,11 +118,11 @@ public class IT_RegionsTranslator {
 
         RegionPropertyReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        RegionPropertyReportPluginData actualPluginData = taskitEngineManager
+        RegionPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(RegionPropertyReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -156,11 +156,11 @@ public class IT_RegionsTranslator {
 
         RegionTransferReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        RegionTransferReportPluginData actualPluginData = taskitEngineManager
+        RegionTransferReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(RegionTransferReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);

@@ -44,20 +44,16 @@ public class IT_GlobalPropertiesTranslator {
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(ProtobufTaskitEngine)
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertiesPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         GlobalPropertiesPluginData expectedPluginData = GlobalPropertiesTestPluginFactory
                 .getStandardGlobalPropertiesPluginData(8368397106493368066L);
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
-        GlobalPropertiesPluginData actualPluginData = taskitEngineManager
-                .getFirstObject(GlobalPropertiesPluginData.class);
+        GlobalPropertiesPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                GlobalPropertiesPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -79,8 +75,6 @@ public class IT_GlobalPropertiesTranslator {
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(ProtobufTaskitEngine)
-                .addInputFilePath(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);
@@ -100,13 +94,12 @@ public class IT_GlobalPropertiesTranslator {
 
         GlobalPropertyReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
 
-        GlobalPropertyReportPluginData actualPluginData = taskitEngineManager
-                .getFirstObject(GlobalPropertyReportPluginData.class);
+
+        GlobalPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), GlobalPropertyReportPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

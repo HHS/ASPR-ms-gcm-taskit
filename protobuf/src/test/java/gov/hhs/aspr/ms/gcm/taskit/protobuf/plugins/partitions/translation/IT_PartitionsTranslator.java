@@ -39,12 +39,12 @@ public class IT_PartitionsTranslator {
 
         PartitionsPluginData expectedPluginData = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         taskitEngineManager.readInput();
 
-        PartitionsPluginData actualPluginData = taskitEngineManager.getFirstObject(PartitionsPluginData.class);
+        PartitionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(PartitionsPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

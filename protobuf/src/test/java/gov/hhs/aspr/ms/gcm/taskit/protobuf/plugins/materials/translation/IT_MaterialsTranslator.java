@@ -64,11 +64,11 @@ public class IT_MaterialsTranslator {
 
         MaterialsPluginData expectedPluginData = MaterialsTestPluginFactory.getStandardMaterialsPluginData(numBatches,
                 numStages, numBatchesInStage, seed);
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         taskitEngineManager.readInput();
-        MaterialsPluginData actualPluginData = taskitEngineManager.getFirstObject(MaterialsPluginData.class);
+        MaterialsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(MaterialsPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -102,12 +102,12 @@ public class IT_MaterialsTranslator {
 
         BatchStatusReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         taskitEngineManager.readInput();
 
-        BatchStatusReportPluginData actualPluginData = taskitEngineManager
+        BatchStatusReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(BatchStatusReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -141,12 +141,12 @@ public class IT_MaterialsTranslator {
 
         MaterialsProducerPropertyReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         taskitEngineManager.readInput();
 
-        MaterialsProducerPropertyReportPluginData actualPluginData = taskitEngineManager
+        MaterialsProducerPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(MaterialsProducerPropertyReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -181,11 +181,11 @@ public class IT_MaterialsTranslator {
 
         MaterialsProducerResourceReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        MaterialsProducerResourceReportPluginData actualPluginData = taskitEngineManager
+        MaterialsProducerResourceReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(MaterialsProducerResourceReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -220,11 +220,11 @@ public class IT_MaterialsTranslator {
 
         StageReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        StageReportPluginData actualPluginData = taskitEngineManager.getFirstObject(StageReportPluginData.class);
+        StageReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(StageReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

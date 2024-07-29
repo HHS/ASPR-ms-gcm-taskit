@@ -67,11 +67,11 @@ public class IT_PersonPropertiesTranslator {
         PersonPropertiesPluginData expectedPluginData = PersonPropertiesTestPluginFactory
                 .getStandardPersonPropertiesPluginData(people, seed);
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        PersonPropertiesPluginData actualPluginData = taskitEngineManager
+        PersonPropertiesPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(PersonPropertiesPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -119,11 +119,11 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyReportPluginData expectedPluginData = personPropertyReportPluginDataBuilder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        PersonPropertyReportPluginData actualPluginData = taskitEngineManager
+        PersonPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(PersonPropertyReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);
@@ -168,11 +168,11 @@ public class IT_PersonPropertiesTranslator {
 
         PersonPropertyInteractionReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
         taskitEngineManager.readInput();
 
-        PersonPropertyInteractionReportPluginData actualPluginData = taskitEngineManager
+        PersonPropertyInteractionReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(PersonPropertyInteractionReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);

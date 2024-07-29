@@ -82,7 +82,7 @@ public class IT_GroupsTranslator {
 
             expectedPluginDatas.add(expectedPluginData);
 
-            taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+            taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                     ProtobufTaskitEngineId.JSON_ENGINE_ID);
             taskitEngineManager.readInput();
         }
@@ -137,12 +137,12 @@ public class IT_GroupsTranslator {
 
         GroupPropertyReportPluginData expectedPluginData = builder.build();
 
-        taskitEngineManager.translateAndWrite(expectedPluginData, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         taskitEngineManager.readInput();
 
-        GroupPropertyReportPluginData actualPluginData = taskitEngineManager
+        GroupPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
                 .getFirstObject(GroupPropertyReportPluginData.class);
 
         assertEquals(expectedPluginData, actualPluginData);

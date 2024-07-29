@@ -43,7 +43,7 @@ public class AT_PersonResourceReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -52,7 +52,7 @@ public class AT_PersonResourceReportPluginDataTranslationSpec {
                 .build();
 
         PersonResourceReportPluginDataTranslationSpec translationSpec = new PersonResourceReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         long seed = 524805676405822016L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);

@@ -30,7 +30,7 @@ public class AT_BatchIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -40,7 +40,7 @@ public class AT_BatchIdTranslationSpec {
                 .build();
 
         BatchIdTranslationSpec translationSpec = new BatchIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         BatchId expectedAppValue = new BatchId(0);
 

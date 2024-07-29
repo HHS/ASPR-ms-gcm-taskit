@@ -25,12 +25,12 @@ public class AT_WellStateTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
 
         WellStateTranslationSpec translationSpec = new WellStateTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         WellState expectedAppValue = WellState.builder().setSeed(524805676405822016L).build();
 

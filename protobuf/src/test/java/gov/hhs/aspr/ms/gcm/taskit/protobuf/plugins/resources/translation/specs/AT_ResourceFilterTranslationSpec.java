@@ -32,7 +32,7 @@ public class AT_ResourceFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -42,7 +42,7 @@ public class AT_ResourceFilterTranslationSpec {
                 .build();
 
         ResourceFilterTranslationSpec translationSpec = new ResourceFilterTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ResourceFilter expectedAppValue = new ResourceFilter(TestResourceId.RESOURCE_1, Equality.EQUAL, 100L);
 

@@ -19,16 +19,13 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.Batch
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.MaterialsProducerPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.MaterialsProducerResourceReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.StageReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.MaterialsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.ResourcesTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
-import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
@@ -53,8 +50,6 @@ public class IT_MaterialsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         int numBatches = 50;
@@ -67,8 +62,8 @@ public class IT_MaterialsTranslator {
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-        MaterialsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(MaterialsPluginData.class);
+        MaterialsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                MaterialsPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -90,8 +85,6 @@ public class IT_MaterialsTranslator {
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), BatchStatusReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         BatchStatusReportPluginData.Builder builder = BatchStatusReportPluginData.builder();
@@ -105,10 +98,8 @@ public class IT_MaterialsTranslator {
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
-        BatchStatusReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(BatchStatusReportPluginData.class);
+        BatchStatusReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                BatchStatusReportPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -130,8 +121,6 @@ public class IT_MaterialsTranslator {
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
@@ -144,10 +133,9 @@ public class IT_MaterialsTranslator {
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
-        MaterialsProducerPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(MaterialsProducerPropertyReportPluginData.class);
+        MaterialsProducerPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(
+                filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class,
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -169,8 +157,6 @@ public class IT_MaterialsTranslator {
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         MaterialsProducerResourceReportPluginData.Builder builder = MaterialsProducerResourceReportPluginData.builder();
@@ -183,10 +169,10 @@ public class IT_MaterialsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        taskitEngineManager.readInput();
 
-        MaterialsProducerResourceReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(MaterialsProducerResourceReportPluginData.class);
+        MaterialsProducerResourceReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(
+                filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class,
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -208,8 +194,6 @@ public class IT_MaterialsTranslator {
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), StageReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
@@ -222,9 +206,9 @@ public class IT_MaterialsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        taskitEngineManager.readInput();
 
-        StageReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(StageReportPluginData.class);
+        StageReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                StageReportPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

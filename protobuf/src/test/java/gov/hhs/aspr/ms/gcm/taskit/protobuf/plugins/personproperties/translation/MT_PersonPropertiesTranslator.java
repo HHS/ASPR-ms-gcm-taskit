@@ -26,7 +26,7 @@ public class MT_PersonPropertiesTranslator {
     String times = "";
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
     Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
-    ProtobufTaskitEngine ProtobufTaskitEngine;
+    ProtobufTaskitEngine protobufTaskitEngine;
     TimeElapser timeElapser = new TimeElapser();
     PersonPropertiesPluginData pluginData;
     PersonPropertiesPluginDataInput inputPluginData;
@@ -91,8 +91,7 @@ public class MT_PersonPropertiesTranslator {
     private void readInput() {
         this.timeElapser.reset();
 
-        this.TaskitEngineManager.readInput();
-        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(Double.toString(elapsedTime));
     }
 

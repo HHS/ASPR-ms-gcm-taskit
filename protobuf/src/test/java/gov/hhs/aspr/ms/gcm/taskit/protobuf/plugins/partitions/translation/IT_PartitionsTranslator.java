@@ -33,8 +33,6 @@ public class IT_PartitionsTranslator {
                         .addTranslationSpec(new TestLabelerTranslationSpec())
                         .addTranslator(PartitionsTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), PartitionsPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         PartitionsPluginData expectedPluginData = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
@@ -42,9 +40,8 @@ public class IT_PartitionsTranslator {
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
-        PartitionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(PartitionsPluginData.class);
+        PartitionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                PartitionsPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

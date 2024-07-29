@@ -25,12 +25,12 @@ public class AT_ReportPeriodTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         ReportPeriodTranslationSpec translationSpec = new ReportPeriodTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ReportPeriod expectedAppValue = ReportPeriod.DAILY;
 

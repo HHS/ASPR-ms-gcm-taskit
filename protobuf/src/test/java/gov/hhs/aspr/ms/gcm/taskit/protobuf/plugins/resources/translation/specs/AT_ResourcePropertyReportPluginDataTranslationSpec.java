@@ -34,7 +34,7 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -43,7 +43,7 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
                 .build();
 
         ResourcePropertyReportPluginDataTranslationSpec translationSpec = new ResourcePropertyReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ReportLabel reportLabel = new SimpleReportLabel("resource property report label");
 

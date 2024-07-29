@@ -37,7 +37,7 @@ public class AT_RegionsPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -45,7 +45,7 @@ public class AT_RegionsPluginDataTranslationSpec {
                 .build();
 
         RegionsPluginDataTranslationSpec translationSpec = new RegionsPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         long seed = 524805676405822016L;
         int initialPopulation = 100;

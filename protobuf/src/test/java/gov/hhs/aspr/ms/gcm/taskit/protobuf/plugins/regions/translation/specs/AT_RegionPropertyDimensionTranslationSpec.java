@@ -30,7 +30,7 @@ public class AT_RegionPropertyDimensionTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -38,7 +38,7 @@ public class AT_RegionPropertyDimensionTranslationSpec {
                 .build();
 
         RegionPropertyDimensionTranslationSpec translationSpec = new RegionPropertyDimensionTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         RegionPropertyDimension expectedAppValue = RegionPropertyDimension.builder()
                 .setRegionId(TestRegionId.REGION_1)

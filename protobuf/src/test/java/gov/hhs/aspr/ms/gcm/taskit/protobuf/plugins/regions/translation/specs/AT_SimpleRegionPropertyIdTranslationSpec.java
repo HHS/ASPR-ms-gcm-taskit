@@ -28,7 +28,7 @@ public class AT_SimpleRegionPropertyIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -36,7 +36,7 @@ public class AT_SimpleRegionPropertyIdTranslationSpec {
                 .build();
 
         SimpleRegionPropertyIdTranslationSpec translationSpec = new SimpleRegionPropertyIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         SimpleRegionPropertyId expectedAppValue = new SimpleRegionPropertyId("test");
 

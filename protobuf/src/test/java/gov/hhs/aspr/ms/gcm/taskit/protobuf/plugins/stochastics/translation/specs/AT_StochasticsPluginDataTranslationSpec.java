@@ -34,12 +34,12 @@ public class AT_StochasticsPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
 
         StochasticsPluginDataTranslationSpec translationSpec = new StochasticsPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         long seed = 524805676405822016L;
 

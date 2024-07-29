@@ -35,7 +35,7 @@ public class AT_MaterialsPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -45,7 +45,7 @@ public class AT_MaterialsPluginDataTranslationSpec {
                 .build();
 
         MaterialsPluginDataTranslationSpec translationSpec = new MaterialsPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         int numBatches = 50;
         int numStages = 10;

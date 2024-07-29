@@ -25,12 +25,12 @@ public class AT_PlannerTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 
         PlannerTranslationSpec translationSpec = new PlannerTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         Planner expectedAppValue = Planner.DATA_MANAGER;
 

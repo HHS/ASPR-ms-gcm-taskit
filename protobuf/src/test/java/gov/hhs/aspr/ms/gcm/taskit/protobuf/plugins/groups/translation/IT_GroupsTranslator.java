@@ -22,12 +22,10 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.data.input.GroupsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.GroupsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
@@ -46,7 +44,7 @@ public class IT_GroupsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -54,9 +52,7 @@ public class IT_GroupsTranslator {
                 .build();
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(ProtobufTaskitEngine)
-                .addInputFilePath(filePath.resolve(fileName), GroupsPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
+                .addTaskitEngine(protobufTaskitEngine)
                 .build();
 
         long seed = 524805676405822016L;
@@ -70,31 +66,20 @@ public class IT_GroupsTranslator {
             people.add(new PersonId(i));
         }
 
-        List<GroupsPluginData> expectedPluginDatas = new ArrayList<>();
-
         Random random = new Random(seed);
 
-        for (int i = 0; i < 10; i++) {
-            Collections.shuffle(people, new Random(random.nextLong()));
+        Collections.shuffle(people, new Random(random.nextLong()));
 
-            GroupsPluginData expectedPluginData = GroupsTestPluginFactory.getStandardGroupsPluginData(groupCount,
-                    membershipCount, people, seed);
+        GroupsPluginData expectedPluginData = GroupsTestPluginFactory.getStandardGroupsPluginData(groupCount,
+                membershipCount, people, seed);
 
-            expectedPluginDatas.add(expectedPluginData);
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-            taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
-                    ProtobufTaskitEngineId.JSON_ENGINE_ID);
-            taskitEngineManager.readInput();
-        }
-
-        List<GroupsPluginData> actualPluginDatas = taskitEngineManager.getObjects(GroupsPluginData.class);
-
-        assertEquals(expectedPluginDatas.size(), actualPluginDatas.size());
-
-        for (int i = 0; i < expectedPluginDatas.size(); i++) {
-            assertEquals(expectedPluginDatas.get(i), actualPluginDatas.get(i));
-            assertEquals(expectedPluginDatas.get(i).toString(), actualPluginDatas.get(i).toString());
-        }
+        GroupsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                GroupsPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
+        assertEquals(expectedPluginData, actualPluginData);
+        assertEquals(expectedPluginData.toString(), actualPluginData.toString());
     }
 
     @Test
@@ -104,7 +89,7 @@ public class IT_GroupsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -112,9 +97,7 @@ public class IT_GroupsTranslator {
                 .build();
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(ProtobufTaskitEngine)
-                .addInputFilePath(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
+                .addTaskitEngine(protobufTaskitEngine)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);
@@ -140,10 +123,7 @@ public class IT_GroupsTranslator {
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
-        GroupPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(GroupPropertyReportPluginData.class);
+        GroupPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), GroupPropertyReportPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

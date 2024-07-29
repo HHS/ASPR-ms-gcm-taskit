@@ -25,12 +25,12 @@ public class AT_PersonRangeTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
 
         PersonRangeTranslationSpec translationSpec = new PersonRangeTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         PersonRange expectedAppValue = new PersonRange(1 * 15, (2 * 15) + 1);
 

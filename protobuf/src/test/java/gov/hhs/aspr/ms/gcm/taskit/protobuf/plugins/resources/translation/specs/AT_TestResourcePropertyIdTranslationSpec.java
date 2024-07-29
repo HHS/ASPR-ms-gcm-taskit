@@ -29,7 +29,7 @@ public class AT_TestResourcePropertyIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -38,7 +38,7 @@ public class AT_TestResourcePropertyIdTranslationSpec {
                 .build();
 
         TestResourcePropertyIdTranslationSpec translationSpec = new TestResourcePropertyIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         TestResourcePropertyId expectedAppValue = TestResourcePropertyId.ResourceProperty_1_1_BOOLEAN_MUTABLE;
 

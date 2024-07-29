@@ -44,8 +44,7 @@ public class IT_PropertiesTranslator {
 
         taskitEngineManager.translateAndWrite(expectedPropertyDefinition, filePath.resolve(fileName),
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        taskitEngineManager.readInput();
-
+        
         PropertyDefinition actualPropertyDefiniton = taskitEngineManager.getFirstObject(PropertyDefinition.class);
 
         assertEquals(expectedPropertyDefinition, actualPropertyDefiniton);

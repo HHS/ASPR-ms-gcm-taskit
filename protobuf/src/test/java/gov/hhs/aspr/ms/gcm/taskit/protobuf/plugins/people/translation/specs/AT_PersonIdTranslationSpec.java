@@ -25,12 +25,12 @@ public class AT_PersonIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
 
         PersonIdTranslationSpec translationSpec = new PersonIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         PersonId expectedAppValue = new PersonId(0);
 

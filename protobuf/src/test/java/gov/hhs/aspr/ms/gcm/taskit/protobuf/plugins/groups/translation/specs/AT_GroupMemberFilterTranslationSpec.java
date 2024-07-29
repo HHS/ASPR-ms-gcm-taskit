@@ -30,7 +30,7 @@ public class AT_GroupMemberFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -39,7 +39,7 @@ public class AT_GroupMemberFilterTranslationSpec {
                 .build();
 
         GroupMemberFilterTranslationSpec translationSpec = new GroupMemberFilterTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         GroupMemberFilter expectedAppValue = new GroupMemberFilter(new GroupId(0));
 

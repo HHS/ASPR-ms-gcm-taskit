@@ -28,7 +28,7 @@ public class AT_TestRegionIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -36,7 +36,7 @@ public class AT_TestRegionIdTranslationSpec {
                 .build();
 
         TestRegionIdTranslationSpec translationSpec = new TestRegionIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         TestRegionId expectedAppValue = TestRegionId.REGION_1;
 

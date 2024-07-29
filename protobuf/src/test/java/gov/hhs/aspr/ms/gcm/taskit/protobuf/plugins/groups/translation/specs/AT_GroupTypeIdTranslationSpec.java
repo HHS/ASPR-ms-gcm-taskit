@@ -29,7 +29,7 @@ public class AT_GroupTypeIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -37,7 +37,7 @@ public class AT_GroupTypeIdTranslationSpec {
                 .build();
 
         GroupTypeIdTranslationSpec translationSpec = new GroupTypeIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         GroupTypeId expectedAppValue = TestGroupTypeId.GROUP_TYPE_1;
 

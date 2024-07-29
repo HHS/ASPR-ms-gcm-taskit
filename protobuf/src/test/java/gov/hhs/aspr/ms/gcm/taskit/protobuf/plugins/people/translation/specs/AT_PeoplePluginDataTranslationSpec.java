@@ -31,12 +31,12 @@ public class AT_PeoplePluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
 
         PeoplePluginDataTranslationSpec translationSpec = new PeoplePluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         PeoplePluginData.Builder builder = PeoplePluginData.builder();
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6573670690105604419L);

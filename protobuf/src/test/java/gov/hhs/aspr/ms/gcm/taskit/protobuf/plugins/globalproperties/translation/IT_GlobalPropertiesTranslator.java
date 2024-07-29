@@ -36,14 +36,14 @@ public class IT_GlobalPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(ProtobufTaskitEngine)
+                .addTaskitEngine(protobufTaskitEngine)
                 .build();
 
         GlobalPropertiesPluginData expectedPluginData = GlobalPropertiesTestPluginFactory
@@ -67,14 +67,14 @@ public class IT_GlobalPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(ProtobufTaskitEngine)
+                .addTaskitEngine(protobufTaskitEngine)
                 .build();
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);

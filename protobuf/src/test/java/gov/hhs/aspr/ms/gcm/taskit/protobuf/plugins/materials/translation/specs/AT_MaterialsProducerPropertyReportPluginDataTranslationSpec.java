@@ -36,7 +36,7 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -46,7 +46,7 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
                 .build();
 
         MaterialsProducerPropertyReportPluginDataTranslationSpec translationSpec = new MaterialsProducerPropertyReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
         ReportLabel reportLabel = new SimpleReportLabel("materials producer property report report label");

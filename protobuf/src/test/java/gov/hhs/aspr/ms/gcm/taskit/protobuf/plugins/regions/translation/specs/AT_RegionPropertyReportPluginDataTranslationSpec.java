@@ -41,7 +41,7 @@ public class AT_RegionPropertyReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -49,7 +49,7 @@ public class AT_RegionPropertyReportPluginDataTranslationSpec {
                 .build();
 
         RegionPropertyReportPluginDataTranslationSpec translationSpec = new RegionPropertyReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         long seed = 524805676405822016L;
         ReportLabel reportLabel = new SimpleReportLabel("region property report label");

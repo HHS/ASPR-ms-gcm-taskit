@@ -31,7 +31,7 @@ public class AT_PersonPropertyFilterTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -40,7 +40,7 @@ public class AT_PersonPropertyFilterTranslationSpec {
                 .build();
 
         PersonPropertyFilterTranslationSpec translationSpec = new PersonPropertyFilterTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         Equality equality = Equality.LESS_THAN;
         PersonPropertyFilter expectedAppValue = new PersonPropertyFilter(

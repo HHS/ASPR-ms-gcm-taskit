@@ -26,12 +26,12 @@ public class AT_ReportLabelTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         ReportLabelTranslationSpec translationSpec = new ReportLabelTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ReportLabel expectedAppValue = new SimpleReportLabel("report label");
 

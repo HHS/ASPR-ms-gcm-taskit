@@ -26,12 +26,12 @@ public class AT_DimensionTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 
         DimensionTranslationSpec translationSpec = new DimensionTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         Dimension expectedAppValue = new ExampleDimension("test");
 

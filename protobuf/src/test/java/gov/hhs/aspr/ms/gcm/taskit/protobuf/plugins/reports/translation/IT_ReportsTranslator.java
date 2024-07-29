@@ -39,8 +39,7 @@ public class IT_ReportsTranslator {
         taskitEngineManager.translateAndWrite(expecetdReportLabel, filePath.resolve(fileName),
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        taskitEngineManager.readInput();
-
+        
         ReportLabel actualReportLabel = taskitEngineManager.getFirstObject(ReportLabel.class);
 
         assertEquals(expecetdReportLabel, actualReportLabel);

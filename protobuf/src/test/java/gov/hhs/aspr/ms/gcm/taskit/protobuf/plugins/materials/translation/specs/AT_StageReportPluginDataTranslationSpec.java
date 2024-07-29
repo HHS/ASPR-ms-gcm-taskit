@@ -36,7 +36,7 @@ public class AT_StageReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -46,7 +46,7 @@ public class AT_StageReportPluginDataTranslationSpec {
                 .build();
 
         StageReportPluginDataTranslationSpec translationSpec = new StageReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
 

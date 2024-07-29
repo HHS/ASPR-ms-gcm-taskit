@@ -30,12 +30,12 @@ public class AT_ExperimentParameterDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 
         ExperimentParameterDataTranslationSpec translationSpec = new ExperimentParameterDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
                 .setThreadCount(8)

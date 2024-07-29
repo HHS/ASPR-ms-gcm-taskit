@@ -26,12 +26,12 @@ public class AT_PropertyDefinitionTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .build();
 
         PropertyDefinitionTranslationSpec translationSpec = new PropertyDefinitionTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         PropertyDefinition expectedAppValue = PropertyDefinition.builder()
                 .setDefaultValue("defaultValue")

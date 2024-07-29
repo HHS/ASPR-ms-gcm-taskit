@@ -30,7 +30,7 @@ public class AT_TestMaterialsProducerIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -40,7 +40,7 @@ public class AT_TestMaterialsProducerIdTranslationSpec {
                 .build();
 
         TestMaterialsProducerIdTranslationSpec translationSpec = new TestMaterialsProducerIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         TestMaterialsProducerId expectedAppValue = TestMaterialsProducerId.MATERIALS_PRODUCER_1;
 

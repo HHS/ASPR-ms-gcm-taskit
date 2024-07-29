@@ -34,7 +34,7 @@ public class AT_GroupPopulationReportPluginDataTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -42,7 +42,7 @@ public class AT_GroupPopulationReportPluginDataTranslationSpec {
                 .build();
 
         GroupPopulationReportPluginDataTranslationSpec translationSpec = new GroupPopulationReportPluginDataTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         ReportLabel reportLabel = new SimpleReportLabel("property report label");
         ReportPeriod reportPeriod = ReportPeriod.DAILY;

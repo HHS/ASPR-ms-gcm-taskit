@@ -25,12 +25,12 @@ public class AT_SimpleRandomNumberGeneratorIdTranslationSpec {
     @Test
     @UnitTestForCoverage
     public void testTranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        ProtobufTaskitEngine protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         SimpleRandomNumberGeneratorIdTranslationSpec translationSpec = new SimpleRandomNumberGeneratorIdTranslationSpec();
-        translationSpec.init(ProtobufTaskitEngine);
+        translationSpec.init(protobufTaskitEngine);
 
         SimpleRandomNumberGeneratorId expectedAppValue = new SimpleRandomNumberGeneratorId("report label");
 

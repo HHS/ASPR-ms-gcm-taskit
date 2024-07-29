@@ -56,14 +56,14 @@ public class RegionPropertyReportPluginDataTranslationSpec
         builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy()).setReportLabel(reportLabelInput);
 
         for (RegionPropertyId regionPropertyId : appObject.getIncludedProperties()) {
-            RegionPropertyIdInput regionPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(regionPropertyId, RegionPropertyId.class);
+            RegionPropertyIdInput regionPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(regionPropertyId,
+                    RegionPropertyId.class);
             builder.addIncludedProperties(regionPropertyIdInput);
         }
 
         for (RegionPropertyId regionPropertyId : appObject.getExcludedProperties()) {
-            RegionPropertyIdInput regionPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(regionPropertyId, RegionPropertyId.class);
+            RegionPropertyIdInput regionPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(regionPropertyId,
+                    RegionPropertyId.class);
             builder.addExcludedProperties(regionPropertyIdInput);
         }
 

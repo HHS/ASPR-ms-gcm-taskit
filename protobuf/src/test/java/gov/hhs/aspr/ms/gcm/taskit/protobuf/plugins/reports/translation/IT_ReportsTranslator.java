@@ -11,8 +11,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
-import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -30,7 +30,8 @@ public class IT_ReportsTranslator {
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(
                         ProtobufJsonTaskitEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
-                .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID)
+                .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class,
+                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         ReportLabel expecetdReportLabel = new SimpleReportLabel("report label");

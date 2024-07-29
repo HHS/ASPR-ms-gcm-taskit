@@ -16,8 +16,8 @@ import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the GlobalProperties Plugin. Using this Translator will add
- * all the necessary TanslationSpecs needed to read and write
- * the GlobalPropertiesPlugin
+ * all the necessary TanslationSpecs needed to read and write the
+ * GlobalPropertiesPlugin
  */
 public class GlobalPropertiesTranslator {
 
@@ -38,8 +38,8 @@ public class GlobalPropertiesTranslator {
 
     /**
      * Returns a Translator Builder that already includes the necessary
-     * TranslationSpecs needed to read and write the GlobalPropertiesPluginData and its
-     * respective reports
+     * TranslationSpecs needed to read and write the GlobalPropertiesPluginData and
+     * its respective reports
      */
     private static Translator.Builder builder() {
 

@@ -19,9 +19,7 @@ public class RandomNumberGeneratorIdTranslationSpec
 
     @Override
     protected RandomNumberGeneratorIdInput translateAppObject(RandomNumberGeneratorId appObject) {
-        return RandomNumberGeneratorIdInput.newBuilder()
-                .setId(this.taskitEngine.getAnyFromObject(appObject))
-                .build();
+        return RandomNumberGeneratorIdInput.newBuilder().setId(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

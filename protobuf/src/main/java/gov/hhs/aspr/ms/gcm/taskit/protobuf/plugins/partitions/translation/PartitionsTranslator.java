@@ -69,8 +69,7 @@ public class PartitionsTranslator {
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * PartitionsPlugin.
+     * Returns a Translator that includes TranslationSpecs for the PartitionsPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

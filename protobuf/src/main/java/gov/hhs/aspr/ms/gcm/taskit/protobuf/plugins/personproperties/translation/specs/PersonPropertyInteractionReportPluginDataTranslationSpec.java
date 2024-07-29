@@ -58,8 +58,8 @@ public class PersonPropertyInteractionReportPluginDataTranslationSpec extends
         builder.setReportLabel(reportLabelInput).setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getPersonPropertyIds()) {
-            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(personPropertyId,
+                    PersonPropertyId.class);
             builder.addPersonPropertyIds(personPropertyIdInput);
         }
 

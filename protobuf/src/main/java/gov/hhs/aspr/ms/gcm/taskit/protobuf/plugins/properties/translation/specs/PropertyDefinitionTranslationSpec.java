@@ -41,8 +41,8 @@ public class PropertyDefinitionTranslationSpec
     protected PropertyDefinitionInput translateAppObject(PropertyDefinition appObject) {
         PropertyDefinitionInput.Builder builder = PropertyDefinitionInput.newBuilder();
         if (appObject.getDefaultValue().isPresent()) {
-            builder.setDefaultValue((Any) this.taskitEngine
-                    .translateObjectAsClassUnsafe(appObject.getDefaultValue().get(), Any.class));
+            builder.setDefaultValue(
+                    (Any) this.taskitEngine.translateObjectAsClassUnsafe(appObject.getDefaultValue().get(), Any.class));
         } else {
             builder.setType(appObject.getType().getName());
         }

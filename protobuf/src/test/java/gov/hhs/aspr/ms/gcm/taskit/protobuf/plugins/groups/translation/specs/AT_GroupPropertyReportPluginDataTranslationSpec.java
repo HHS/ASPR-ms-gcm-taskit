@@ -15,11 +15,11 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.reports.input.GroupPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.GroupsTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.specs.GroupPropertyReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
@@ -78,7 +78,8 @@ public class AT_GroupPropertyReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.translateInputObject(GroupPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(
+                    GroupPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

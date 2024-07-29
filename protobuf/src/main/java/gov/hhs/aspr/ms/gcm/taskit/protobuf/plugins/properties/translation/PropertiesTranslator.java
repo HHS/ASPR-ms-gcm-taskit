@@ -45,8 +45,7 @@ public class PropertiesTranslator {
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * PropertiesPlugin.
+     * Returns a Translator that includes TranslationSpecs for the PropertiesPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

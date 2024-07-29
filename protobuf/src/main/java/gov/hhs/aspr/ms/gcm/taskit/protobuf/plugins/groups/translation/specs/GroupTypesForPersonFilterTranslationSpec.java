@@ -19,8 +19,7 @@ public class GroupTypesForPersonFilterTranslationSpec
 
     @Override
     protected GroupTypesForPersonFilterInput translateAppObject(GroupTypesForPersonFilter appObject) {
-        EqualityInput equality = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(),
-                Equality.class);
+        EqualityInput equality = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(), Equality.class);
         int groupTypeCount = appObject.getGroupTypeCount();
 
         return GroupTypesForPersonFilterInput.newBuilder()

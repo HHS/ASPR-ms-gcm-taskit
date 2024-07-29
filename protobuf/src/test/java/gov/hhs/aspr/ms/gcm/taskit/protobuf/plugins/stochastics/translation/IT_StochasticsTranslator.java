@@ -17,8 +17,11 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.Stocha
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.StochasticsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_StochasticsTranslator {
@@ -33,9 +36,8 @@ public class IT_StochasticsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
-                        .addTranslator(StochasticsTranslator.getTranslator())
-                        .build())
+                .addTaskitEngine(
+                        ProtobufJsonTaskitEngine.builder().addTranslator(StochasticsTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
                         ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();

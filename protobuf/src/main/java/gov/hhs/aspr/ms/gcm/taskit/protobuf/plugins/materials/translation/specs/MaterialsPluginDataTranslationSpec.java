@@ -67,8 +67,7 @@ public class MaterialsPluginDataTranslationSpec
         // batch property defintions
         for (BatchPropertyDefinitionMapInput batchPropertyDefinitionMapInput : inputObject
                 .getBatchPropertyDefinitionsList()) {
-            MaterialId materialId = this.taskitEngine
-                    .translateObject(batchPropertyDefinitionMapInput.getMaterialId());
+            MaterialId materialId = this.taskitEngine.translateObject(batchPropertyDefinitionMapInput.getMaterialId());
             for (PropertyDefinitionMapInput propertyDefinitionMapInput : batchPropertyDefinitionMapInput
                     .getPropertyDefinitionsList()) {
                 BatchPropertyId batchPropertyId = this.taskitEngine
@@ -112,8 +111,7 @@ public class MaterialsPluginDataTranslationSpec
                     .translateObject(materialsProducerResourceLevelMapInput.getMaterialsProducerId());
             for (ResourceInitializationInput resourceInitializationInput : materialsProducerResourceLevelMapInput
                     .getResourceLevelsList()) {
-                ResourceId resourceId = this.taskitEngine
-                        .translateObject(resourceInitializationInput.getResourceId());
+                ResourceId resourceId = this.taskitEngine.translateObject(resourceInitializationInput.getResourceId());
                 long amount = resourceInitializationInput.getAmount();
 
                 builder.setMaterialsProducerResourceLevel(materialsProducerId, resourceId, amount);
@@ -136,8 +134,7 @@ public class MaterialsPluginDataTranslationSpec
             for (PropertyValueMapInput propertyValueMapInput : batchPropertyValueInput.getPropertyValuesList()) {
                 BatchPropertyId batchPropertyId = this.taskitEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyId());
-                Object propertyValue = this.taskitEngine
-                        .getObjectFromAny(propertyValueMapInput.getPropertyValue());
+                Object propertyValue = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
                 builder.setBatchPropertyValue(batchId, batchPropertyId, propertyValue);
             }
@@ -246,8 +243,7 @@ public class MaterialsPluginDataTranslationSpec
 
             for (BatchPropertyId batchPropertyId : batchPropDefMap.keySet()) {
                 PropertyDefinition propertyDefinition = batchPropDefMap.get(batchPropertyId);
-                PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine
-                        .translateObject(propertyDefinition);
+                PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine.translateObject(propertyDefinition);
 
                 PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                         .setPropertyDefinition(propertyDefinitionInput)
@@ -330,8 +326,8 @@ public class MaterialsPluginDataTranslationSpec
         for (BatchId batchId : batchIds) {
             BatchIdInput batchIdInput = this.taskitEngine.translateObject(batchId);
             double amount = batchAmounts.get(batchId);
-            MaterialIdInput materialIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(batchMaterials.get(batchId), MaterialId.class);
+            MaterialIdInput materialIdInput = this.taskitEngine.translateObjectAsClassSafe(batchMaterials.get(batchId),
+                    MaterialId.class);
 
             BatchInput batchMap = BatchInput.newBuilder()
                     .setAmount(amount)

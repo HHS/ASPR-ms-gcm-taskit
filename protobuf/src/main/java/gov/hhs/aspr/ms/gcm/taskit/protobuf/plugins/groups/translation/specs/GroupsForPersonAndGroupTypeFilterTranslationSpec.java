@@ -12,7 +12,8 @@ public class GroupsForPersonAndGroupTypeFilterTranslationSpec
         extends ProtobufTranslationSpec<GroupsForPersonAndGroupTypeFilterInput, GroupsForPersonAndGroupTypeFilter> {
 
     @Override
-    protected GroupsForPersonAndGroupTypeFilter translateInputObject(GroupsForPersonAndGroupTypeFilterInput inputObject) {
+    protected GroupsForPersonAndGroupTypeFilter translateInputObject(
+            GroupsForPersonAndGroupTypeFilterInput inputObject) {
         GroupTypeId groupTypeId = this.taskitEngine.translateObject(inputObject.getGroupTypeId());
         Equality equality = this.taskitEngine.translateObject(inputObject.getEquality());
         int groupCount = inputObject.getGroupCount();

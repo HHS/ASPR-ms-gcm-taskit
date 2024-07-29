@@ -23,8 +23,7 @@ public class ResourceFilterTranslationSpec extends ProtobufTranslationSpec<Resou
     protected ResourceFilterInput translateAppObject(ResourceFilter appObject) {
         ResourceIdInput resourceId = this.taskitEngine.translateObjectAsClassSafe(appObject.getResourceId(),
                 ResourceId.class);
-        EqualityInput equality = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(),
-                Equality.class);
+        EqualityInput equality = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(), Equality.class);
         long resourceValue = appObject.getResourceValue();
 
         return ResourceFilterInput.newBuilder()

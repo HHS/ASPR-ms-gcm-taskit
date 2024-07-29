@@ -72,8 +72,7 @@ public class ResourcesTranslator {
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * ResourcesPlugin.
+     * Returns a Translator that includes TranslationSpecs for the ResourcesPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

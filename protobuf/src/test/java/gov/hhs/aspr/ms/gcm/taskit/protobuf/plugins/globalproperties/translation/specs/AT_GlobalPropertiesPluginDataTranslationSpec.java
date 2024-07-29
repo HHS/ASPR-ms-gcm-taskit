@@ -14,6 +14,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
@@ -47,7 +49,8 @@ public class AT_GlobalPropertiesPluginDataTranslationSpec {
         GlobalPropertiesPluginDataInput globalPropertiesPluginDataInput = translationSpec
                 .translateAppObject(expectedAppValue);
 
-        GlobalPropertiesPluginData actualAppValue = translationSpec.translateInputObject(globalPropertiesPluginDataInput);
+        GlobalPropertiesPluginData actualAppValue = translationSpec
+                .translateInputObject(globalPropertiesPluginDataInput);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -55,7 +58,8 @@ public class AT_GlobalPropertiesPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.translateInputObject(GlobalPropertiesPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(
+                    GlobalPropertiesPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

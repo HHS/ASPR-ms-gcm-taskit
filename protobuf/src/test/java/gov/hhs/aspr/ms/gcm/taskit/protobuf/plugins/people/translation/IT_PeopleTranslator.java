@@ -13,8 +13,11 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePlugi
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
+import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 

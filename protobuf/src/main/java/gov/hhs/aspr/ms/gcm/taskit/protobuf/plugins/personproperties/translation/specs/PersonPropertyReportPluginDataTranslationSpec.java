@@ -64,14 +64,14 @@ public class PersonPropertyReportPluginDataTranslationSpec
                 .setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getIncludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(personPropertyId,
+                    PersonPropertyId.class);
             builder.addIncludedProperties(personPropertyIdInput);
         }
 
         for (PersonPropertyId personPropertyId : appObject.getExcludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(personPropertyId,
+                    PersonPropertyId.class);
             builder.addExcludedProperties(personPropertyIdInput);
         }
 

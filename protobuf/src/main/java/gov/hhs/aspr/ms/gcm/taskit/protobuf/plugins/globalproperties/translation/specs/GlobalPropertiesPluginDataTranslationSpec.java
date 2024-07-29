@@ -41,8 +41,7 @@ public class GlobalPropertiesPluginDataTranslationSpec
 
         for (PropertyValueMapInput propertyValueMapInput : inputObject.getGlobalPropertyValuesList()) {
 
-            GlobalPropertyId propertyId = this.taskitEngine
-                    .getObjectFromAny(propertyValueMapInput.getPropertyId());
+            GlobalPropertyId propertyId = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyId());
             Object value = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
             builder.setGlobalPropertyValue(propertyId, value, propertyValueMapInput.getPropertyValueTime());

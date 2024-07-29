@@ -17,7 +17,8 @@ public class AT_NucleusTranslator {
     @Test
     @UnitTestForCoverage
     public void testGetTranslationSpecs() throws ClassNotFoundException {
-        Set<String> missing = TranslatorTestSupport.testGetTranslationSpecs(NucleusTranslator.class, NucleusTranslator.getTranslationSpecs());
+        Set<String> missing = TranslatorTestSupport.testGetTranslationSpecs(NucleusTranslator.class,
+                NucleusTranslator.getTranslationSpecs());
 
         assertTrue(missing.isEmpty(), missing.toString());
     }
@@ -28,7 +29,8 @@ public class AT_NucleusTranslator {
 
         Translator expectedTranslator = Translator.builder()
                 .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
-                .setInitializer((translatorContext) -> {})
+                .setInitializer((translatorContext) -> {
+                })
                 .build();
 
         assertEquals(expectedTranslator, NucleusTranslator.getTranslator());

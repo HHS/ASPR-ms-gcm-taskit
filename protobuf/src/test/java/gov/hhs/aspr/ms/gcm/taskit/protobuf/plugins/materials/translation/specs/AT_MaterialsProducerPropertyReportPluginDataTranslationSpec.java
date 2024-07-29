@@ -18,6 +18,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTr
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.ResourcesTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
@@ -54,7 +55,8 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
 
         MaterialsProducerPropertyReportPluginData expectedAppValue = builder.build();
 
-        MaterialsProducerPropertyReportPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
+        MaterialsProducerPropertyReportPluginDataInput inputValue = translationSpec
+                .translateAppObject(expectedAppValue);
 
         MaterialsProducerPropertyReportPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
@@ -64,7 +66,8 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.translateInputObject(MaterialsProducerPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(
+                    MaterialsProducerPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

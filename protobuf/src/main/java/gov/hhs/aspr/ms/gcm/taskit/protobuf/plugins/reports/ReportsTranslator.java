@@ -50,8 +50,7 @@ public class ReportsTranslator {
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * ReportsPlugin.
+     * Returns a Translator that includes TranslationSpecs for the ReportsPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

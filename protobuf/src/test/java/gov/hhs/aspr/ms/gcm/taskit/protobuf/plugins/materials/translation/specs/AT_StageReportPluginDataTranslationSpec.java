@@ -18,6 +18,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTr
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.ResourcesTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
@@ -65,7 +66,8 @@ public class AT_StageReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.translateInputObject(StageReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec
+                    .translateInputObject(StageReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

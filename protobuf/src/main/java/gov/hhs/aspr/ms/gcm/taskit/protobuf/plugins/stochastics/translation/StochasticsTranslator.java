@@ -29,7 +29,6 @@ public class StochasticsTranslator {
         list.add(new RandomNumberGeneratorIdTranslationSpec());
         list.add(new TestRandomGeneratorIdTranslationSpec());
         list.add(new SimpleRandomNumberGeneratorIdTranslationSpec());
-        
 
         return list;
     }

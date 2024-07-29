@@ -76,8 +76,7 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
                 GroupPropertyId groupPropertyId = this.taskitEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyId());
-                Object propertyValue = this.taskitEngine
-                        .getObjectFromAny(propertyValueMapInput.getPropertyValue());
+                Object propertyValue = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
                 builder.setGroupPropertyValue(new GroupId(groupId), groupPropertyId, propertyValue);
             }
@@ -158,8 +157,7 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
                 PropertyDefinition propertyDefinition = appObject.getGroupPropertyDefinition(groupTypeId,
                         groupPropertyId);
 
-                PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine
-                        .translateObject(propertyDefinition);
+                PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine.translateObject(propertyDefinition);
 
                 PropertyDefinitionMapInput propertyDefInput = PropertyDefinitionMapInput.newBuilder()
                         .setPropertyDefinition(propertyDefinitionInput)

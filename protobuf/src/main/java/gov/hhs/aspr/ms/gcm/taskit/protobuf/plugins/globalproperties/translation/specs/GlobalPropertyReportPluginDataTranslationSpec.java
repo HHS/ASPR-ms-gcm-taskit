@@ -56,14 +56,14 @@ public class GlobalPropertyReportPluginDataTranslationSpec
         builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy()).setReportLabel(reportLabelInput);
 
         for (GlobalPropertyId globalPropertyId : appObject.getIncludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(globalPropertyId, GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(globalPropertyId,
+                    GlobalPropertyId.class);
             builder.addIncludedProperties(globalPropertyIdInput);
         }
 
         for (GlobalPropertyId globalPropertyId : appObject.getExcludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(globalPropertyId, GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine.translateObjectAsClassSafe(globalPropertyId,
+                    GlobalPropertyId.class);
             builder.addExcludedProperties(globalPropertyIdInput);
         }
 

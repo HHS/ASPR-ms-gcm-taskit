@@ -70,7 +70,8 @@ public class AT_ExperimentParameterDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.translateInputObject(ExperimentParameterDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec
+                    .translateInputObject(ExperimentParameterDataInput.newBuilder().setVersion("badversion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

@@ -33,7 +33,7 @@ public class IT_StochasticsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(StochasticsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,

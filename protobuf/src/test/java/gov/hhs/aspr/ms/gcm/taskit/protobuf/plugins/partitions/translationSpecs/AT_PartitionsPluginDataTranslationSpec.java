@@ -29,8 +29,8 @@ public class AT_PartitionsPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testtranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
+    public void testTranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslationSpec(new TestFilterTranslationSpec())
                 .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())

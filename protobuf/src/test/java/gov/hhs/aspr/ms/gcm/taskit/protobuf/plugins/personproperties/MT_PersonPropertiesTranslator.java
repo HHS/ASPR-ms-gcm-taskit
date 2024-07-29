@@ -31,7 +31,7 @@ public class MT_PersonPropertiesTranslator {
     TaskitEngineManager TaskitEngineManager;
 
     private MT_PersonPropertiesTranslator() {
-        ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
+        ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())

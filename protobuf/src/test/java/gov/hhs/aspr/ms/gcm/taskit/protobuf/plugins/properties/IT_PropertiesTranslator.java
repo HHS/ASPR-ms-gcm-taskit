@@ -28,7 +28,7 @@ public class IT_PropertiesTranslator {
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
                 .addTaskitEngine(
-                        IProtobufTaskitEngineBuilder().addTranslator(PropertiesTranslator.getTranslator()).build())
+                        ProtobufJsonTaskitEngine.builder().addTranslator(PropertiesTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class,
                         TaskitEngineId.PROTOBUF)
                 .build();

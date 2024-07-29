@@ -27,8 +27,8 @@ public class AT_SimpleRegionIdTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testtranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
+    public void testTranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())

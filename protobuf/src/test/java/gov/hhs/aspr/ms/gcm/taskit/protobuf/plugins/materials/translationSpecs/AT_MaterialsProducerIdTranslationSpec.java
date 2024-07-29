@@ -30,8 +30,8 @@ public class AT_MaterialsProducerIdTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testtranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
+    public void testTranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())

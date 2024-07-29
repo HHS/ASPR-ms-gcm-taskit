@@ -48,7 +48,7 @@ public class IT_RegionsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -87,7 +87,7 @@ public class IT_RegionsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -138,7 +138,7 @@ public class IT_RegionsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())

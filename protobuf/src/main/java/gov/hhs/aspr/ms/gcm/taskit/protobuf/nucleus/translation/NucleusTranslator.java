@@ -1,15 +1,15 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.translationSpecs.ExampleDimensionTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.DimensionTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.ExperimentParameterDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlannerTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.SimulationStateTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.translation.specs.ExampleDimensionTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs.DimensionTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs.ExperimentParameterDataTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs.PlannerTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs.SimulationStateTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;

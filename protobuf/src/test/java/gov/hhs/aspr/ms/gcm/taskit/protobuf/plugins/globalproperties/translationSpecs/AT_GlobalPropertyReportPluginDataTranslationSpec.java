@@ -34,8 +34,8 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testtranslateObject() {
-        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
+    public void testTranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())

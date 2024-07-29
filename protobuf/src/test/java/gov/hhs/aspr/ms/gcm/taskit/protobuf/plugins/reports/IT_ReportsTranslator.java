@@ -28,7 +28,7 @@ public class IT_ReportsTranslator {
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
                 .addTaskitEngine(
-                        IProtobufTaskitEngineBuilder().addTranslator(ReportsTranslator.getTranslator()).build())
+                        ProtobufJsonTaskitEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, TaskitEngineId.PROTOBUF)
                 .build();
 

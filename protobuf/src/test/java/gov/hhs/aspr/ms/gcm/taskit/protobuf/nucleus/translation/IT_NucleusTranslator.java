@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +30,7 @@ public class IT_NucleusTranslator {
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
                 .addTaskitEngine(
-                        IProtobufTaskitEngineBuilder().addTranslator(NucleusTranslator.getTranslator()).build())
+                        ProtobufJsonTaskitEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), SimulationStateInput.class,
                         TaskitEngineId.PROTOBUF)
                 .build();
@@ -61,7 +61,7 @@ public class IT_NucleusTranslator {
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
                 .addTaskitEngine(
-                        IProtobufTaskitEngineBuilder().addTranslator(NucleusTranslator.getTranslator()).build())
+                        ProtobufJsonTaskitEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ExperimentParameterDataInput.class,
                         TaskitEngineId.PROTOBUF)
                 .build();

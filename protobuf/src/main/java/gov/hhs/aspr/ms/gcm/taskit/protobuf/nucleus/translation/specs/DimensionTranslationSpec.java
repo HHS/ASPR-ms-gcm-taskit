@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs;
 
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.Dimension;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.DimensionInput;

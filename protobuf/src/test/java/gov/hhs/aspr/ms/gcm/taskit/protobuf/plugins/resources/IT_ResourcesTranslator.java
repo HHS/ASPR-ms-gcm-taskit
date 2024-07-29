@@ -51,7 +51,7 @@ public class IT_ResourcesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(ResourcesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -91,7 +91,7 @@ public class IT_ResourcesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(ResourcesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -144,7 +144,7 @@ public class IT_ResourcesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(ResourcesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -182,7 +182,7 @@ public class IT_ResourcesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(ResourcesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())

@@ -29,7 +29,7 @@ public class IT_PartitionsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslationSpec(new TestFilterTranslationSpec())
                         .addTranslationSpec(new TestLabelerTranslationSpec())
                         .addTranslator(PartitionsTranslator.getTranslator())

@@ -47,7 +47,7 @@ public class IT_PersonPropertiesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -87,7 +87,7 @@ public class IT_PersonPropertiesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
@@ -139,7 +139,7 @@ public class IT_PersonPropertiesTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())

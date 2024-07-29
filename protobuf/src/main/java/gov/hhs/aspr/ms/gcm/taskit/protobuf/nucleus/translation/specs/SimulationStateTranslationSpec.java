@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation.specs;
 
 import java.time.LocalDate;
 

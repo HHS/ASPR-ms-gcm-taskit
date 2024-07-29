@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translation;
 
 import gov.hhs.aspr.ms.taskit.core.translation.TranslatorId;
 

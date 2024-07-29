@@ -31,7 +31,7 @@ public class IT_PeopleTranslator {
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
                 .addTaskitEngine(
-                        IProtobufTaskitEngineBuilder().addTranslator(PeopleTranslator.getTranslator()).build())
+                        ProtobufJsonTaskitEngine.builder().addTranslator(PeopleTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class,
                         TaskitEngineId.PROTOBUF)
                 .build();

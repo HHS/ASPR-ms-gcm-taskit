@@ -43,7 +43,7 @@ public class IT_MaterialsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(ResourcesTranslator.getTranslator())
@@ -80,7 +80,7 @@ public class IT_MaterialsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -120,7 +120,7 @@ public class IT_MaterialsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -159,7 +159,7 @@ public class IT_MaterialsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -198,7 +198,7 @@ public class IT_MaterialsTranslator {
         ResourceHelper.createFile(filePath, fileName);
 
         TaskitEngineManager translatorController = TaskitEngineManager.builder()
-                .addTaskitEngine(IProtobufTaskitEngineBuilder()
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())

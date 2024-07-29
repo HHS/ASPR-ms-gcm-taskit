@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation;
 
 import gov.hhs.aspr.ms.taskit.core.translation.TranslatorId;
 

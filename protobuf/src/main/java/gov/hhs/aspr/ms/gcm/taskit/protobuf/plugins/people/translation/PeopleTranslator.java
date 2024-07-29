@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translation;
 
 import java.util.ArrayList;
 import java.util.List;

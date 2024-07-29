@@ -1,4 +1,4 @@
-package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics;
+package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation;
 
 import java.util.ArrayList;
 import java.util.List;

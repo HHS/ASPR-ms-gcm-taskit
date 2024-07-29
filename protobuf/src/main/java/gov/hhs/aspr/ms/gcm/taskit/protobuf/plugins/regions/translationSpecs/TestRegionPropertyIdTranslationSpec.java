@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.testsupport.input.TestRegionPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -12,12 +12,12 @@ public class TestRegionPropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestRegionPropertyIdInput, TestRegionPropertyId> {
 
     @Override
-    protected TestRegionPropertyId convertInputObject(TestRegionPropertyIdInput inputObject) {
+    protected TestRegionPropertyId translateInputObject(TestRegionPropertyIdInput inputObject) {
         return TestRegionPropertyId.valueOf(inputObject.name());
     }
 
     @Override
-    protected TestRegionPropertyIdInput convertAppObject(TestRegionPropertyId appObject) {
+    protected TestRegionPropertyIdInput translateAppObject(TestRegionPropertyId appObject) {
         return TestRegionPropertyIdInput.valueOf(appObject.name());
     }
 

@@ -2,17 +2,17 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.translationSpecs
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExampleDimension;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.input.ExampleDimensionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class ExampleDimensionTranslationSpec extends ProtobufTranslationSpec<ExampleDimensionInput, ExampleDimension> {
 
     @Override
-    protected ExampleDimension convertInputObject(ExampleDimensionInput inputObject) {
+    protected ExampleDimension translateInputObject(ExampleDimensionInput inputObject) {
         return new ExampleDimension(inputObject.getLevelName());
     }
 
     @Override
-    protected ExampleDimensionInput convertAppObject(ExampleDimension appObject) {
+    protected ExampleDimensionInput translateAppObject(ExampleDimension appObject) {
         return ExampleDimensionInput.newBuilder().setLevelName(appObject.getLevelName()).build();
     }
 

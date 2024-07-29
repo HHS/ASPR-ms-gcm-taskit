@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.FilterInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain FilterInput}
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class FilterTranslationSpec extends ProtobufTranslationSpec<FilterInput, Filter> {
 
     @Override
-    protected Filter convertInputObject(FilterInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getFilter());
+    protected Filter translateInputObject(FilterInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getFilter());
     }
 
     @Override
-    protected FilterInput convertAppObject(Filter appObject) {
-        return FilterInput.newBuilder().setFilter(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected FilterInput translateAppObject(Filter appObject) {
+        return FilterInput.newBuilder().setFilter(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

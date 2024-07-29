@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.BatchPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.BatchPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class BatchPropertyIdTranslationSpec extends ProtobufTranslationSpec<BatchPropertyIdInput, BatchPropertyId> {
 
     @Override
-    protected BatchPropertyId convertInputObject(BatchPropertyIdInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getId());
+    protected BatchPropertyId translateInputObject(BatchPropertyIdInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getId());
     }
 
     @Override
-    protected BatchPropertyIdInput convertAppObject(BatchPropertyId appObject) {
-        return BatchPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected BatchPropertyIdInput translateAppObject(BatchPropertyId appObject) {
+        return BatchPropertyIdInput.newBuilder().setId(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

@@ -6,7 +6,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.FilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.LabelerInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.PartitionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -15,19 +15,19 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class PartitionTranslationSpec extends ProtobufTranslationSpec<PartitionInput, Partition> {
 
     @Override
-    protected Partition convertInputObject(PartitionInput inputObject) {
+    protected Partition translateInputObject(PartitionInput inputObject) {
         Partition.Builder builder = Partition.builder();
 
         builder.setRetainPersonKeys(inputObject.getRetainPersonKeys());
 
         if (inputObject.hasFilter()) {
-            Filter filter = this.translationEngine.convertObject(inputObject.getFilter());
+            Filter filter = this.taskitEngine.translateObject(inputObject.getFilter());
 
             builder.setFilter(filter);
         }
 
         for (LabelerInput labelerInput : inputObject.getLabelersList()) {
-            Labeler labeler = this.translationEngine.convertObject(labelerInput);
+            Labeler labeler = this.taskitEngine.translateObject(labelerInput);
 
             builder.addLabeler(labeler);
         }
@@ -36,20 +36,20 @@ public class PartitionTranslationSpec extends ProtobufTranslationSpec<PartitionI
     }
 
     @Override
-    protected PartitionInput convertAppObject(Partition appObject) {
+    protected PartitionInput translateAppObject(Partition appObject) {
         PartitionInput.Builder builder = PartitionInput.newBuilder();
 
         builder.setRetainPersonKeys(appObject.retainPersonKeys());
 
         if (appObject.getFilter().isPresent()) {
-            FilterInput filterInput = this.translationEngine.convertObjectAsSafeClass(appObject.getFilter().get(),
+            FilterInput filterInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getFilter().get(),
                     Filter.class);
 
             builder.setFilter(filterInput);
         }
 
         for (Labeler labeler : appObject.getLabelers()) {
-            LabelerInput labelerInput = this.translationEngine.convertObjectAsSafeClass(labeler, Labeler.class);
+            LabelerInput labelerInput = this.taskitEngine.translateObjectAsClassSafe(labeler, Labeler.class);
 
             builder.addLabelers(labelerInput);
         }

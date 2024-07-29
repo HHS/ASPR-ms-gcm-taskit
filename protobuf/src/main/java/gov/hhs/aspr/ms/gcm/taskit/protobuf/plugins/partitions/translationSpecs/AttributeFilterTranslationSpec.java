@@ -8,7 +8,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.testsupport.attributes.
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.attributes.input.AttributeFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.attributes.input.AttributeIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -17,21 +17,21 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class AttributeFilterTranslationSpec extends ProtobufTranslationSpec<AttributeFilterInput, AttributeFilter> {
 
     @Override
-    protected AttributeFilter convertInputObject(AttributeFilterInput inputObject) {
-        AttributeId attributeId = this.translationEngine.convertObject(inputObject.getAttributeId());
-        Equality equality = this.translationEngine.convertObject(inputObject.getEquality());
-        Object value = this.translationEngine.getObjectFromAny(inputObject.getValue());
+    protected AttributeFilter translateInputObject(AttributeFilterInput inputObject) {
+        AttributeId attributeId = this.taskitEngine.translateObject(inputObject.getAttributeId());
+        Equality equality = this.taskitEngine.translateObject(inputObject.getEquality());
+        Object value = this.taskitEngine.getObjectFromAny(inputObject.getValue());
 
         return new AttributeFilter(attributeId, equality, value);
     }
 
     @Override
-    protected AttributeFilterInput convertAppObject(AttributeFilter appObject) {
-        AttributeIdInput attributeIdInput = this.translationEngine.convertObjectAsSafeClass(appObject.getAttributeId(),
+    protected AttributeFilterInput translateAppObject(AttributeFilter appObject) {
+        AttributeIdInput attributeIdInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getAttributeId(),
                 AttributeId.class);
-        EqualityInput equalityInput = this.translationEngine.convertObjectAsSafeClass(appObject.getEquality(),
+        EqualityInput equalityInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(),
                 Equality.class);
-        Any value = this.translationEngine.getAnyFromObject(appObject.getValue());
+        Any value = this.taskitEngine.getAnyFromObject(appObject.getValue());
 
         return AttributeFilterInput.newBuilder()
                 .setAttributeId(attributeIdInput)

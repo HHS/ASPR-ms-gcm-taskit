@@ -7,22 +7,22 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimens
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class GroupPropertyDimensionTranslationSpec
         extends ProtobufTranslationSpec<GroupPropertyDimensionInput, GroupPropertyDimension> {
 
     @Override
-    protected GroupPropertyDimension convertInputObject(GroupPropertyDimensionInput inputObject) {
+    protected GroupPropertyDimension translateInputObject(GroupPropertyDimensionInput inputObject) {
         GroupPropertyDimension.Builder builder = GroupPropertyDimension.builder();
 
-        GroupPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getGroupPropertyId());
+        GroupPropertyId globalPropertyId = this.taskitEngine.translateObject(inputObject.getGroupPropertyId());
         GroupId groupId = new GroupId(inputObject.getGId());
 
         builder.setGroupPropertyId(globalPropertyId).setGroupId(groupId);
 
         for (Any anyValue : inputObject.getValuesList()) {
-            Object value = this.translationEngine.getObjectFromAny(anyValue);
+            Object value = this.taskitEngine.getObjectFromAny(anyValue);
             builder.addValue(value);
         }
 
@@ -30,16 +30,16 @@ public class GroupPropertyDimensionTranslationSpec
     }
 
     @Override
-    protected GroupPropertyDimensionInput convertAppObject(GroupPropertyDimension appObject) {
+    protected GroupPropertyDimensionInput translateAppObject(GroupPropertyDimension appObject) {
         GroupPropertyDimensionInput.Builder builder = GroupPropertyDimensionInput.newBuilder();
 
-        GroupPropertyIdInput globalPropertyIdInput = this.translationEngine
-                .convertObjectAsSafeClass(appObject.getGroupPropertyId(), GroupPropertyId.class);
+        GroupPropertyIdInput globalPropertyIdInput = this.taskitEngine
+                .translateObjectAsClassSafe(appObject.getGroupPropertyId(), GroupPropertyId.class);
 
         builder.setGroupPropertyId(globalPropertyIdInput).setGId(appObject.getGroupId().getValue());
 
         for (Object objValue : appObject.getValues()) {
-            builder.addValues(this.translationEngine.getAnyFromObject(objValue));
+            builder.addValues(this.taskitEngine.getAnyFromObject(objValue));
         }
 
         return builder.build();

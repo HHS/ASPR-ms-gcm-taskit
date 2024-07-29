@@ -7,8 +7,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.Stocha
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.WellStateInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -20,21 +20,21 @@ public class StochasticsPluginDataTranslationSpec
         extends ProtobufTranslationSpec<StochasticsPluginDataInput, StochasticsPluginData> {
 
     @Override
-    protected StochasticsPluginData convertInputObject(StochasticsPluginDataInput inputObject) {
+    protected StochasticsPluginData translateInputObject(StochasticsPluginDataInput inputObject) {
         if (!StochasticsPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         StochasticsPluginData.Builder builder = StochasticsPluginData.builder();
 
-        WellState wellState = this.translationEngine.convertObject(inputObject.getWellState());
+        WellState wellState = this.taskitEngine.translateObject(inputObject.getWellState());
 
         builder.setMainRNGState(wellState);
 
         for (RandomNumberGeneratorMapInput randomGenIdInput : inputObject.getRandomNumberGeneratorIdsList()) {
-            RandomNumberGeneratorId generatorId = this.translationEngine
-                    .convertObject(randomGenIdInput.getRandomNumberGeneratorId());
-            WellState generatorWellState = this.translationEngine.convertObject(randomGenIdInput.getWellState());
+            RandomNumberGeneratorId generatorId = this.taskitEngine
+                    .translateObject(randomGenIdInput.getRandomNumberGeneratorId());
+            WellState generatorWellState = this.taskitEngine.translateObject(randomGenIdInput.getWellState());
             builder.addRNG(generatorId, generatorWellState);
         }
 
@@ -42,19 +42,19 @@ public class StochasticsPluginDataTranslationSpec
     }
 
     @Override
-    protected StochasticsPluginDataInput convertAppObject(StochasticsPluginData appObject) {
+    protected StochasticsPluginDataInput translateAppObject(StochasticsPluginData appObject) {
         StochasticsPluginDataInput.Builder builder = StochasticsPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        WellStateInput wellStateInput = this.translationEngine.convertObject(appObject.getWellState());
+        WellStateInput wellStateInput = this.taskitEngine.translateObject(appObject.getWellState());
         builder.setWellState(wellStateInput);
 
         for (RandomNumberGeneratorId randomNumberGeneratorId : appObject.getRandomNumberGeneratorIds()) {
-            RandomNumberGeneratorIdInput randomNumberGeneratorIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(randomNumberGeneratorId, RandomNumberGeneratorId.class);
-            WellStateInput generatorWellStateInput = this.translationEngine
-                    .convertObject(appObject.getWellState(randomNumberGeneratorId));
+            RandomNumberGeneratorIdInput randomNumberGeneratorIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(randomNumberGeneratorId, RandomNumberGeneratorId.class);
+            WellStateInput generatorWellStateInput = this.taskitEngine
+                    .translateObject(appObject.getWellState(randomNumberGeneratorId));
 
             builder.addRandomNumberGeneratorIds(RandomNumberGeneratorMapInput.newBuilder()
                     .setWellState(generatorWellStateInput)

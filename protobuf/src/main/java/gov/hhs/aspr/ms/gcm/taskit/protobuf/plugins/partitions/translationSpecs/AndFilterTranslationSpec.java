@@ -4,7 +4,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.AndFilt
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.AndFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.FilterInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -13,15 +13,15 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class AndFilterTranslationSpec extends ProtobufTranslationSpec<AndFilterInput, AndFilter> {
 
     @Override
-    protected AndFilter convertInputObject(AndFilterInput inputObject) {
-        return new AndFilter(this.translationEngine.convertObject(inputObject.getA()),
-                this.translationEngine.convertObject(inputObject.getB()));
+    protected AndFilter translateInputObject(AndFilterInput inputObject) {
+        return new AndFilter(this.taskitEngine.translateObject(inputObject.getA()),
+                this.taskitEngine.translateObject(inputObject.getB()));
     }
 
     @Override
-    protected AndFilterInput convertAppObject(AndFilter appObject) {
-        FilterInput a = this.translationEngine.convertObjectAsSafeClass(appObject.getFirstFilter(), Filter.class);
-        FilterInput b = this.translationEngine.convertObjectAsSafeClass(appObject.getSecondFilter(), Filter.class);
+    protected AndFilterInput translateAppObject(AndFilter appObject) {
+        FilterInput a = this.taskitEngine.translateObjectAsClassSafe(appObject.getFirstFilter(), Filter.class);
+        FilterInput b = this.taskitEngine.translateObjectAsClassSafe(appObject.getSecondFilter(), Filter.class);
         return AndFilterInput.newBuilder().setA(a).setB(b).build();
     }
 

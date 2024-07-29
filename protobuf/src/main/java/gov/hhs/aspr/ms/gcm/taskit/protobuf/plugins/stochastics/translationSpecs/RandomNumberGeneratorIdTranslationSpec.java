@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.RandomNumberGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -13,14 +13,14 @@ public class RandomNumberGeneratorIdTranslationSpec
         extends ProtobufTranslationSpec<RandomNumberGeneratorIdInput, RandomNumberGeneratorId> {
 
     @Override
-    protected RandomNumberGeneratorId convertInputObject(RandomNumberGeneratorIdInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getId());
+    protected RandomNumberGeneratorId translateInputObject(RandomNumberGeneratorIdInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getId());
     }
 
     @Override
-    protected RandomNumberGeneratorIdInput convertAppObject(RandomNumberGeneratorId appObject) {
+    protected RandomNumberGeneratorIdInput translateAppObject(RandomNumberGeneratorId appObject) {
         return RandomNumberGeneratorIdInput.newBuilder()
-                .setId(this.translationEngine.getAnyFromObject(appObject))
+                .setId(this.taskitEngine.getAnyFromObject(appObject))
                 .build();
     }
 

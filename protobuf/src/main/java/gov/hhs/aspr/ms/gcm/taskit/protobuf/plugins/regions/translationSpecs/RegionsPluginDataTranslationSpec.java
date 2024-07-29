@@ -18,8 +18,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionI
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionMembershipInput.RegionPersonInfo;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyValueMapInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -30,37 +30,37 @@ public class RegionsPluginDataTranslationSpec
         extends ProtobufTranslationSpec<RegionsPluginDataInput, RegionsPluginData> {
 
     @Override
-    protected RegionsPluginData convertInputObject(RegionsPluginDataInput inputObject) {
+    protected RegionsPluginData translateInputObject(RegionsPluginDataInput inputObject) {
         if (!RegionsPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         RegionsPluginData.Builder builder = RegionsPluginData.builder();
 
         // add regions
         for (RegionIdInput regionIdInput : inputObject.getRegionIdsList()) {
-            RegionId regionId = this.translationEngine.convertObject(regionIdInput);
+            RegionId regionId = this.taskitEngine.translateObject(regionIdInput);
 
             builder.addRegion(regionId);
         }
 
         // define regions
         for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getRegionPropertyDefinitionsList()) {
-            RegionPropertyId regionPropertyId = this.translationEngine
+            RegionPropertyId regionPropertyId = this.taskitEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
-            PropertyDefinition propertyDefinition = this.translationEngine
-                    .convertObject(propertyDefinitionMapInput.getPropertyDefinition());
+            PropertyDefinition propertyDefinition = this.taskitEngine
+                    .translateObject(propertyDefinitionMapInput.getPropertyDefinition());
 
             builder.defineRegionProperty(regionPropertyId, propertyDefinition);
         }
 
         // add region property values
         for (RegionPropertyValueMapInput regionPropertyValueMapInput : inputObject.getRegionPropertyValuesList()) {
-            RegionId regionId = this.translationEngine.convertObject(regionPropertyValueMapInput.getRegionId());
+            RegionId regionId = this.taskitEngine.translateObject(regionPropertyValueMapInput.getRegionId());
             for (PropertyValueMapInput propertyValueMapInput : regionPropertyValueMapInput.getPropertyValueMapList()) {
-                RegionPropertyId regionPropertyId = this.translationEngine
+                RegionPropertyId regionPropertyId = this.taskitEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyId());
-                Object regionPropertyValue = this.translationEngine
+                Object regionPropertyValue = this.taskitEngine
                         .getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
                 builder.setRegionPropertyValue(regionId, regionPropertyId, regionPropertyValue);
@@ -72,7 +72,7 @@ public class RegionsPluginDataTranslationSpec
         builder.setPersonRegionArrivalTracking(trackRegionArrivalTimes);
 
         for (RegionMembershipInput regionMembershipInput : inputObject.getPersonRegionsList()) {
-            RegionId regionId = this.translationEngine.convertObject(regionMembershipInput.getRegionId());
+            RegionId regionId = this.taskitEngine.translateObject(regionMembershipInput.getRegionId());
 
             for (RegionPersonInfo regionPersonInfo : regionMembershipInput.getPeopleList()) {
                 PersonId personId = new PersonId(regionPersonInfo.getPersonId());
@@ -88,24 +88,24 @@ public class RegionsPluginDataTranslationSpec
     }
 
     @Override
-    protected RegionsPluginDataInput convertAppObject(RegionsPluginData appObject) {
+    protected RegionsPluginDataInput translateAppObject(RegionsPluginData appObject) {
         RegionsPluginDataInput.Builder builder = RegionsPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
         // add regions
         for (RegionId regionId : appObject.getRegionIds()) {
-            RegionIdInput regionIdInput = this.translationEngine.convertObjectAsSafeClass(regionId, RegionId.class);
+            RegionIdInput regionIdInput = this.taskitEngine.translateObjectAsClassSafe(regionId, RegionId.class);
             builder.addRegionIds(regionIdInput);
         }
 
         // add region property definitions
         for (RegionPropertyId regionPropertyId : appObject.getRegionPropertyIds()) {
-            PropertyDefinitionInput propertyDefinitionInput = this.translationEngine
-                    .convertObject(appObject.getRegionPropertyDefinition(regionPropertyId));
+            PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine
+                    .translateObject(appObject.getRegionPropertyDefinition(regionPropertyId));
 
             PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
-                    .setPropertyId(this.translationEngine.getAnyFromObject(regionPropertyId))
+                    .setPropertyId(this.taskitEngine.getAnyFromObject(regionPropertyId))
                     .setPropertyDefinition(propertyDefinitionInput)
                     .build();
 
@@ -113,12 +113,12 @@ public class RegionsPluginDataTranslationSpec
         }
 
         for (RegionId regionId : appObject.getRegionIds()) {
-            RegionIdInput regionIdInput = this.translationEngine.convertObjectAsSafeClass(regionId, RegionId.class);
+            RegionIdInput regionIdInput = this.taskitEngine.translateObjectAsClassSafe(regionId, RegionId.class);
 
             for (RegionPropertyId regionPropertyId : appObject.getRegionPropertyValues(regionId).keySet()) {
                 PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
-                        .setPropertyId(this.translationEngine.getAnyFromObject(regionPropertyId))
-                        .setPropertyValue(this.translationEngine
+                        .setPropertyId(this.taskitEngine.getAnyFromObject(regionPropertyId))
+                        .setPropertyValue(this.taskitEngine
                                 .getAnyFromObject(appObject.getRegionPropertyValues(regionId).get(regionPropertyId)))
                         .build();
 
@@ -140,7 +140,7 @@ public class RegionsPluginDataTranslationSpec
             PersonId personId = new PersonId(i);
 
             RegionId regionId = appObject.getPersonRegion(personId).get();
-            RegionIdInput regionIdInput = this.translationEngine.convertObjectAsSafeClass(regionId, RegionId.class);
+            RegionIdInput regionIdInput = this.taskitEngine.translateObjectAsClassSafe(regionId, RegionId.class);
             List<RegionPersonInfo> peopleInRegion = regionMembershipMap.get(regionIdInput);
 
             if (peopleInRegion == null) {

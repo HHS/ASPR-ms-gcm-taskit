@@ -8,8 +8,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -21,28 +21,28 @@ public class PersonPropertyReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<PersonPropertyReportPluginDataInput, PersonPropertyReportPluginData> {
 
     @Override
-    protected PersonPropertyReportPluginData convertInputObject(PersonPropertyReportPluginDataInput inputObject) {
+    protected PersonPropertyReportPluginData translateInputObject(PersonPropertyReportPluginDataInput inputObject) {
         if (!PersonPropertyReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         PersonPropertyReportPluginData.Builder builder = PersonPropertyReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
         builder.setReportLabel(reportLabel);
 
-        ReportPeriod reportPeriod = this.translationEngine.convertObject(inputObject.getReportPeriod());
+        ReportPeriod reportPeriod = this.taskitEngine.translateObject(inputObject.getReportPeriod());
         builder.setReportPeriod(reportPeriod);
 
         builder.setDefaultInclusion(inputObject.getDefaultInclusionPolicy());
 
         for (PersonPropertyIdInput personPropertyIdInput : inputObject.getIncludedPropertiesList()) {
-            PersonPropertyId personPropertyId = this.translationEngine.convertObject(personPropertyIdInput);
+            PersonPropertyId personPropertyId = this.taskitEngine.translateObject(personPropertyIdInput);
             builder.includePersonProperty(personPropertyId);
         }
 
         for (PersonPropertyIdInput personPropertyIdInput : inputObject.getExcludedPropertiesList()) {
-            PersonPropertyId personPropertyId = this.translationEngine.convertObject(personPropertyIdInput);
+            PersonPropertyId personPropertyId = this.taskitEngine.translateObject(personPropertyIdInput);
             builder.excludePersonProperty(personPropertyId);
         }
 
@@ -50,28 +50,28 @@ public class PersonPropertyReportPluginDataTranslationSpec
     }
 
     @Override
-    protected PersonPropertyReportPluginDataInput convertAppObject(PersonPropertyReportPluginData appObject) {
+    protected PersonPropertyReportPluginDataInput translateAppObject(PersonPropertyReportPluginData appObject) {
         PersonPropertyReportPluginDataInput.Builder builder = PersonPropertyReportPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
-        ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
+        ReportPeriodInput reportPeriodInput = this.taskitEngine.translateObject(appObject.getReportPeriod());
 
         builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
                 .setReportLabel(reportLabelInput)
                 .setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getIncludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
             builder.addIncludedProperties(personPropertyIdInput);
         }
 
         for (PersonPropertyId personPropertyId : appObject.getExcludedProperties()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
             builder.addExcludedProperties(personPropertyIdInput);
         }
 

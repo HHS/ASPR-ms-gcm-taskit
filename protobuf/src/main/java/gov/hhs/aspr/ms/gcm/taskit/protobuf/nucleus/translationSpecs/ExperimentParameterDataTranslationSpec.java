@@ -4,8 +4,8 @@ import java.nio.file.Path;
 
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -17,9 +17,9 @@ public class ExperimentParameterDataTranslationSpec
         extends ProtobufTranslationSpec<ExperimentParameterDataInput, ExperimentParameterData> {
 
     @Override
-    protected ExperimentParameterData convertInputObject(ExperimentParameterDataInput inputObject) {
+    protected ExperimentParameterData translateInputObject(ExperimentParameterDataInput inputObject) {
         if (!ExperimentParameterData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
@@ -44,7 +44,7 @@ public class ExperimentParameterDataTranslationSpec
     }
 
     @Override
-    protected ExperimentParameterDataInput convertAppObject(ExperimentParameterData appObject) {
+    protected ExperimentParameterDataInput translateAppObject(ExperimentParameterData appObject) {
         ExperimentParameterDataInput.Builder builder = ExperimentParameterDataInput.newBuilder()
                 .setThreadCount(appObject.getThreadCount())
                 .setStartRecordingIsScheduled(appObject.stateRecordingIsScheduled())

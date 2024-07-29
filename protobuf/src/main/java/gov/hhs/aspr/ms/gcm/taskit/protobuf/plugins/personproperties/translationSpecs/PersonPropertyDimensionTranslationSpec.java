@@ -6,21 +6,21 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPro
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class PersonPropertyDimensionTranslationSpec
         extends ProtobufTranslationSpec<PersonPropertyDimensionInput, PersonPropertyDimension> {
 
     @Override
-    protected PersonPropertyDimension convertInputObject(PersonPropertyDimensionInput inputObject) {
+    protected PersonPropertyDimension translateInputObject(PersonPropertyDimensionInput inputObject) {
         PersonPropertyDimension.Builder builder = PersonPropertyDimension.builder();
 
-        PersonPropertyId personPropertyId = this.translationEngine.convertObject(inputObject.getPersonPropertyId());
+        PersonPropertyId personPropertyId = this.taskitEngine.translateObject(inputObject.getPersonPropertyId());
 
         builder.setPersonPropertyId(personPropertyId).setTrackTimes(inputObject.getTrackTimes());
 
         for (Any anyValue : inputObject.getValuesList()) {
-            Object value = this.translationEngine.getObjectFromAny(anyValue);
+            Object value = this.taskitEngine.getObjectFromAny(anyValue);
             builder.addValue(value);
         }
 
@@ -28,16 +28,16 @@ public class PersonPropertyDimensionTranslationSpec
     }
 
     @Override
-    protected PersonPropertyDimensionInput convertAppObject(PersonPropertyDimension appObject) {
+    protected PersonPropertyDimensionInput translateAppObject(PersonPropertyDimension appObject) {
         PersonPropertyDimensionInput.Builder builder = PersonPropertyDimensionInput.newBuilder();
 
-        PersonPropertyIdInput personPropertyIdInput = this.translationEngine
-                .convertObjectAsSafeClass(appObject.getPersonPropertyId(), PersonPropertyId.class);
+        PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
+                .translateObjectAsClassSafe(appObject.getPersonPropertyId(), PersonPropertyId.class);
 
         builder.setPersonPropertyId(personPropertyIdInput).setTrackTimes(appObject.getTrackTimes());
 
         for (Object objValue : appObject.getValues()) {
-            builder.addValues(this.translationEngine.getAnyFromObject(objValue));
+            builder.addValues(this.taskitEngine.getAnyFromObject(objValue));
         }
 
         return builder.build();

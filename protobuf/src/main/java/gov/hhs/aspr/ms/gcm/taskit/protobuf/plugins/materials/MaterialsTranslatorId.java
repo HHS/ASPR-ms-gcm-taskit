@@ -1,6 +1,6 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials;
 
-import gov.hhs.aspr.ms.taskit.core.TranslatorId;
+import gov.hhs.aspr.ms.taskit.core.translation.TranslatorId;
 
 /**
  * TranslatorId for the Materials Translator

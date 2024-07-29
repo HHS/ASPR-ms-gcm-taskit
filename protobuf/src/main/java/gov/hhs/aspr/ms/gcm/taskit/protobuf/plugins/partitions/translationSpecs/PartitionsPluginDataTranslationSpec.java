@@ -2,8 +2,8 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.datamanagers.PartitionsPluginData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.data.input.PartitionsPluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -14,9 +14,9 @@ public class PartitionsPluginDataTranslationSpec
         extends ProtobufTranslationSpec<PartitionsPluginDataInput, PartitionsPluginData> {
 
     @Override
-    protected PartitionsPluginData convertInputObject(PartitionsPluginDataInput inputObject) {
+    protected PartitionsPluginData translateInputObject(PartitionsPluginDataInput inputObject) {
         if (!PartitionsPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         PartitionsPluginData.Builder builder = PartitionsPluginData.builder();
@@ -27,7 +27,7 @@ public class PartitionsPluginDataTranslationSpec
     }
 
     @Override
-    protected PartitionsPluginDataInput convertAppObject(PartitionsPluginData appObject) {
+    protected PartitionsPluginDataInput translateAppObject(PartitionsPluginData appObject) {
         PartitionsPluginDataInput.Builder builder = PartitionsPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion()).setSupportRunContinuity(appObject.supportsRunContinuity());

@@ -4,7 +4,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.Filter;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.OrFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.FilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.OrFilterInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -13,15 +13,15 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class OrFilterTranslationSpec extends ProtobufTranslationSpec<OrFilterInput, OrFilter> {
 
     @Override
-    protected OrFilter convertInputObject(OrFilterInput inputObject) {
-        return new OrFilter(this.translationEngine.convertObject(inputObject.getA()),
-                this.translationEngine.convertObject(inputObject.getB()));
+    protected OrFilter translateInputObject(OrFilterInput inputObject) {
+        return new OrFilter(this.taskitEngine.translateObject(inputObject.getA()),
+                this.taskitEngine.translateObject(inputObject.getB()));
     }
 
     @Override
-    protected OrFilterInput convertAppObject(OrFilter appObject) {
-        FilterInput a = this.translationEngine.convertObjectAsSafeClass(appObject.getFirstFilter(), Filter.class);
-        FilterInput b = this.translationEngine.convertObjectAsSafeClass(appObject.getSecondFilter(), Filter.class);
+    protected OrFilterInput translateAppObject(OrFilter appObject) {
+        FilterInput a = this.taskitEngine.translateObjectAsClassSafe(appObject.getFirstFilter(), Filter.class);
+        FilterInput b = this.taskitEngine.translateObjectAsClassSafe(appObject.getSecondFilter(), Filter.class);
         return OrFilterInput.newBuilder().setA(a).setB(b).build();
     }
 

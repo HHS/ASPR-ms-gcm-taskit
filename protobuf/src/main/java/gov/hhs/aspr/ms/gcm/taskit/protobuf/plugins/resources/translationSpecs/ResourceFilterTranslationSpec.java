@@ -6,24 +6,24 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class ResourceFilterTranslationSpec extends ProtobufTranslationSpec<ResourceFilterInput, ResourceFilter> {
 
     @Override
-    protected ResourceFilter convertInputObject(ResourceFilterInput inputObject) {
-        ResourceId resourceId = this.translationEngine.convertObject(inputObject.getResourceId());
-        Equality equality = this.translationEngine.convertObject(inputObject.getEquality());
+    protected ResourceFilter translateInputObject(ResourceFilterInput inputObject) {
+        ResourceId resourceId = this.taskitEngine.translateObject(inputObject.getResourceId());
+        Equality equality = this.taskitEngine.translateObject(inputObject.getEquality());
         long resourceValue = inputObject.getResourceValue();
 
         return new ResourceFilter(resourceId, equality, resourceValue);
     }
 
     @Override
-    protected ResourceFilterInput convertAppObject(ResourceFilter appObject) {
-        ResourceIdInput resourceId = this.translationEngine.convertObjectAsSafeClass(appObject.getResourceId(),
+    protected ResourceFilterInput translateAppObject(ResourceFilter appObject) {
+        ResourceIdInput resourceId = this.taskitEngine.translateObjectAsClassSafe(appObject.getResourceId(),
                 ResourceId.class);
-        EqualityInput equality = this.translationEngine.convertObjectAsSafeClass(appObject.getEquality(),
+        EqualityInput equality = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(),
                 Equality.class);
         long resourceValue = appObject.getResourceValue();
 

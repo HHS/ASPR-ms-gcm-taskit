@@ -3,7 +3,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.support.ResourceInitialization;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceInitializationInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -14,17 +14,17 @@ public class ResourceInitializationTranslationSpec
         extends ProtobufTranslationSpec<ResourceInitializationInput, ResourceInitialization> {
 
     @Override
-    protected ResourceInitialization convertInputObject(ResourceInitializationInput inputObject) {
-        ResourceId resourceId = this.translationEngine.convertObject(inputObject.getResourceId());
+    protected ResourceInitialization translateInputObject(ResourceInitializationInput inputObject) {
+        ResourceId resourceId = this.taskitEngine.translateObject(inputObject.getResourceId());
         long amount = inputObject.getAmount();
         return new ResourceInitialization(resourceId, amount);
     }
 
     @Override
-    protected ResourceInitializationInput convertAppObject(ResourceInitialization appObject) {
+    protected ResourceInitializationInput translateAppObject(ResourceInitialization appObject) {
         return ResourceInitializationInput.newBuilder()
                 .setAmount(appObject.getAmount())
-                .setResourceId(this.translationEngine.getAnyFromObject(appObject.getResourceId()))
+                .setResourceId(this.taskitEngine.getAnyFromObject(appObject.getResourceId()))
                 .build();
     }
 

@@ -6,8 +6,8 @@ import com.google.type.Date;
 
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -17,9 +17,9 @@ import gov.hhs.aspr.ms.util.errors.ContractException;
 public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<SimulationStateInput, SimulationState> {
 
     @Override
-    protected SimulationState convertInputObject(SimulationStateInput inputObject) {
+    protected SimulationState translateInputObject(SimulationStateInput inputObject) {
         if (!SimulationState.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         SimulationState.Builder builder = SimulationState.builder();
@@ -27,7 +27,7 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
         builder.setStartTime(inputObject.getStartTime());
 
         if (inputObject.hasBaseDate()) {
-            LocalDate LocalDate = this.translationEngine.convertObject(inputObject.getBaseDate());
+            LocalDate LocalDate = this.taskitEngine.translateObject(inputObject.getBaseDate());
             builder.setBaseDate(LocalDate);
         }
 
@@ -35,12 +35,12 @@ public class SimulationStateTranslationSpec extends ProtobufTranslationSpec<Simu
     }
 
     @Override
-    protected SimulationStateInput convertAppObject(SimulationState appObject) {
+    protected SimulationStateInput translateAppObject(SimulationState appObject) {
         SimulationStateInput.Builder builder = SimulationStateInput.newBuilder()
                 .setStartTime(appObject.getStartTime())
                 .setVersion(appObject.getVersion());
 
-        Date date = this.translationEngine.convertObject(appObject.getBaseDate());
+        Date date = this.taskitEngine.translateObject(appObject.getBaseDate());
         builder.setBaseDate(date);
 
         return builder.build();

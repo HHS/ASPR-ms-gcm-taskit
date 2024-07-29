@@ -18,8 +18,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyValueMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -31,9 +31,9 @@ public class PersonPropertiesPluginDataTranslationSpec
         extends ProtobufTranslationSpec<PersonPropertiesPluginDataInput, PersonPropertiesPluginData> {
 
     @Override
-    protected PersonPropertiesPluginData convertInputObject(PersonPropertiesPluginDataInput inputObject) {
+    protected PersonPropertiesPluginData translateInputObject(PersonPropertiesPluginDataInput inputObject) {
         if (!PersonPropertiesPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         PersonPropertiesPluginData.Builder builder = PersonPropertiesPluginData.builder();
@@ -41,12 +41,12 @@ public class PersonPropertiesPluginDataTranslationSpec
         Map<Any, PersonPropertyId> personPropIdMap = new LinkedHashMap<>();
 
         for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getPersonPropertyDefinitionsList()) {
-            PersonPropertyId propertyId = this.translationEngine
+            PersonPropertyId propertyId = this.taskitEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
             personPropIdMap.put(propertyDefinitionMapInput.getPropertyId(), propertyId);
 
-            PropertyDefinition propertyDefinition = this.translationEngine
-                    .convertObject(propertyDefinitionMapInput.getPropertyDefinition());
+            PropertyDefinition propertyDefinition = this.taskitEngine
+                    .translateObject(propertyDefinitionMapInput.getPropertyDefinition());
 
             builder.definePersonProperty(propertyId, propertyDefinition,
                     propertyDefinitionMapInput.getPropertyDefinitionTime(),
@@ -60,7 +60,7 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .getPropertyValuesList()) {
                 for (int pId : personPropertyValueInput.getPIdList()) {
                     builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                            this.translationEngine.getObjectFromAny(personPropertyValueInput.getValue()));
+                            this.taskitEngine.getObjectFromAny(personPropertyValueInput.getValue()));
                 }
             }
         }
@@ -81,7 +81,7 @@ public class PersonPropertiesPluginDataTranslationSpec
     }
 
     @Override
-    protected PersonPropertiesPluginDataInput convertAppObject(PersonPropertiesPluginData appObject) {
+    protected PersonPropertiesPluginDataInput translateAppObject(PersonPropertiesPluginData appObject) {
         PersonPropertiesPluginDataInput.Builder builder = PersonPropertiesPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
@@ -96,13 +96,13 @@ public class PersonPropertiesPluginDataTranslationSpec
         for (PersonPropertyId personPropertyId : personPropertyDefinitions.keySet()) {
             PropertyDefinition propertyDefinition = appObject.getPersonPropertyDefinition(personPropertyId);
 
-            PropertyDefinitionInput propertyDefinitionInput = this.translationEngine.convertObject(propertyDefinition);
+            PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine.translateObject(propertyDefinition);
             double propertyDefinitionTime = personPropertyDefinitionTimes.get(personPropertyId);
             boolean propertyTrackingPolicy = personPropertyTimeTrackingPolicies.get(personPropertyId);
 
             PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                     .setPropertyDefinition(propertyDefinitionInput)
-                    .setPropertyId(this.translationEngine.getAnyFromObject(personPropertyId))
+                    .setPropertyId(this.taskitEngine.getAnyFromObject(personPropertyId))
                     .setPropertyDefinitionTime(propertyDefinitionTime)
                     .setPropertyTrackingPolicy(propertyTrackingPolicy)
                     .build();
@@ -123,7 +123,7 @@ public class PersonPropertiesPluginDataTranslationSpec
 
                     if (personPropertyValueInputBuilder == null) {
                         personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder()
-                                .setValue(this.translationEngine.getAnyFromObject(propertyValues.get(i)));
+                                .setValue(this.taskitEngine.getAnyFromObject(propertyValues.get(i)));
 
                         personPropertyInputBuildersMap.put(propertyValues.get(i), personPropertyValueInputBuilder);
                     }
@@ -133,8 +133,8 @@ public class PersonPropertiesPluginDataTranslationSpec
             }
 
             PersonPropertyValueMapInput.Builder valueMapInputBuilder = PersonPropertyValueMapInput.newBuilder()
-                    .setPersonPropertyId((PersonPropertyIdInput) this.translationEngine
-                            .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class));
+                    .setPersonPropertyId((PersonPropertyIdInput) this.taskitEngine
+                            .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class));
 
             for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyInputBuildersMap
                     .values()) {
@@ -171,8 +171,8 @@ public class PersonPropertiesPluginDataTranslationSpec
             }
 
             PersonPropertyTimeMapInput.Builder timeMapInputBuilder = PersonPropertyTimeMapInput.newBuilder()
-                    .setPersonPropertyId((PersonPropertyIdInput) this.translationEngine
-                            .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class));
+                    .setPersonPropertyId((PersonPropertyIdInput) this.taskitEngine
+                            .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class));
 
             for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyInputBuildersMap
                     .values()) {

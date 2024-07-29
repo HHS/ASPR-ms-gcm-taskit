@@ -10,9 +10,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.DimensionTra
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.ExperimentParameterDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.PlannerTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs.SimulationStateTranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for Nucleus Using this Translator will add all the necessary
@@ -23,8 +24,8 @@ public class NucleusTranslator {
     private NucleusTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new SimulationStateTranslationSpec());
         list.add(new PlannerTranslationSpec());
@@ -43,36 +44,40 @@ public class NucleusTranslator {
         Translator.Builder builder = Translator.builder()
                 .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translationEngineBuilder.addFieldToIncludeDefaultValue(
-                            SimulationStateInput.getDescriptor().findFieldByName("startTime"));
-                    
-                    translationEngineBuilder.addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("threadCount"))
-                    .addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("startRecordingIsScheduled"))
-                    .addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("simulationHaltTime"))
-                    .addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("haltOnException"))
-                    .addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("experimentProgressLogPath"))
-                    .addFieldToIncludeDefaultValue(
-                            ExperimentParameterDataInput.getDescriptor().findFieldByName("continueFromProgressLog"));                    
+                    if (taskitEngineBuilder instanceof ProtobufJsonTaskitEngine.Builder) {
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder).addFieldToIncludeDefaultValue(
+                                SimulationStateInput.getDescriptor().findFieldByName("startTime"));
+
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder)
+                                .addFieldToIncludeDefaultValue(
+                                        ExperimentParameterDataInput.getDescriptor().findFieldByName("threadCount"))
+                                .addFieldToIncludeDefaultValue(ExperimentParameterDataInput.getDescriptor()
+                                        .findFieldByName("startRecordingIsScheduled"))
+                                .addFieldToIncludeDefaultValue(ExperimentParameterDataInput.getDescriptor()
+                                        .findFieldByName("simulationHaltTime"))
+                                .addFieldToIncludeDefaultValue(
+                                        ExperimentParameterDataInput.getDescriptor().findFieldByName("haltOnException"))
+                                .addFieldToIncludeDefaultValue(ExperimentParameterDataInput.getDescriptor()
+                                        .findFieldByName("experimentProgressLogPath"))
+                                .addFieldToIncludeDefaultValue(ExperimentParameterDataInput.getDescriptor()
+                                        .findFieldByName("continueFromProgressLog"));
+                    }
+
                 });
 
         return builder;
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * classes within Nucleus
+     * Returns a Translator that includes TranslationSpecs for the classes within
+     * Nucleus
      */
     public static Translator getTranslator() {
         return builder().build();

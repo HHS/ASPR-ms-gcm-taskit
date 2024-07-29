@@ -2,18 +2,18 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.Dimension;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.DimensionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class DimensionTranslationSpec extends ProtobufTranslationSpec<DimensionInput, Dimension> {
 
     @Override
-    protected Dimension convertInputObject(DimensionInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getDimension());
+    protected Dimension translateInputObject(DimensionInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getDimension());
     }
 
     @Override
-    protected DimensionInput convertAppObject(Dimension appObject) {
-        return DimensionInput.newBuilder().setDimension(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected DimensionInput translateAppObject(Dimension appObject) {
+        return DimensionInput.newBuilder().setDimension(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

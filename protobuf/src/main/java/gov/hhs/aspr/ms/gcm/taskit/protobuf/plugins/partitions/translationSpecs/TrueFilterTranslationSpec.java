@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.filters.TrueFilter;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.filters.input.TrueFilterInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,12 +11,12 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class TrueFilterTranslationSpec extends ProtobufTranslationSpec<TrueFilterInput, TrueFilter> {
 
     @Override
-    protected TrueFilter convertInputObject(TrueFilterInput inputObject) {
+    protected TrueFilter translateInputObject(TrueFilterInput inputObject) {
         return new TrueFilter();
     }
 
     @Override
-    protected TrueFilterInput convertAppObject(TrueFilter appObject) {
+    protected TrueFilterInput translateAppObject(TrueFilter appObject) {
         return TrueFilterInput.newBuilder().build();
     }
 

@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.SimpleReportLabelInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -12,14 +12,14 @@ public class SimpleReportLabelTranslationSpec
         extends ProtobufTranslationSpec<SimpleReportLabelInput, SimpleReportLabel> {
 
     @Override
-    protected SimpleReportLabel convertInputObject(SimpleReportLabelInput inputObject) {
-        return new SimpleReportLabel(this.translationEngine.getObjectFromAny(inputObject.getValue()));
+    protected SimpleReportLabel translateInputObject(SimpleReportLabelInput inputObject) {
+        return new SimpleReportLabel(this.taskitEngine.getObjectFromAny(inputObject.getValue()));
     }
 
     @Override
-    protected SimpleReportLabelInput convertAppObject(SimpleReportLabel appObject) {
+    protected SimpleReportLabelInput translateAppObject(SimpleReportLabel appObject) {
         return SimpleReportLabelInput.newBuilder()
-                .setValue(this.translationEngine.getAnyFromObject(appObject.getValue()))
+                .setValue(this.taskitEngine.getAnyFromObject(appObject.getValue()))
                 .build();
     }
 

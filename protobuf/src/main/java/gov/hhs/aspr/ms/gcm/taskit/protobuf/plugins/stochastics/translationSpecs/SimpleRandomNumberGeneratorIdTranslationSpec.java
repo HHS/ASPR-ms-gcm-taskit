@@ -4,7 +4,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.SimpleRandomNumberGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.SimpleReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.SimpleRandomNumberGeneratorIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -14,14 +14,14 @@ public class SimpleRandomNumberGeneratorIdTranslationSpec
         extends ProtobufTranslationSpec<SimpleRandomNumberGeneratorIdInput, SimpleRandomNumberGeneratorId> {
 
     @Override
-    protected SimpleRandomNumberGeneratorId convertInputObject(SimpleRandomNumberGeneratorIdInput inputObject) {
-        return new SimpleRandomNumberGeneratorId(this.translationEngine.getObjectFromAny(inputObject.getValue()));
+    protected SimpleRandomNumberGeneratorId translateInputObject(SimpleRandomNumberGeneratorIdInput inputObject) {
+        return new SimpleRandomNumberGeneratorId(this.taskitEngine.getObjectFromAny(inputObject.getValue()));
     }
 
     @Override
-    protected SimpleRandomNumberGeneratorIdInput convertAppObject(SimpleRandomNumberGeneratorId appObject) {
+    protected SimpleRandomNumberGeneratorIdInput translateAppObject(SimpleRandomNumberGeneratorId appObject) {
         return SimpleRandomNumberGeneratorIdInput.newBuilder()
-                .setValue(this.translationEngine.getAnyFromObject(appObject.getValue()))
+                .setValue(this.taskitEngine.getAnyFromObject(appObject.getValue()))
                 .build();
     }
 

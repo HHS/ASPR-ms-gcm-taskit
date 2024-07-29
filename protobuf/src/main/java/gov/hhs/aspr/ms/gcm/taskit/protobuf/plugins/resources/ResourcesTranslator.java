@@ -17,9 +17,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs.Re
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs.ResourcesPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs.TestResourceIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs.TestResourcePropertyIdTranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Resources Plugin. Using this Translator will add all the
@@ -30,8 +30,8 @@ public class ResourcesTranslator {
     private ResourcesTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new PersonResourceReportPluginDataTranslationSpec());
         list.add(new ResourceFilterTranslationSpec());
@@ -59,11 +59,11 @@ public class ResourcesTranslator {
                 .addDependency(RegionsTranslatorId.TRANSLATOR_ID)
                 .addDependency(ReportsTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
                 });

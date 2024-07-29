@@ -4,22 +4,22 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupsForPersonFilt
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupsForPersonFilterInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.EqualityInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class GroupsForPersonFilterTranslationSpec
         extends ProtobufTranslationSpec<GroupsForPersonFilterInput, GroupsForPersonFilter> {
 
     @Override
-    protected GroupsForPersonFilter convertInputObject(GroupsForPersonFilterInput inputObject) {
-        Equality equality = this.translationEngine.convertObject(inputObject.getEquality());
+    protected GroupsForPersonFilter translateInputObject(GroupsForPersonFilterInput inputObject) {
+        Equality equality = this.taskitEngine.translateObject(inputObject.getEquality());
         int groupCount = inputObject.getGroupCount();
 
         return new GroupsForPersonFilter(equality, groupCount);
     }
 
     @Override
-    protected GroupsForPersonFilterInput convertAppObject(GroupsForPersonFilter appObject) {
-        EqualityInput equalityInput = this.translationEngine.convertObjectAsSafeClass(appObject.getEquality(),
+    protected GroupsForPersonFilterInput translateAppObject(GroupsForPersonFilter appObject) {
+        EqualityInput equalityInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getEquality(),
                 Equality.class);
         int groupCount = appObject.getGroupCount();
 

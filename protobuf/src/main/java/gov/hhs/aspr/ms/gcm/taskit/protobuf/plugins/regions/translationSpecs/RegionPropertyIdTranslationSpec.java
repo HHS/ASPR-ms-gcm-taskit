@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class RegionPropertyIdTranslationSpec extends ProtobufTranslationSpec<RegionPropertyIdInput, RegionPropertyId> {
 
     @Override
-    protected RegionPropertyId convertInputObject(RegionPropertyIdInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getId());
+    protected RegionPropertyId translateInputObject(RegionPropertyIdInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getId());
     }
 
     @Override
-    protected RegionPropertyIdInput convertAppObject(RegionPropertyId appObject) {
-        return RegionPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected RegionPropertyIdInput translateAppObject(RegionPropertyId appObject) {
+        return RegionPropertyIdInput.newBuilder().setId(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

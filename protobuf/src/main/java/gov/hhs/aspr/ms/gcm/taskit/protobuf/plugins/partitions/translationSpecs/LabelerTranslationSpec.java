@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Labeler;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.input.LabelerInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain LabelerInput}
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class LabelerTranslationSpec extends ProtobufTranslationSpec<LabelerInput, Labeler> {
 
     @Override
-    protected Labeler convertInputObject(LabelerInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getLabeler());
+    protected Labeler translateInputObject(LabelerInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getLabeler());
     }
 
     @Override
-    protected LabelerInput convertAppObject(Labeler appObject) {
-        return LabelerInput.newBuilder().setLabeler(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected LabelerInput translateAppObject(Labeler appObject) {
+        return LabelerInput.newBuilder().setLabeler(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

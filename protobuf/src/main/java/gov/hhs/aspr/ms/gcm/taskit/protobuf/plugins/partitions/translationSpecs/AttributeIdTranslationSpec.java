@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.testsupport.attributes.support.AttributeId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.support.attributes.input.AttributeIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class AttributeIdTranslationSpec extends ProtobufTranslationSpec<AttributeIdInput, AttributeId> {
 
     @Override
-    protected AttributeId convertInputObject(AttributeIdInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getId());
+    protected AttributeId translateInputObject(AttributeIdInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getId());
     }
 
     @Override
-    protected AttributeIdInput convertAppObject(AttributeId appObject) {
-        return AttributeIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected AttributeIdInput translateAppObject(AttributeId appObject) {
+        return AttributeIdInput.newBuilder().setId(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

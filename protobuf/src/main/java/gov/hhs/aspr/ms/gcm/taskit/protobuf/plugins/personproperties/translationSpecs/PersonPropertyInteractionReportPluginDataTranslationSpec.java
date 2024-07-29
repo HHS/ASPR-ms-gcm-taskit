@@ -8,8 +8,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -21,22 +21,22 @@ public class PersonPropertyInteractionReportPluginDataTranslationSpec extends
         ProtobufTranslationSpec<PersonPropertyInteractionReportPluginDataInput, PersonPropertyInteractionReportPluginData> {
 
     @Override
-    protected PersonPropertyInteractionReportPluginData convertInputObject(
+    protected PersonPropertyInteractionReportPluginData translateInputObject(
             PersonPropertyInteractionReportPluginDataInput inputObject) {
         if (!PersonPropertyInteractionReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         PersonPropertyInteractionReportPluginData.Builder builder = PersonPropertyInteractionReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
         builder.setReportLabel(reportLabel);
 
-        ReportPeriod reportPeriod = this.translationEngine.convertObject(inputObject.getReportPeriod());
+        ReportPeriod reportPeriod = this.taskitEngine.translateObject(inputObject.getReportPeriod());
         builder.setReportPeriod(reportPeriod);
 
         for (PersonPropertyIdInput personPropertyIdInput : inputObject.getPersonPropertyIdsList()) {
-            PersonPropertyId personPropertyId = this.translationEngine.convertObject(personPropertyIdInput);
+            PersonPropertyId personPropertyId = this.taskitEngine.translateObject(personPropertyIdInput);
             builder.addPersonPropertyId(personPropertyId);
         }
 
@@ -44,22 +44,22 @@ public class PersonPropertyInteractionReportPluginDataTranslationSpec extends
     }
 
     @Override
-    protected PersonPropertyInteractionReportPluginDataInput convertAppObject(
+    protected PersonPropertyInteractionReportPluginDataInput translateAppObject(
             PersonPropertyInteractionReportPluginData appObject) {
         PersonPropertyInteractionReportPluginDataInput.Builder builder = PersonPropertyInteractionReportPluginDataInput
                 .newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
-        ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
+        ReportPeriodInput reportPeriodInput = this.taskitEngine.translateObject(appObject.getReportPeriod());
 
         builder.setReportLabel(reportLabelInput).setReportPeriod(reportPeriodInput);
 
         for (PersonPropertyId personPropertyId : appObject.getPersonPropertyIds()) {
-            PersonPropertyIdInput personPropertyIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(personPropertyId, PersonPropertyId.class);
+            PersonPropertyIdInput personPropertyIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class);
             builder.addPersonPropertyIds(personPropertyIdInput);
         }
 

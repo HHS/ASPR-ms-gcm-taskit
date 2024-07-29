@@ -24,9 +24,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslatorId;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Materials Plugin. Using this Translator will add all the
@@ -37,8 +38,8 @@ public class MaterialsTranslator {
     private MaterialsTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new MaterialsPluginDataTranslationSpec());
         list.add(new MaterialIdTranslationSpec());
@@ -71,24 +72,26 @@ public class MaterialsTranslator {
                 .addDependency(RegionsTranslatorId.TRANSLATOR_ID)
                 .addDependency(ReportsTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translationEngineBuilder
-                            .addFieldToIncludeDefaultValue(BatchIdInput.getDescriptor().findFieldByName("id"))
-                            .addFieldToIncludeDefaultValue(StageIdInput.getDescriptor().findFieldByName("id"));
+                    if (taskitEngineBuilder instanceof ProtobufJsonTaskitEngine.Builder) {
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder)
+                                .addFieldToIncludeDefaultValue(BatchIdInput.getDescriptor().findFieldByName("id"))
+                                .addFieldToIncludeDefaultValue(StageIdInput.getDescriptor().findFieldByName("id"));
+                    }
+
                 });
 
         return builder;
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * MaterialsPlugin.
+     * Returns a Translator that includes TranslationSpecs for the MaterialsPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

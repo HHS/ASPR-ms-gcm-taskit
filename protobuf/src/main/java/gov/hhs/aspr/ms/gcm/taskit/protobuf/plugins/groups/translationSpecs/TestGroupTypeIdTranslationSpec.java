@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupTypeId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.testsupport.input.TestGroupTypeIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,12 +11,12 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class TestGroupTypeIdTranslationSpec extends ProtobufTranslationSpec<TestGroupTypeIdInput, TestGroupTypeId> {
 
     @Override
-    protected TestGroupTypeId convertInputObject(TestGroupTypeIdInput inputObject) {
+    protected TestGroupTypeId translateInputObject(TestGroupTypeIdInput inputObject) {
         return TestGroupTypeId.valueOf(inputObject.name());
     }
 
     @Override
-    protected TestGroupTypeIdInput convertAppObject(TestGroupTypeId appObject) {
+    protected TestGroupTypeIdInput translateAppObject(TestGroupTypeId appObject) {
         return TestGroupTypeIdInput.valueOf(appObject.name());
     }
 

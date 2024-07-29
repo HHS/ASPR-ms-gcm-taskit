@@ -6,21 +6,21 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPro
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class GlobalPropertyDimensionTranslationSpec
         extends ProtobufTranslationSpec<GlobalPropertyDimensionInput, GlobalPropertyDimension> {
 
     @Override
-    protected GlobalPropertyDimension convertInputObject(GlobalPropertyDimensionInput inputObject) {
+    protected GlobalPropertyDimension translateInputObject(GlobalPropertyDimensionInput inputObject) {
         GlobalPropertyDimension.Builder builder = GlobalPropertyDimension.builder();
 
-        GlobalPropertyId globalPropertyId = this.translationEngine.convertObject(inputObject.getGlobalPropertyId());
+        GlobalPropertyId globalPropertyId = this.taskitEngine.translateObject(inputObject.getGlobalPropertyId());
 
         builder.setGlobalPropertyId(globalPropertyId).setAssignmentTime(inputObject.getAssignmentTime());
 
         for (Any anyValue : inputObject.getValuesList()) {
-            Object value = this.translationEngine.getObjectFromAny(anyValue);
+            Object value = this.taskitEngine.getObjectFromAny(anyValue);
             builder.addValue(value);
         }
 
@@ -28,16 +28,16 @@ public class GlobalPropertyDimensionTranslationSpec
     }
 
     @Override
-    protected GlobalPropertyDimensionInput convertAppObject(GlobalPropertyDimension appObject) {
+    protected GlobalPropertyDimensionInput translateAppObject(GlobalPropertyDimension appObject) {
         GlobalPropertyDimensionInput.Builder builder = GlobalPropertyDimensionInput.newBuilder();
 
-        GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
-                .convertObjectAsSafeClass(appObject.getGlobalPropertyId(), GlobalPropertyId.class);
+        GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine
+                .translateObjectAsClassSafe(appObject.getGlobalPropertyId(), GlobalPropertyId.class);
 
         builder.setGlobalPropertyId(globalPropertyIdInput).setAssignmentTime(appObject.getAssignmentTime());
 
         for (Object objValue : appObject.getValues()) {
-            builder.addValues(this.translationEngine.getAnyFromObject(objValue));
+            builder.addValues(this.taskitEngine.getAnyFromObject(objValue));
         }
 
         return builder.build();

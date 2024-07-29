@@ -6,8 +6,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.reports.input.GlobalPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -19,25 +19,25 @@ public class GlobalPropertyReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<GlobalPropertyReportPluginDataInput, GlobalPropertyReportPluginData> {
 
     @Override
-    protected GlobalPropertyReportPluginData convertInputObject(GlobalPropertyReportPluginDataInput inputObject) {
+    protected GlobalPropertyReportPluginData translateInputObject(GlobalPropertyReportPluginDataInput inputObject) {
         if (!GlobalPropertyReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         GlobalPropertyReportPluginData.Builder builder = GlobalPropertyReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
         builder.setReportLabel(reportLabel);
 
         builder.setDefaultInclusion(inputObject.getDefaultInclusionPolicy());
 
         for (GlobalPropertyIdInput globalPropertyIdInput : inputObject.getIncludedPropertiesList()) {
-            GlobalPropertyId globalPropertyId = this.translationEngine.convertObject(globalPropertyIdInput);
+            GlobalPropertyId globalPropertyId = this.taskitEngine.translateObject(globalPropertyIdInput);
             builder.includeGlobalProperty(globalPropertyId);
         }
 
         for (GlobalPropertyIdInput globalPropertyIdInput : inputObject.getExcludedPropertiesList()) {
-            GlobalPropertyId globalPropertyId = this.translationEngine.convertObject(globalPropertyIdInput);
+            GlobalPropertyId globalPropertyId = this.taskitEngine.translateObject(globalPropertyIdInput);
             builder.excludeGlobalProperty(globalPropertyId);
         }
 
@@ -45,25 +45,25 @@ public class GlobalPropertyReportPluginDataTranslationSpec
     }
 
     @Override
-    protected GlobalPropertyReportPluginDataInput convertAppObject(GlobalPropertyReportPluginData appObject) {
+    protected GlobalPropertyReportPluginDataInput translateAppObject(GlobalPropertyReportPluginData appObject) {
         GlobalPropertyReportPluginDataInput.Builder builder = GlobalPropertyReportPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
 
         builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy()).setReportLabel(reportLabelInput);
 
         for (GlobalPropertyId globalPropertyId : appObject.getIncludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(globalPropertyId, GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(globalPropertyId, GlobalPropertyId.class);
             builder.addIncludedProperties(globalPropertyIdInput);
         }
 
         for (GlobalPropertyId globalPropertyId : appObject.getExcludedProperties()) {
-            GlobalPropertyIdInput globalPropertyIdInput = this.translationEngine
-                    .convertObjectAsSafeClass(globalPropertyId, GlobalPropertyId.class);
+            GlobalPropertyIdInput globalPropertyIdInput = this.taskitEngine
+                    .translateObjectAsClassSafe(globalPropertyId, GlobalPropertyId.class);
             builder.addExcludedProperties(globalPropertyIdInput);
         }
 

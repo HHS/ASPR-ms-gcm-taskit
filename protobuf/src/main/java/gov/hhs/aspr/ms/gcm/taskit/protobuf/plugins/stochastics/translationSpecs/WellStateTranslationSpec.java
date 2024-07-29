@@ -7,7 +7,7 @@ import com.google.protobuf.ByteString;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.WellState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.WellStateInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -16,7 +16,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class WellStateTranslationSpec extends ProtobufTranslationSpec<WellStateInput, WellState> {
 
     @Override
-    protected WellState convertInputObject(WellStateInput inputObject) {
+    protected WellState translateInputObject(WellStateInput inputObject) {
         WellState.Builder builder = WellState.builder();
 
         builder.setSeed(inputObject.getSeed());
@@ -32,7 +32,7 @@ public class WellStateTranslationSpec extends ProtobufTranslationSpec<WellStateI
     }
 
     @Override
-    protected WellStateInput convertAppObject(WellState appObject) {
+    protected WellStateInput translateAppObject(WellState appObject) {
         WellStateInput.Builder builder = WellStateInput.newBuilder();
 
         builder.setSeed(appObject.getSeed());

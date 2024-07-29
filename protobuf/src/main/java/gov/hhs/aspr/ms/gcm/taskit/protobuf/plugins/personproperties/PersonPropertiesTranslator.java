@@ -14,9 +14,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationS
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translationSpecs.TestPersonPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the PersonProperties Plugin. Using this Translator will add
@@ -28,8 +29,8 @@ public class PersonPropertiesTranslator {
     private PersonPropertiesTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new PersonPropertiesPluginDataTranslationSpec());
         list.add(new PersonPropertyDimensionTranslationSpec());
@@ -53,15 +54,17 @@ public class PersonPropertiesTranslator {
                 .addDependency(PeopleTranslatorId.TRANSLATOR_ID)
                 .addDependency(ReportsTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translationEngineBuilder.addFieldToIncludeDefaultValue(
-                            PersonPropertyValueInput.getDescriptor().findFieldByName("pId"));
+                    if (taskitEngineBuilder instanceof ProtobufJsonTaskitEngine.Builder) {
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder).addFieldToIncludeDefaultValue(
+                                PersonPropertyValueInput.getDescriptor().findFieldByName("pId"));
+                    }
 
                 });
 

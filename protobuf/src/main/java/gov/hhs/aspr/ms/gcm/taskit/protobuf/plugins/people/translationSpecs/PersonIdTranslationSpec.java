@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.support.input.PersonIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,12 +11,12 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class PersonIdTranslationSpec extends ProtobufTranslationSpec<PersonIdInput, PersonId> {
 
     @Override
-    protected PersonId convertInputObject(PersonIdInput inputObject) {
+    protected PersonId translateInputObject(PersonIdInput inputObject) {
         return new PersonId(inputObject.getId());
     }
 
     @Override
-    protected PersonIdInput convertAppObject(PersonId appObject) {
+    protected PersonIdInput translateAppObject(PersonId appObject) {
         return PersonIdInput.newBuilder().setId(appObject.getValue()).build();
     }
 

@@ -4,8 +4,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.reports.StageReportPlugi
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.StageReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -17,26 +17,26 @@ public class StageReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<StageReportPluginDataInput, StageReportPluginData> {
 
     @Override
-    protected StageReportPluginData convertInputObject(StageReportPluginDataInput inputObject) {
+    protected StageReportPluginData translateInputObject(StageReportPluginDataInput inputObject) {
         if (!StageReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
 
         builder.setReportLabel(reportLabel);
         return builder.build();
     }
 
     @Override
-    protected StageReportPluginDataInput convertAppObject(StageReportPluginData appObject) {
+    protected StageReportPluginDataInput translateAppObject(StageReportPluginData appObject) {
         StageReportPluginDataInput.Builder builder = StageReportPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
 
         builder.setReportLabel(reportLabelInput);

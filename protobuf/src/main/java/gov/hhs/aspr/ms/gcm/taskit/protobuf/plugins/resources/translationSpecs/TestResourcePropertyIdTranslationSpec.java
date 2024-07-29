@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.resources.testsupport.TestResourcePropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.testsupport.input.TestResourcePropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -13,12 +13,12 @@ public class TestResourcePropertyIdTranslationSpec
         extends ProtobufTranslationSpec<TestResourcePropertyIdInput, TestResourcePropertyId> {
 
     @Override
-    protected TestResourcePropertyId convertInputObject(TestResourcePropertyIdInput inputObject) {
+    protected TestResourcePropertyId translateInputObject(TestResourcePropertyIdInput inputObject) {
         return TestResourcePropertyId.valueOf(inputObject.name());
     }
 
     @Override
-    protected TestResourcePropertyIdInput convertAppObject(TestResourcePropertyId appObject) {
+    protected TestResourcePropertyIdInput translateAppObject(TestResourcePropertyId appObject) {
         return TestResourcePropertyIdInput.valueOf(appObject.name());
     }
 

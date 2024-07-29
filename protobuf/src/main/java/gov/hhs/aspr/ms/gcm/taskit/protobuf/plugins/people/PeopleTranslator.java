@@ -7,9 +7,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.support.input.PersonId
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PeoplePluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PersonIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PersonRangeTranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the People Plugin. Using this Translator will add all the
@@ -20,8 +21,8 @@ public class PeopleTranslator {
     private PeopleTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new PeoplePluginDataTranslationSpec());
         list.add(new PersonIdTranslationSpec());
@@ -38,22 +39,23 @@ public class PeopleTranslator {
         return Translator.builder()
                 .setTranslatorId(PeopleTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    translationEngineBuilder.addTranslationSpec(new PeoplePluginDataTranslationSpec())
-                            .addTranslationSpec(new PersonIdTranslationSpec())
-                            .addTranslationSpec(new PersonRangeTranslationSpec());
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
+                    }
 
-                    translationEngineBuilder
-                            .addFieldToIncludeDefaultValue(PersonIdInput.getDescriptor().findFieldByName("id"));
+                    if (taskitEngineBuilder instanceof ProtobufJsonTaskitEngine.Builder) {
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder)
+                                .addFieldToIncludeDefaultValue(PersonIdInput.getDescriptor().findFieldByName("id"));
+                    }
                 });
 
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * PeoplePlugin.
+     * Returns a Translator that includes TranslationSpecs for the PeoplePlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

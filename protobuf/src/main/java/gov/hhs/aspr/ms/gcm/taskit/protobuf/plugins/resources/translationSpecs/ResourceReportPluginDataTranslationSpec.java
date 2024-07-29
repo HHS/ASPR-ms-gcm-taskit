@@ -8,8 +8,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportL
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourceReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceIdInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -21,27 +21,27 @@ public class ResourceReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<ResourceReportPluginDataInput, ResourceReportPluginData> {
 
     @Override
-    protected ResourceReportPluginData convertInputObject(ResourceReportPluginDataInput inputObject) {
+    protected ResourceReportPluginData translateInputObject(ResourceReportPluginDataInput inputObject) {
         if (!ResourceReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         ResourceReportPluginData.Builder builder = ResourceReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
-        ReportPeriod reportPeriod = this.translationEngine.convertObject(inputObject.getReportPeriod());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
+        ReportPeriod reportPeriod = this.taskitEngine.translateObject(inputObject.getReportPeriod());
 
         builder.setReportLabel(reportLabel)
                 .setReportPeriod(reportPeriod)
                 .setDefaultInclusion(inputObject.getDefaultInclusionPolicy());
 
         for (ResourceIdInput resourceIdInput : inputObject.getIncludedPropertiesList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(resourceIdInput);
+            ResourceId resourceId = this.taskitEngine.translateObject(resourceIdInput);
             builder.includeResource(resourceId);
         }
 
         for (ResourceIdInput resourceIdInput : inputObject.getExcludedPropertiesList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(resourceIdInput);
+            ResourceId resourceId = this.taskitEngine.translateObject(resourceIdInput);
             builder.excludeResource(resourceId);
         }
 
@@ -49,27 +49,27 @@ public class ResourceReportPluginDataTranslationSpec
     }
 
     @Override
-    protected ResourceReportPluginDataInput convertAppObject(ResourceReportPluginData appObject) {
+    protected ResourceReportPluginDataInput translateAppObject(ResourceReportPluginData appObject) {
         ResourceReportPluginDataInput.Builder builder = ResourceReportPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
-        ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
+        ReportPeriodInput reportPeriodInput = this.taskitEngine.translateObject(appObject.getReportPeriod());
 
         builder.setDefaultInclusionPolicy(appObject.getDefaultInclusionPolicy())
                 .setReportPeriod(reportPeriodInput)
                 .setReportLabel(reportLabelInput);
 
         for (ResourceId resourceId : appObject.getIncludedResourceIds()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
             builder.addIncludedProperties(resourceIdInput);
         }
 
         for (ResourceId resourceId : appObject.getExcludedResourceIds()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
             builder.addExcludedProperties(resourceIdInput);
         }

@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -11,13 +11,13 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class GroupPropertyIdTranslationSpec extends ProtobufTranslationSpec<GroupPropertyIdInput, GroupPropertyId> {
 
     @Override
-    protected GroupPropertyId convertInputObject(GroupPropertyIdInput inputObject) {
-        return this.translationEngine.getObjectFromAny(inputObject.getId());
+    protected GroupPropertyId translateInputObject(GroupPropertyIdInput inputObject) {
+        return this.taskitEngine.getObjectFromAny(inputObject.getId());
     }
 
     @Override
-    protected GroupPropertyIdInput convertAppObject(GroupPropertyId appObject) {
-        return GroupPropertyIdInput.newBuilder().setId(this.translationEngine.getAnyFromObject(appObject)).build();
+    protected GroupPropertyIdInput translateAppObject(GroupPropertyId appObject) {
+        return GroupPropertyIdInput.newBuilder().setId(this.taskitEngine.getAnyFromObject(appObject)).build();
     }
 
     @Override

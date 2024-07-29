@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.BatchId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.BatchIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain BatchIdInput}
@@ -11,12 +11,12 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class BatchIdTranslationSpec extends ProtobufTranslationSpec<BatchIdInput, BatchId> {
 
     @Override
-    protected BatchId convertInputObject(BatchIdInput inputObject) {
+    protected BatchId translateInputObject(BatchIdInput inputObject) {
         return new BatchId(inputObject.getId());
     }
 
     @Override
-    protected BatchIdInput convertAppObject(BatchId appObject) {
+    protected BatchIdInput translateAppObject(BatchId appObject) {
         return BatchIdInput.newBuilder().setId(appObject.getValue()).build();
     }
 

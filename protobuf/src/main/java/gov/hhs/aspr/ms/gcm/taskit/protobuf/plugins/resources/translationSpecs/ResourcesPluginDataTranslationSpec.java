@@ -26,8 +26,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.Resou
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourceInitializationInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourcePropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourcePropertyValueMapInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -38,49 +38,49 @@ public class ResourcesPluginDataTranslationSpec
         extends ProtobufTranslationSpec<ResourcesPluginDataInput, ResourcesPluginData> {
 
     @Override
-    protected ResourcesPluginData convertInputObject(ResourcesPluginDataInput inputObject) {
+    protected ResourcesPluginData translateInputObject(ResourcesPluginDataInput inputObject) {
         if (!ResourcesPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         ResourcesPluginData.Builder builder = ResourcesPluginData.builder();
 
         for (ResourceIdMapInput resourceIdInput : inputObject.getResourceIdsList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(resourceIdInput.getResourceId());
+            ResourceId resourceId = this.taskitEngine.translateObject(resourceIdInput.getResourceId());
             builder.addResource(resourceId, resourceIdInput.getResourceTime(),
                     resourceIdInput.getResourceTimeTrackingPolicy());
         }
 
         for (ResourcePropertyDefinitionMapInput resourcePropertyDefinitionMapInput : inputObject
                 .getResourcePropertyDefinitionsList()) {
-            ResourceId resourceId = this.translationEngine
-                    .convertObject(resourcePropertyDefinitionMapInput.getResourceId());
+            ResourceId resourceId = this.taskitEngine
+                    .translateObject(resourcePropertyDefinitionMapInput.getResourceId());
 
             PropertyDefinitionMapInput propertyDefinitionMapInput = resourcePropertyDefinitionMapInput
                     .getResourcePropertyDefinitionMap();
 
-            ResourcePropertyId resourcePropertyId = this.translationEngine
+            ResourcePropertyId resourcePropertyId = this.taskitEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
-            PropertyDefinition propertyDefinition = this.translationEngine
-                    .convertObject(propertyDefinitionMapInput.getPropertyDefinition());
+            PropertyDefinition propertyDefinition = this.taskitEngine
+                    .translateObject(propertyDefinitionMapInput.getPropertyDefinition());
 
             builder.defineResourceProperty(resourceId, resourcePropertyId, propertyDefinition);
         }
 
         for (ResourcePropertyValueMapInput resourcePropertyValueMapInput : inputObject
                 .getResourcePropertyValuesList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(resourcePropertyValueMapInput.getResourceId());
+            ResourceId resourceId = this.taskitEngine.translateObject(resourcePropertyValueMapInput.getResourceId());
 
             PropertyValueMapInput propertyValueMapInput = resourcePropertyValueMapInput.getResourcePropertyValueMap();
-            ResourcePropertyId resourcePropertyId = this.translationEngine
+            ResourcePropertyId resourcePropertyId = this.taskitEngine
                     .getObjectFromAny(propertyValueMapInput.getPropertyId());
-            Object propertyValue = this.translationEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
+            Object propertyValue = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
             builder.setResourcePropertyValue(resourceId, resourcePropertyId, propertyValue);
         }
 
         for (PersonResourceLevelMapInput personResourceLevelsInput : inputObject.getPersonResourceLevelsList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(personResourceLevelsInput.getResourceId());
+            ResourceId resourceId = this.taskitEngine.translateObject(personResourceLevelsInput.getResourceId());
 
             for (PersonResourceLevelInput personResourceInput : personResourceLevelsInput
                     .getPersonResourceLevelsList()) {
@@ -92,7 +92,7 @@ public class ResourcesPluginDataTranslationSpec
         }
 
         for (PersonResourceTimeMapInput personResourceTimesInput : inputObject.getPersonResourceTimesList()) {
-            ResourceId resourceId = this.translationEngine.convertObject(personResourceTimesInput.getResourceId());
+            ResourceId resourceId = this.taskitEngine.translateObject(personResourceTimesInput.getResourceId());
 
             for (PersonResourceTimeInput personResourceInput : personResourceTimesInput.getPersonResourceTimesList()) {
                 PersonId personId = new PersonId(personResourceInput.getPersonId());
@@ -103,12 +103,12 @@ public class ResourcesPluginDataTranslationSpec
         }
 
         for (RegionResourceLevelMapInput regionResourceLevelsInput : inputObject.getRegionResourceLevelsList()) {
-            RegionId regionId = this.translationEngine.convertObject(regionResourceLevelsInput.getRegionId());
+            RegionId regionId = this.taskitEngine.translateObject(regionResourceLevelsInput.getRegionId());
 
             for (ResourceInitializationInput resourceInitializationInput : regionResourceLevelsInput
                     .getRegionResourceLevelsList()) {
-                ResourceInitialization resourceInitialization = this.translationEngine
-                        .convertObject(resourceInitializationInput);
+                ResourceInitialization resourceInitialization = this.taskitEngine
+                        .translateObject(resourceInitializationInput);
 
                 builder.setRegionResourceLevel(regionId, resourceInitialization.getResourceId(),
                         resourceInitialization.getAmount());
@@ -119,7 +119,7 @@ public class ResourcesPluginDataTranslationSpec
     }
 
     @Override
-    protected ResourcesPluginDataInput convertAppObject(ResourcesPluginData appObject) {
+    protected ResourcesPluginDataInput translateAppObject(ResourcesPluginData appObject) {
         ResourcesPluginDataInput.Builder builder = ResourcesPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
@@ -134,7 +134,7 @@ public class ResourcesPluginDataTranslationSpec
 
         // Resource Ids
         for (ResourceId resourceId : resourceDefaultTimes.keySet()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
 
             ResourceIdMapInput resourceIdMapInput = ResourceIdMapInput.newBuilder()
@@ -148,19 +148,19 @@ public class ResourcesPluginDataTranslationSpec
 
         // Resource Property Defs
         for (ResourceId resourceId : resourcePropDefs.keySet()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
 
             for (ResourcePropertyId resourcePropertyId : resourcePropDefs.get(resourceId).keySet()) {
                 ResourcePropertyDefinitionMapInput.Builder resourcePropDefBuilder = ResourcePropertyDefinitionMapInput
                         .newBuilder();
 
-                PropertyDefinitionInput propertyDefinitionInput = this.translationEngine
-                        .convertObject(appObject.getResourcePropertyDefinition(resourceId, resourcePropertyId));
+                PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine
+                        .translateObject(appObject.getResourcePropertyDefinition(resourceId, resourcePropertyId));
 
                 PropertyDefinitionMapInput propertyDefInput = PropertyDefinitionMapInput.newBuilder()
                         .setPropertyDefinition(propertyDefinitionInput)
-                        .setPropertyId(this.translationEngine.getAnyFromObject(resourcePropertyId))
+                        .setPropertyId(this.taskitEngine.getAnyFromObject(resourcePropertyId))
                         .build();
 
                 resourcePropDefBuilder.setResourcePropertyDefinitionMap(propertyDefInput)
@@ -173,7 +173,7 @@ public class ResourcesPluginDataTranslationSpec
 
         // Resource Property Values
         for (ResourceId resourceId : resourcePropValues.keySet()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
 
             for (ResourcePropertyId resourcePropertyId : resourcePropValues.get(resourceId).keySet()) {
@@ -183,8 +183,8 @@ public class ResourcesPluginDataTranslationSpec
                 Object propertyValue = appObject.getResourcePropertyValue(resourceId, resourcePropertyId).get();
 
                 PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
-                        .setPropertyValue(this.translationEngine.getAnyFromObject(propertyValue))
-                        .setPropertyId(this.translationEngine.getAnyFromObject(resourcePropertyId))
+                        .setPropertyValue(this.taskitEngine.getAnyFromObject(propertyValue))
+                        .setPropertyId(this.taskitEngine.getAnyFromObject(resourcePropertyId))
                         .build();
 
                 resourcePropValBuilder.setResourcePropertyValueMap(propertyValueMapInput)
@@ -196,7 +196,7 @@ public class ResourcesPluginDataTranslationSpec
 
         // Region Resource Values
         for (RegionId regionId : regionResourceLevels.keySet()) {
-            RegionIdInput regionIdInput = this.translationEngine.convertObjectAsSafeClass(regionId, RegionId.class);
+            RegionIdInput regionIdInput = this.taskitEngine.translateObjectAsClassSafe(regionId, RegionId.class);
 
             RegionResourceLevelMapInput.Builder regionResourceLevelsBuilder = RegionResourceLevelMapInput.newBuilder()
                     .setRegionId(regionIdInput);
@@ -206,8 +206,8 @@ public class ResourcesPluginDataTranslationSpec
 
                 ResourceInitialization resourceInitialization = new ResourceInitialization(resourceId,
                         regionResourceLevel);
-                ResourceInitializationInput resourceInitializationInput = this.translationEngine
-                        .convertObject(resourceInitialization);
+                ResourceInitializationInput resourceInitializationInput = this.taskitEngine
+                        .translateObject(resourceInitialization);
                 regionResourceLevelsBuilder.addRegionResourceLevels(resourceInitializationInput);
 
             }
@@ -217,7 +217,7 @@ public class ResourcesPluginDataTranslationSpec
 
         // Person Resource Levels
         for (ResourceId resourceId : personResourceLevels.keySet()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
             List<Long> resourceLevels = personResourceLevels.get(resourceId);
 
@@ -250,7 +250,7 @@ public class ResourcesPluginDataTranslationSpec
 
         // Person Resource Times
         for (ResourceId resourceId : personResourceTimes.keySet()) {
-            ResourceIdInput resourceIdInput = this.translationEngine.convertObjectAsSafeClass(resourceId,
+            ResourceIdInput resourceIdInput = this.taskitEngine.translateObjectAsClassSafe(resourceId,
                     ResourceId.class);
 
             List<Double> resourceTimes = appObject.getPersonResourceTimes(resourceId);

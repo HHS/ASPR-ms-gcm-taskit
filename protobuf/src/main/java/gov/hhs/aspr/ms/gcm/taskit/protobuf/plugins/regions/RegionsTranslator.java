@@ -18,9 +18,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.Simp
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.TestRegionIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translationSpecs.TestRegionPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Regions Plugin. Using this Translator will add all the
@@ -31,8 +32,8 @@ public class RegionsTranslator {
     private RegionsTranslator() {
     }
 
-    protected static List<TranslationSpec<?, ?>> getTranslationSpecs() {
-        List<TranslationSpec<?, ?>> list = new ArrayList<>();
+    protected static List<ProtobufTranslationSpec<?, ?>> getTranslationSpecs() {
+        List<ProtobufTranslationSpec<?, ?>> list = new ArrayList<>();
 
         list.add(new RegionFilterTranslationSpec());
         list.add(new RegionIdTranslationSpec());
@@ -60,15 +61,17 @@ public class RegionsTranslator {
                 .addDependency(PropertiesTranslatorId.TRANSLATOR_ID)
                 .addDependency(ReportsTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translationEngineBuilder.addFieldToIncludeDefaultValue(
-                            RegionPersonInfo.getDescriptor().findFieldByName("personId"));
+                    if (taskitEngineBuilder instanceof ProtobufJsonTaskitEngine.Builder) {
+                        ((ProtobufJsonTaskitEngine.Builder) taskitEngineBuilder).addFieldToIncludeDefaultValue(
+                                RegionPersonInfo.getDescriptor().findFieldByName("personId"));
+                    }
 
                 });
 
@@ -76,8 +79,7 @@ public class RegionsTranslator {
     }
 
     /**
-     * Returns a Translator that includes TranslationSpecs for the
-     * RegionsPlugin.
+     * Returns a Translator that includes TranslationSpecs for the RegionsPlugin.
      */
     public static Translator getTranslator() {
         return builder().build();

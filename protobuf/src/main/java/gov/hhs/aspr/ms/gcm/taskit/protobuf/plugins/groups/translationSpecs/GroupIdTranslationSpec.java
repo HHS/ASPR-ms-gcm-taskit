@@ -2,7 +2,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translationSpecs;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between {@linkplain GroupIdInput}
@@ -11,12 +11,12 @@ import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
 public class GroupIdTranslationSpec extends ProtobufTranslationSpec<GroupIdInput, GroupId> {
 
     @Override
-    protected GroupId convertInputObject(GroupIdInput inputObject) {
+    protected GroupId translateInputObject(GroupIdInput inputObject) {
         return new GroupId(inputObject.getId());
     }
 
     @Override
-    protected GroupIdInput convertAppObject(GroupId appObject) {
+    protected GroupIdInput translateAppObject(GroupId appObject) {
         return GroupIdInput.newBuilder().setId(appObject.getValue()).build();
     }
 

@@ -9,8 +9,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.data.input.G
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyValueMapInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -22,18 +22,18 @@ public class GlobalPropertiesPluginDataTranslationSpec
         extends ProtobufTranslationSpec<GlobalPropertiesPluginDataInput, GlobalPropertiesPluginData> {
 
     @Override
-    protected GlobalPropertiesPluginData convertInputObject(GlobalPropertiesPluginDataInput inputObject) {
+    protected GlobalPropertiesPluginData translateInputObject(GlobalPropertiesPluginDataInput inputObject) {
         if (!GlobalPropertiesPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         GlobalPropertiesPluginData.Builder builder = GlobalPropertiesPluginData.builder();
 
         for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getGlobalPropertyDefinitinionsList()) {
-            GlobalPropertyId propertyId = this.translationEngine
+            GlobalPropertyId propertyId = this.taskitEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
-            PropertyDefinition propertyDefinition = this.translationEngine
-                    .convertObject(propertyDefinitionMapInput.getPropertyDefinition());
+            PropertyDefinition propertyDefinition = this.taskitEngine
+                    .translateObject(propertyDefinitionMapInput.getPropertyDefinition());
 
             builder.defineGlobalProperty(propertyId, propertyDefinition,
                     propertyDefinitionMapInput.getPropertyDefinitionTime());
@@ -41,9 +41,9 @@ public class GlobalPropertiesPluginDataTranslationSpec
 
         for (PropertyValueMapInput propertyValueMapInput : inputObject.getGlobalPropertyValuesList()) {
 
-            GlobalPropertyId propertyId = this.translationEngine
+            GlobalPropertyId propertyId = this.taskitEngine
                     .getObjectFromAny(propertyValueMapInput.getPropertyId());
-            Object value = this.translationEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
+            Object value = this.taskitEngine.getObjectFromAny(propertyValueMapInput.getPropertyValue());
 
             builder.setGlobalPropertyValue(propertyId, value, propertyValueMapInput.getPropertyValueTime());
         }
@@ -52,7 +52,7 @@ public class GlobalPropertiesPluginDataTranslationSpec
     }
 
     @Override
-    protected GlobalPropertiesPluginDataInput convertAppObject(GlobalPropertiesPluginData appObject) {
+    protected GlobalPropertiesPluginDataInput translateAppObject(GlobalPropertiesPluginData appObject) {
         GlobalPropertiesPluginDataInput.Builder builder = GlobalPropertiesPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
@@ -60,11 +60,11 @@ public class GlobalPropertiesPluginDataTranslationSpec
         for (GlobalPropertyId globalPropertyId : appObject.getGlobalPropertyDefinitions().keySet()) {
             PropertyDefinition propertyDefinition = appObject.getGlobalPropertyDefinition(globalPropertyId);
 
-            PropertyDefinitionInput propertyDefinitionInput = this.translationEngine.convertObject(propertyDefinition);
+            PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine.translateObject(propertyDefinition);
 
             PropertyDefinitionMapInput propertyDefinitionMapInput = PropertyDefinitionMapInput.newBuilder()
                     .setPropertyDefinition(propertyDefinitionInput)
-                    .setPropertyId(this.translationEngine.getAnyFromObject(globalPropertyId))
+                    .setPropertyId(this.taskitEngine.getAnyFromObject(globalPropertyId))
                     .setPropertyDefinitionTime(appObject.getGlobalPropertyDefinitionTime(globalPropertyId))
                     .setPropertyTrackingPolicy(true)
                     .build();
@@ -73,11 +73,11 @@ public class GlobalPropertiesPluginDataTranslationSpec
         }
 
         for (GlobalPropertyId globalPropertyId : appObject.getGlobalPropertyValues().keySet()) {
-            Any propertyValueInput = this.translationEngine
+            Any propertyValueInput = this.taskitEngine
                     .getAnyFromObject(appObject.getGlobalPropertyValue(globalPropertyId).get());
 
             PropertyValueMapInput.Builder propertyValueMapInputBuilder = PropertyValueMapInput.newBuilder()
-                    .setPropertyId(this.translationEngine.getAnyFromObject(globalPropertyId))
+                    .setPropertyId(this.taskitEngine.getAnyFromObject(globalPropertyId))
                     .setPropertyValue(propertyValueInput)
                     .setPropertyValueTime(appObject.getGlobalPropertyTime(globalPropertyId).get());
 

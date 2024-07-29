@@ -6,8 +6,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportPeriod;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportPeriodInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
 /**
@@ -19,15 +19,15 @@ public class RegionTransferReportPluginDataTranslationSpec
         extends ProtobufTranslationSpec<RegionTransferReportPluginDataInput, RegionTransferReportPluginData> {
 
     @Override
-    protected RegionTransferReportPluginData convertInputObject(RegionTransferReportPluginDataInput inputObject) {
+    protected RegionTransferReportPluginData translateInputObject(RegionTransferReportPluginDataInput inputObject) {
         if (!RegionTransferReportPluginData.checkVersionSupported(inputObject.getVersion())) {
-            throw new ContractException(CoreTranslationError.UNSUPPORTED_VERSION);
+            throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
 
         RegionTransferReportPluginData.Builder builder = RegionTransferReportPluginData.builder();
 
-        ReportLabel reportLabel = this.translationEngine.convertObject(inputObject.getReportLabel());
-        ReportPeriod reportPeriod = this.translationEngine.convertObject(inputObject.getReportPeriod());
+        ReportLabel reportLabel = this.taskitEngine.translateObject(inputObject.getReportLabel());
+        ReportPeriod reportPeriod = this.taskitEngine.translateObject(inputObject.getReportPeriod());
 
         builder.setReportLabel(reportLabel).setReportPeriod(reportPeriod);
 
@@ -35,15 +35,15 @@ public class RegionTransferReportPluginDataTranslationSpec
     }
 
     @Override
-    protected RegionTransferReportPluginDataInput convertAppObject(RegionTransferReportPluginData appObject) {
+    protected RegionTransferReportPluginDataInput translateAppObject(RegionTransferReportPluginData appObject) {
         RegionTransferReportPluginDataInput.Builder builder = RegionTransferReportPluginDataInput.newBuilder();
 
         builder.setVersion(appObject.getVersion());
 
-        ReportLabelInput reportLabelInput = this.translationEngine.convertObjectAsSafeClass(appObject.getReportLabel(),
+        ReportLabelInput reportLabelInput = this.taskitEngine.translateObjectAsClassSafe(appObject.getReportLabel(),
                 ReportLabel.class);
 
-        ReportPeriodInput reportPeriodInput = this.translationEngine.convertObject(appObject.getReportPeriod());
+        ReportPeriodInput reportPeriodInput = this.taskitEngine.translateObject(appObject.getReportPeriod());
         builder.setReportLabel(reportLabelInput).setReportPeriod(reportPeriodInput);
 
         return builder.build();

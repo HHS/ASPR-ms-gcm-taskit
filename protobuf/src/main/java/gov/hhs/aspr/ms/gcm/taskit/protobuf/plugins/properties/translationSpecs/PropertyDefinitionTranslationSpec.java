@@ -4,7 +4,7 @@ import com.google.protobuf.Any;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationSpec;
+import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * TranslationSpec that defines how to convert between
@@ -14,13 +14,13 @@ public class PropertyDefinitionTranslationSpec
         extends ProtobufTranslationSpec<PropertyDefinitionInput, PropertyDefinition> {
 
     @Override
-    protected PropertyDefinition convertInputObject(PropertyDefinitionInput inputObject) {
+    protected PropertyDefinition translateInputObject(PropertyDefinitionInput inputObject) {
         PropertyDefinition.Builder builder = PropertyDefinition.builder();
 
         builder.setPropertyValueMutability(inputObject.getPropertyValuesAreMutable());
 
         if (inputObject.hasDefaultValue()) {
-            Object defaultValue = this.translationEngine.convertObject(inputObject.getDefaultValue());
+            Object defaultValue = this.taskitEngine.translateObject(inputObject.getDefaultValue());
             builder.setDefaultValue(defaultValue);
             builder.setType(defaultValue.getClass());
         } else {
@@ -38,11 +38,11 @@ public class PropertyDefinitionTranslationSpec
     }
 
     @Override
-    protected PropertyDefinitionInput convertAppObject(PropertyDefinition appObject) {
+    protected PropertyDefinitionInput translateAppObject(PropertyDefinition appObject) {
         PropertyDefinitionInput.Builder builder = PropertyDefinitionInput.newBuilder();
         if (appObject.getDefaultValue().isPresent()) {
-            builder.setDefaultValue((Any) this.translationEngine
-                    .convertObjectAsUnsafeClass(appObject.getDefaultValue().get(), Any.class));
+            builder.setDefaultValue((Any) this.taskitEngine
+                    .translateObjectAsClassUnsafe(appObject.getDefaultValue().get(), Any.class));
         } else {
             builder.setType(appObject.getType().getName());
         }

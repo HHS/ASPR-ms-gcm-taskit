@@ -13,7 +13,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.support.input.ResourcePropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,8 +28,8 @@ public class AT_ResourcePropertyIdTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -38,13 +38,13 @@ public class AT_ResourcePropertyIdTranslationSpec {
                 .build();
 
         ResourcePropertyIdTranslationSpec translationSpec = new ResourcePropertyIdTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         ResourcePropertyId expectedAppValue = TestResourcePropertyId.ResourceProperty_1_2_INTEGER_MUTABLE;
 
-        ResourcePropertyIdInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        ResourcePropertyIdInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        ResourcePropertyId actualAppValue = translationSpec.convertInputObject(inputValue);
+        ResourcePropertyId actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

@@ -13,7 +13,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,8 +28,8 @@ public class AT_GroupsForPersonFilterTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -38,13 +38,13 @@ public class AT_GroupsForPersonFilterTranslationSpec {
                 .build();
 
         GroupsForPersonFilterTranslationSpec translationSpec = new GroupsForPersonFilterTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         GroupsForPersonFilter expectedAppValue = new GroupsForPersonFilter(Equality.EQUAL, 10);
 
-        GroupsForPersonFilterInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        GroupsForPersonFilterInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        GroupsForPersonFilter actualAppValue = translationSpec.convertInputObject(inputValue);
+        GroupsForPersonFilter actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

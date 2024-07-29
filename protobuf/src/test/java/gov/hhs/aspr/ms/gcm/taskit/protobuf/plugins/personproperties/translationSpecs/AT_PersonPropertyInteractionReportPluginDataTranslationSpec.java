@@ -21,8 +21,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyInteractionReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -39,8 +39,8 @@ public class AT_PersonPropertyInteractionReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -48,7 +48,7 @@ public class AT_PersonPropertyInteractionReportPluginDataTranslationSpec {
                 .build();
 
         PersonPropertyInteractionReportPluginDataTranslationSpec translationSpec = new PersonPropertyInteractionReportPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         long seed = 4684903523797799712L;
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(seed);
@@ -70,9 +70,9 @@ public class AT_PersonPropertyInteractionReportPluginDataTranslationSpec {
 
         PersonPropertyInteractionReportPluginData expectedAppValue = builder.build();
 
-        PersonPropertyInteractionReportPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PersonPropertyInteractionReportPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PersonPropertyInteractionReportPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        PersonPropertyInteractionReportPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -80,10 +80,10 @@ public class AT_PersonPropertyInteractionReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(PersonPropertyInteractionReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(PersonPropertyInteractionReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

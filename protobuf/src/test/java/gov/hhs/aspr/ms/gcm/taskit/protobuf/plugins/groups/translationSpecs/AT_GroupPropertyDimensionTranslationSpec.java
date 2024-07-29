@@ -13,7 +13,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPro
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,8 +28,8 @@ public class AT_GroupPropertyDimensionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(GroupsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -37,7 +37,7 @@ public class AT_GroupPropertyDimensionTranslationSpec {
                 .build();
 
         GroupPropertyDimensionTranslationSpec translationSpec = new GroupPropertyDimensionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         GroupPropertyDimension expectedAppValue = GroupPropertyDimension.builder()
                 .setGroupId(new GroupId(0))
@@ -47,9 +47,9 @@ public class AT_GroupPropertyDimensionTranslationSpec {
                 .addValue(15000.5)
                 .build();
 
-        GroupPropertyDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        GroupPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        GroupPropertyDimension actualAppValue = translationSpec.convertInputObject(inputValue);
+        GroupPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

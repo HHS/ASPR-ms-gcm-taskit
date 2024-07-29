@@ -11,9 +11,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.time.TimeElapser;
 
@@ -23,14 +23,14 @@ public class MT_PersonPropertiesTranslator {
     String times = "";
     Path basePath = ResourceHelper.getResourceDir(this.getClass());
     Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
-    ProtobufTranslationEngine protobufTranslationEngine;
+    ProtobufTaskitEngine ProtobufTaskitEngine;
     TimeElapser timeElapser = new TimeElapser();
     PersonPropertiesPluginData pluginData;
     PersonPropertiesPluginDataInput inputPluginData;
-    TranslationController translationController;
+    TaskitEngineManager TaskitEngineManager;
 
     private MT_PersonPropertiesTranslator() {
-        protobufTranslationEngine = ProtobufTranslationEngine.builder()
+        ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -43,10 +43,10 @@ public class MT_PersonPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        this.translationController = TranslationController.builder()
-                .addTranslationEngine(this.protobufTranslationEngine)
+        this.TaskitEngineManager = TaskitEngineManager.builder()
+                .addTaskitEngine(this.ProtobufTaskitEngine)
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         List<PersonId> people = new ArrayList<>();
@@ -64,7 +64,7 @@ public class MT_PersonPropertiesTranslator {
     public void convertPluginDataToInput() {
         this.timeElapser.reset();
         // convert data
-        this.inputPluginData = this.protobufTranslationEngine.convertObject(this.pluginData);
+        this.inputPluginData = this.ProtobufTaskitEngine.translateObject(this.pluginData);
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(elapsedTime + ",");
 
@@ -76,8 +76,8 @@ public class MT_PersonPropertiesTranslator {
         String fileName = "personPropertiesPluginData_mt-" + population + ".json";
         this.timeElapser.reset();
 
-        this.translationController.writeOutput(this.inputPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+        this.TaskitEngineManager.writeOutput(this.inputPluginData, filePath.resolve(fileName),
+                TaskitEngineId.PROTOBUF);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(elapsedTime + ",");
@@ -88,7 +88,7 @@ public class MT_PersonPropertiesTranslator {
     private void readInput() {
         this.timeElapser.reset();
 
-        this.translationController.readInput();
+        this.TaskitEngineManager.readInput();
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(Double.toString(elapsedTime));
     }

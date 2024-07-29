@@ -15,8 +15,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.Stochastic
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.StochasticsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -32,13 +32,13 @@ public class AT_StochasticsPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
 
         StochasticsPluginDataTranslationSpec translationSpec = new StochasticsPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         long seed = 524805676405822016L;
 
@@ -63,9 +63,9 @@ public class AT_StochasticsPluginDataTranslationSpec {
 
         StochasticsPluginData expectedAppValue = builder.build();
 
-        StochasticsPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        StochasticsPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        StochasticsPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        StochasticsPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -73,10 +73,10 @@ public class AT_StochasticsPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(StochasticsPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(StochasticsPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

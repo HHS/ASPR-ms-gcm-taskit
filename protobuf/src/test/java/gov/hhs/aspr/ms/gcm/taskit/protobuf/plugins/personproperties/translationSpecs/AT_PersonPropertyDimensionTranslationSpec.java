@@ -12,7 +12,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.PersonProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -27,8 +27,8 @@ public class AT_PersonPropertyDimensionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -36,7 +36,7 @@ public class AT_PersonPropertyDimensionTranslationSpec {
                 .build();
 
         PersonPropertyDimensionTranslationSpec translationSpec = new PersonPropertyDimensionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         PersonPropertyDimension expectedAppValue = PersonPropertyDimension.builder()
                 .setPersonPropertyId(TestPersonPropertyId.PERSON_PROPERTY_6_DOUBLE_MUTABLE_TRACK)
@@ -46,9 +46,9 @@ public class AT_PersonPropertyDimensionTranslationSpec {
                 .addValue(15000.5)
                 .build();
 
-        PersonPropertyDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PersonPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PersonPropertyDimension actualAppValue = translationSpec.convertInputObject(inputValue);
+        PersonPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

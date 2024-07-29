@@ -13,7 +13,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,8 +28,8 @@ public class AT_TestMaterialsProducerIdTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -39,13 +39,13 @@ public class AT_TestMaterialsProducerIdTranslationSpec {
                 .build();
 
         TestMaterialsProducerIdTranslationSpec translationSpec = new TestMaterialsProducerIdTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         TestMaterialsProducerId expectedAppValue = TestMaterialsProducerId.MATERIALS_PRODUCER_1;
 
-        TestMaterialsProducerIdInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        TestMaterialsProducerIdInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        TestMaterialsProducerId actualAppValue = translationSpec.convertInputObject(inputValue);
+        TestMaterialsProducerId actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

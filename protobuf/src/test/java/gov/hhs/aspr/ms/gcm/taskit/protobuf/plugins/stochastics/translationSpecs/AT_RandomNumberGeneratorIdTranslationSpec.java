@@ -9,7 +9,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.RandomNumberGe
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.StochasticsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.support.input.RandomNumberGeneratorIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -24,19 +24,19 @@ public class AT_RandomNumberGeneratorIdTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(StochasticsTranslator.getTranslator())
                 .build();
 
         RandomNumberGeneratorIdTranslationSpec translationSpec = new RandomNumberGeneratorIdTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         RandomNumberGeneratorId expectedAppValue = TestRandomGeneratorId.BLITZEN;
 
-        RandomNumberGeneratorIdInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        RandomNumberGeneratorIdInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        RandomNumberGeneratorId actualAppValue = translationSpec.convertInputObject(inputValue);
+        RandomNumberGeneratorId actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

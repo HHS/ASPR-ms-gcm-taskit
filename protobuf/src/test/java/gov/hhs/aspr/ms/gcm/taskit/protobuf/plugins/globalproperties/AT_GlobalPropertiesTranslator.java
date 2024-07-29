@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TranslationSpecSupport;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.core.testsupport.TranslatorTestSupport;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
@@ -19,7 +19,7 @@ public class AT_GlobalPropertiesTranslator {
     @Test
     @UnitTestForCoverage
     public void testGetTranslationSpecs() throws ClassNotFoundException {
-        Set<String> missing = TranslationSpecSupport.testGetTranslationSpecs(GlobalPropertiesTranslator.class,
+        Set<String> missing = TranslatorTestSupport.testGetTranslationSpecs(GlobalPropertiesTranslator.class,
                 GlobalPropertiesTranslator.getTranslationSpecs());
 
         assertTrue(missing.isEmpty(), missing.toString());

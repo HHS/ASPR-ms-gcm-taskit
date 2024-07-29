@@ -28,9 +28,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPlu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
@@ -46,15 +46,15 @@ public class IT_RegionsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -69,7 +69,7 @@ public class IT_RegionsTranslator {
                 seed);
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         RegionsPluginData actualPluginData = translatorController.getFirstObject(RegionsPluginData.class);
@@ -85,15 +85,15 @@ public class IT_RegionsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -119,7 +119,7 @@ public class IT_RegionsTranslator {
         RegionPropertyReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         RegionPropertyReportPluginData actualPluginData = translatorController
@@ -136,15 +136,15 @@ public class IT_RegionsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(RegionsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
@@ -157,7 +157,7 @@ public class IT_RegionsTranslator {
         RegionTransferReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         RegionTransferReportPluginData actualPluginData = translatorController

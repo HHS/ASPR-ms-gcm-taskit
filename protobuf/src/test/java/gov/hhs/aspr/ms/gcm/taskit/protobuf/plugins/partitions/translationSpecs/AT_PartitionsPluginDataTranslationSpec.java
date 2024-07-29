@@ -11,8 +11,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.data.input.PartitionsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestLabelerTranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,29 +28,29 @@ public class AT_PartitionsPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslationSpec(new TestFilterTranslationSpec())
                 .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
 
         PartitionsPluginDataTranslationSpec translationSpec = new PartitionsPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         PartitionsPluginData expectedAppValue = PartitionsPluginData.builder().setRunContinuitySupport(true).build();
 
-        PartitionsPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PartitionsPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PartitionsPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        PartitionsPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
 
         expectedAppValue = PartitionsPluginData.builder().setRunContinuitySupport(false).build();
 
-        inputValue = translationSpec.convertAppObject(expectedAppValue);
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        inputValue = translationSpec.translateAppObject(expectedAppValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -58,10 +58,10 @@ public class AT_PartitionsPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(PartitionsPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(PartitionsPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

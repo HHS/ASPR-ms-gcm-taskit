@@ -11,7 +11,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -26,15 +26,15 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         GlobalPropertyDimensionTranslationSpec translationSpec = new GlobalPropertyDimensionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         GlobalPropertyDimension expectedAppValue = GlobalPropertyDimension.builder()
                 .setAssignmentTime(0)
@@ -44,9 +44,9 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
                 .addValue(15000.5)
                 .build();
 
-        GlobalPropertyDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        GlobalPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        GlobalPropertyDimension actualAppValue = translationSpec.convertInputObject(inputValue);
+        GlobalPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

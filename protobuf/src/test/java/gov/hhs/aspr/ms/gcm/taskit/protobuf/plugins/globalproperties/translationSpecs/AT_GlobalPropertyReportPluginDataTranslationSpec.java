@@ -15,8 +15,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.reports.input.GlobalPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -33,15 +33,15 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         GlobalPropertyReportPluginDataTranslationSpec translationSpec = new GlobalPropertyReportPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(524805676405822016L);
         GlobalPropertyReportPluginData.Builder builder = GlobalPropertyReportPluginData.builder();
@@ -61,10 +61,10 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
         GlobalPropertyReportPluginData expectedAppValue = builder.build();
 
         GlobalPropertyReportPluginDataInput globalPropertiesPluginDataInput = translationSpec
-                .convertAppObject(expectedAppValue);
+                .translateAppObject(expectedAppValue);
 
         GlobalPropertyReportPluginData actualAppValue = translationSpec
-                .convertInputObject(globalPropertiesPluginDataInput);
+                .translateInputObject(globalPropertiesPluginDataInput);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -72,10 +72,10 @@ public class AT_GlobalPropertyReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(GlobalPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(GlobalPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

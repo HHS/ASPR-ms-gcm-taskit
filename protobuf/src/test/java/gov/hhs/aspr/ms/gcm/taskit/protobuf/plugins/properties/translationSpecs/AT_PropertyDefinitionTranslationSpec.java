@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -24,13 +24,13 @@ public class AT_PropertyDefinitionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .build();
 
         PropertyDefinitionTranslationSpec translationSpec = new PropertyDefinitionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         PropertyDefinition expectedAppValue = PropertyDefinition.builder()
                 .setDefaultValue("defaultValue")
@@ -38,21 +38,21 @@ public class AT_PropertyDefinitionTranslationSpec {
                 .setType(String.class)
                 .build();
 
-        PropertyDefinitionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PropertyDefinitionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PropertyDefinition actualAppValue = translationSpec.convertInputObject(inputValue);
+        PropertyDefinition actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         expectedAppValue = PropertyDefinition.builder().setPropertyValueMutability(true).setType(String.class).build();
 
-        inputValue = translationSpec.convertAppObject(expectedAppValue);
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        inputValue = translationSpec.translateAppObject(expectedAppValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         assertThrows(RuntimeException.class, () -> {
-            translationSpec.convertInputObject(
+            translationSpec.translateInputObject(
                     PropertyDefinitionInput.getDefaultInstance().toBuilder().setType("Foo").build());
         });
     }

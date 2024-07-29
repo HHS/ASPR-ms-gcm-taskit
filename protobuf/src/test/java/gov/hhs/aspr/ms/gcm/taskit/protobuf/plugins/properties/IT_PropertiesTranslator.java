@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -25,11 +25,11 @@ public class IT_PropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(
-                        ProtobufTranslationEngine.builder().addTranslator(PropertiesTranslator.getTranslator()).build())
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(
+                        IProtobufTaskitEngineBuilder().addTranslator(PropertiesTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         PropertyDefinition expectedPropertyDefinition = PropertyDefinition.builder()
@@ -39,7 +39,7 @@ public class IT_PropertiesTranslator {
                 .build();
 
         translatorController.writeOutput(expectedPropertyDefinition, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         PropertyDefinition actualPropertyDefiniton = translatorController.getFirstObject(PropertyDefinition.class);

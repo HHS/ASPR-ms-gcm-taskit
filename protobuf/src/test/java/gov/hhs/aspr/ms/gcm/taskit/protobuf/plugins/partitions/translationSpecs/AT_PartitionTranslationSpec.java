@@ -14,7 +14,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.TestFi
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.TestLabeler;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.testsupport.translationSpecs.TestLabelerTranslationSpec;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -29,15 +29,15 @@ public class AT_PartitionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslationSpec(new TestFilterTranslationSpec())
                 .addTranslationSpec(new TestLabelerTranslationSpec())
                 .addTranslator(PartitionsTranslator.getTranslator())
                 .build();
 
         PartitionTranslationSpec translationSpec = new PartitionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         Filter partitionFilter = new TestFilter(0);
         Labeler partitionLabeler = new TestLabeler("Test");
@@ -47,17 +47,17 @@ public class AT_PartitionTranslationSpec {
                 .addLabeler(partitionLabeler)
                 .build();
 
-        PartitionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PartitionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        Partition actualAppValue = translationSpec.convertInputObject(inputValue);
+        Partition actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         expectedAppValue = Partition.builder().addLabeler(partitionLabeler).build();
 
-        inputValue = translationSpec.convertAppObject(expectedAppValue);
+        inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -28,13 +28,13 @@ public class AT_ExperimentParameterDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 
         ExperimentParameterDataTranslationSpec translationSpec = new ExperimentParameterDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
                 .setThreadCount(8)
@@ -48,31 +48,31 @@ public class AT_ExperimentParameterDataTranslationSpec {
 
         ExperimentParameterData expectedAppValue = builder.build();
 
-        ExperimentParameterDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        ExperimentParameterDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        ExperimentParameterData actualAppValue = translationSpec.convertInputObject(inputValue);
+        ExperimentParameterData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         expectedAppValue = builder.setSimulationHaltTime(10.0).build();
-        inputValue = translationSpec.convertAppObject(expectedAppValue);
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        inputValue = translationSpec.translateAppObject(expectedAppValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         expectedAppValue = builder.setExperimentProgressLog(Path.of("")).build();
-        inputValue = translationSpec.convertAppObject(expectedAppValue);
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        inputValue = translationSpec.translateAppObject(expectedAppValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
 
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(ExperimentParameterDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(ExperimentParameterDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.NucleusTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.ExampleDimension;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.testsupport.input.ExampleDimensionInput;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -23,20 +23,20 @@ public class AT_ExampleDimensionTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
+    public void testtranslateObject() {
 
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(NucleusTranslator.getTranslator())
                 .build();
 
         ExampleDimensionTranslationSpec translationSpec = new ExampleDimensionTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         ExampleDimension expectedAppValue = new ExampleDimension("test");
 
-        ExampleDimensionInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        ExampleDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        ExampleDimension actualAppValue = translationSpec.convertInputObject(inputValue);
+        ExampleDimension actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

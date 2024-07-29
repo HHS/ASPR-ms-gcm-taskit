@@ -15,8 +15,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.reports.input.ResourcePropertyReportPluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -32,8 +32,8 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(ResourcesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -42,7 +42,7 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
                 .build();
 
         ResourcePropertyReportPluginDataTranslationSpec translationSpec = new ResourcePropertyReportPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         ReportLabel reportLabel = new SimpleReportLabel("resource property report label");
 
@@ -52,9 +52,9 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
 
         ResourcePropertyReportPluginData expectedAppValue = builder.build();
 
-        ResourcePropertyReportPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        ResourcePropertyReportPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        ResourcePropertyReportPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        ResourcePropertyReportPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -62,10 +62,10 @@ public class AT_ResourcePropertyReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(ResourcePropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(ResourcePropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

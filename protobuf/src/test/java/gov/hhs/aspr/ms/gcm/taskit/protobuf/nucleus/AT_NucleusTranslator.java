@@ -8,10 +8,10 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationSpec;
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TranslationSpecSupport;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.testsupport.TranslatorTestSupport;
+import gov.hhs.aspr.ms.taskit.core.translation.TranslationSpec;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
@@ -20,7 +20,7 @@ public class AT_NucleusTranslator {
     @Test
     @UnitTestForCoverage
     public void testGetTranslationSpecs() throws ClassNotFoundException {
-        Set<String> missing = TranslationSpecSupport.testGetTranslationSpecs(NucleusTranslator.class, NucleusTranslator.getTranslationSpecs());
+        Set<String> missing = TranslatorTestSupport.testGetTranslationSpecs(NucleusTranslator.class, NucleusTranslator.getTranslationSpecs());
 
         assertTrue(missing.isEmpty(), missing.toString());
     }
@@ -32,14 +32,14 @@ public class AT_NucleusTranslator {
         Translator expectedTranslator = Translator.builder()
                 .setTranslatorId(NucleusTranslatorId.TRANSLATOR_ID)
                 .setInitializer((translatorContext) -> {
-                    ProtobufTranslationEngine.Builder translationEngineBuilder = translatorContext
-                            .getTranslationEngineBuilder(ProtobufTranslationEngine.Builder.class);
+                    IProtobufTaskitEngineBuilder taskitEngineBuilder = translatorContext
+                            .getTaskitEngineBuilder(IProtobufTaskitEngineBuilder.class);
 
-                    for (TranslationSpec<?, ?> translationSpec : NucleusTranslator.getTranslationSpecs()) {
-                        translationEngineBuilder.addTranslationSpec(translationSpec);
+                    for (ProtobufTranslationSpec<?, ?> translationSpec : NucleusTranslator.getTranslationSpecs()) {
+                        taskitEngineBuilder.addTranslationSpec(translationSpec);
                     }
 
-                    translationEngineBuilder.addFieldToIncludeDefaultValue(
+                    taskitEngineBuilder.addFieldToIncludeDefaultValue(
                             SimulationStateInput.getDescriptor().findFieldByName("startTime"));
                 })
                 .build();

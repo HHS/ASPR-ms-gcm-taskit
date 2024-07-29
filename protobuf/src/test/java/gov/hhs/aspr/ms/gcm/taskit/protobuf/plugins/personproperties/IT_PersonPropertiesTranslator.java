@@ -27,9 +27,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.reports.input.PersonPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
@@ -45,15 +45,15 @@ public class IT_PersonPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -68,7 +68,7 @@ public class IT_PersonPropertiesTranslator {
                 .getStandardPersonPropertiesPluginData(people, seed);
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertiesPluginData actualPluginData = translatorController
@@ -85,15 +85,15 @@ public class IT_PersonPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -120,7 +120,7 @@ public class IT_PersonPropertiesTranslator {
         PersonPropertyReportPluginData expectedPluginData = personPropertyReportPluginDataBuilder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyReportPluginData actualPluginData = translatorController
@@ -137,15 +137,15 @@ public class IT_PersonPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(PersonPropertiesTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), PersonPropertyInteractionReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 4684903523797799712L;
@@ -169,7 +169,7 @@ public class IT_PersonPropertiesTranslator {
         PersonPropertyInteractionReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         PersonPropertyInteractionReportPluginData actualPluginData = translatorController

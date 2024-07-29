@@ -16,8 +16,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -33,8 +33,8 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(MaterialsTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
@@ -44,7 +44,7 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
                 .build();
 
         MaterialsProducerPropertyReportPluginDataTranslationSpec translationSpec = new MaterialsProducerPropertyReportPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
         ReportLabel reportLabel = new SimpleReportLabel("materials producer property report report label");
@@ -53,9 +53,9 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
 
         MaterialsProducerPropertyReportPluginData expectedAppValue = builder.build();
 
-        MaterialsProducerPropertyReportPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        MaterialsProducerPropertyReportPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        MaterialsProducerPropertyReportPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        MaterialsProducerPropertyReportPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -63,10 +63,10 @@ public class AT_MaterialsProducerPropertyReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(MaterialsProducerPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(MaterialsProducerPropertyReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

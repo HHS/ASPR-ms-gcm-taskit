@@ -24,9 +24,9 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.ResourcesTranslator;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -41,8 +41,8 @@ public class IT_MaterialsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
                         .addTranslator(ResourcesTranslator.getTranslator())
@@ -51,7 +51,7 @@ public class IT_MaterialsTranslator {
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         int numBatches = 50;
@@ -62,7 +62,7 @@ public class IT_MaterialsTranslator {
         MaterialsPluginData expectedPluginData = MaterialsTestPluginFactory.getStandardMaterialsPluginData(numBatches,
                 numStages, numBatchesInStage, seed);
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
         MaterialsPluginData actualPluginData = translatorController.getFirstObject(MaterialsPluginData.class);
@@ -78,8 +78,8 @@ public class IT_MaterialsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -88,7 +88,7 @@ public class IT_MaterialsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), BatchStatusReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         BatchStatusReportPluginData.Builder builder = BatchStatusReportPluginData.builder();
@@ -100,7 +100,7 @@ public class IT_MaterialsTranslator {
         BatchStatusReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
 
@@ -118,8 +118,8 @@ public class IT_MaterialsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -128,7 +128,7 @@ public class IT_MaterialsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsProducerPropertyReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         MaterialsProducerPropertyReportPluginData.Builder builder = MaterialsProducerPropertyReportPluginData.builder();
@@ -139,7 +139,7 @@ public class IT_MaterialsTranslator {
         MaterialsProducerPropertyReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
 
@@ -157,8 +157,8 @@ public class IT_MaterialsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -167,7 +167,7 @@ public class IT_MaterialsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), MaterialsProducerResourceReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         MaterialsProducerResourceReportPluginData.Builder builder = MaterialsProducerResourceReportPluginData.builder();
@@ -179,7 +179,7 @@ public class IT_MaterialsTranslator {
         MaterialsProducerResourceReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         MaterialsProducerResourceReportPluginData actualPluginData = translatorController
@@ -196,8 +196,8 @@ public class IT_MaterialsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(MaterialsTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .addTranslator(PropertiesTranslator.getTranslator())
@@ -206,7 +206,7 @@ public class IT_MaterialsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), StageReportPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         StageReportPluginData.Builder builder = StageReportPluginData.builder();
@@ -218,7 +218,7 @@ public class IT_MaterialsTranslator {
         StageReportPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         StageReportPluginData actualPluginData = translatorController.getFirstObject(StageReportPluginData.class);

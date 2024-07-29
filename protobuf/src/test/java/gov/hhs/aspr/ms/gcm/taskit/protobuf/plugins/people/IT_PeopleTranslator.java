@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.people.datamanagers.PeoplePluginData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.random.RandomGeneratorProvider;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
@@ -28,11 +28,11 @@ public class IT_PeopleTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(
-                        ProtobufTranslationEngine.builder().addTranslator(PeopleTranslator.getTranslator()).build())
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(
+                        IProtobufTaskitEngineBuilder().addTranslator(PeopleTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), PeoplePluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         PeoplePluginData.Builder builder = PeoplePluginData.builder();
@@ -48,7 +48,7 @@ public class IT_PeopleTranslator {
         PeoplePluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         PeoplePluginData actualPluginData = translatorController.getFirstObject(PeoplePluginData.class);

@@ -14,9 +14,9 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.WellState;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.StochasticsTestPluginFactory;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -31,12 +31,12 @@ public class IT_StochasticsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(ProtobufTranslationEngine.builder()
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(IProtobufTaskitEngineBuilder()
                         .addTranslator(StochasticsTranslator.getTranslator())
                         .build())
                 .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         long seed = 524805676405822016L;
@@ -63,7 +63,7 @@ public class IT_StochasticsTranslator {
         StochasticsPluginData expectedPluginData = builder.build();
 
         translatorController.writeOutput(expectedPluginData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
         translatorController.readInput();
 
         StochasticsPluginData actualPluginData = translatorController.getFirstObject(StochasticsPluginData.class);

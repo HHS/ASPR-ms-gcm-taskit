@@ -11,9 +11,9 @@ import gov.hhs.aspr.ms.gcm.simulation.nucleus.ExperimentParameterData;
 import gov.hhs.aspr.ms.gcm.simulation.nucleus.SimulationState;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.ExperimentParameterDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.SimulationStateInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -28,11 +28,11 @@ public class IT_NucleusTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(
-                        ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(
+                        IProtobufTaskitEngineBuilder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), SimulationStateInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         double startTime = 5;
@@ -43,7 +43,7 @@ public class IT_NucleusTranslator {
                 .build();
 
         translatorController.writeOutput(exptectedSimulationState, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
 
@@ -59,11 +59,11 @@ public class IT_NucleusTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(
-                        ProtobufTranslationEngine.builder().addTranslator(NucleusTranslator.getTranslator()).build())
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(
+                        IProtobufTaskitEngineBuilder().addTranslator(NucleusTranslator.getTranslator()).build())
                 .addInputFilePath(filePath.resolve(fileName), ExperimentParameterDataInput.class,
-                        TranslationEngineType.PROTOBUF)
+                        TaskitEngineId.PROTOBUF)
                 .build();
 
         ExperimentParameterData.Builder builder = ExperimentParameterData.builder()
@@ -79,7 +79,7 @@ public class IT_NucleusTranslator {
         ExperimentParameterData expectedExperimentParameterData = builder.build();
 
         translatorController.writeOutput(expectedExperimentParameterData, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
 

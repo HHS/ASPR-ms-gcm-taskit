@@ -12,8 +12,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalProper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.data.input.GlobalPropertiesPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -29,24 +29,24 @@ public class AT_GlobalPropertiesPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
+    public void testtranslateObject() {
 
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(GlobalPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
         GlobalPropertiesPluginDataTranslationSpec translationSpec = new GlobalPropertiesPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         GlobalPropertiesPluginData expectedAppValue = GlobalPropertiesTestPluginFactory
                 .getStandardGlobalPropertiesPluginData(8368397106493368066L);
 
         GlobalPropertiesPluginDataInput globalPropertiesPluginDataInput = translationSpec
-                .convertAppObject(expectedAppValue);
+                .translateAppObject(expectedAppValue);
 
-        GlobalPropertiesPluginData actualAppValue = translationSpec.convertInputObject(globalPropertiesPluginDataInput);
+        GlobalPropertiesPluginData actualAppValue = translationSpec.translateInputObject(globalPropertiesPluginDataInput);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -54,10 +54,10 @@ public class AT_GlobalPropertiesPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(GlobalPropertiesPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(GlobalPropertiesPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

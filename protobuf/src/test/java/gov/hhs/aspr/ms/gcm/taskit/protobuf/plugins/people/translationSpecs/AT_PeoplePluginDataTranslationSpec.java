@@ -11,8 +11,8 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.people.datamanagers.PeoplePluginDa
 import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonRange;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.data.input.PeoplePluginDataInput;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -29,13 +29,13 @@ public class AT_PeoplePluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(PeopleTranslator.getTranslator())
                 .build();
 
         PeoplePluginDataTranslationSpec translationSpec = new PeoplePluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         PeoplePluginData.Builder builder = PeoplePluginData.builder();
         RandomGenerator randomGenerator = RandomGeneratorProvider.getRandomGenerator(6573670690105604419L);
@@ -49,16 +49,16 @@ public class AT_PeoplePluginDataTranslationSpec {
 
         PeoplePluginData expectedAppValue = builder.build();
 
-        PeoplePluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        PeoplePluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PeoplePluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        PeoplePluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
 
         inputValue = inputValue.toBuilder().clearPersonCount().build();
 
-        actualAppValue = translationSpec.convertInputObject(inputValue);
+        actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -66,10 +66,10 @@ public class AT_PeoplePluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(PeoplePluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(PeoplePluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

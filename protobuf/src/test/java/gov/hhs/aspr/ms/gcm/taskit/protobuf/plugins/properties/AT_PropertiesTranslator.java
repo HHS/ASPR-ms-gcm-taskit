@@ -7,8 +7,8 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.taskit.core.Translator;
-import gov.hhs.aspr.ms.taskit.core.testsupport.TranslationSpecSupport;
+import gov.hhs.aspr.ms.taskit.core.translation.Translator;
+import gov.hhs.aspr.ms.taskit.core.testsupport.TranslatorTestSupport;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 
@@ -17,7 +17,7 @@ public class AT_PropertiesTranslator {
     @Test
     @UnitTestForCoverage
     public void testGetTranslationSpecs() throws ClassNotFoundException {
-        Set<String> missing = TranslationSpecSupport.testGetTranslationSpecs(PropertiesTranslator.class,
+        Set<String> missing = TranslatorTestSupport.testGetTranslationSpecs(PropertiesTranslator.class,
                 PropertiesTranslator.getTranslationSpecs());
 
         assertTrue(missing.isEmpty(), missing.toString());

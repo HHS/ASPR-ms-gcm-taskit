@@ -15,8 +15,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslat
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
-import gov.hhs.aspr.ms.taskit.core.CoreTranslationError;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
@@ -32,8 +32,8 @@ public class AT_RegionTransferReportPluginDataTranslationSpec {
 
     @Test
     @UnitTestForCoverage
-    public void testConvertObject() {
-        ProtobufTranslationEngine protobufTranslationEngine = ProtobufTranslationEngine.builder()
+    public void testtranslateObject() {
+        ProtobufTaskitEngine ProtobufTaskitEngine = IProtobufTaskitEngineBuilder()
                 .addTranslator(RegionsTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -41,7 +41,7 @@ public class AT_RegionTransferReportPluginDataTranslationSpec {
                 .build();
 
         RegionTransferReportPluginDataTranslationSpec translationSpec = new RegionTransferReportPluginDataTranslationSpec();
-        translationSpec.init(protobufTranslationEngine);
+        translationSpec.init(ProtobufTaskitEngine);
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
         ReportPeriod reportPeriod = ReportPeriod.DAILY;
@@ -52,9 +52,9 @@ public class AT_RegionTransferReportPluginDataTranslationSpec {
 
         RegionTransferReportPluginData expectedAppValue = builder.build();
 
-        RegionTransferReportPluginDataInput inputValue = translationSpec.convertAppObject(expectedAppValue);
+        RegionTransferReportPluginDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        RegionTransferReportPluginData actualAppValue = translationSpec.convertInputObject(inputValue);
+        RegionTransferReportPluginData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
         assertEquals(expectedAppValue.toString(), actualAppValue.toString());
@@ -62,10 +62,10 @@ public class AT_RegionTransferReportPluginDataTranslationSpec {
         // preconditions
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
-            translationSpec.convertInputObject(RegionTransferReportPluginDataInput.newBuilder().setVersion("badversion").build());
+            translationSpec.translateInputObject(RegionTransferReportPluginDataInput.newBuilder().setVersion("badversion").build());
         });
 
-        assertEquals(CoreTranslationError.UNSUPPORTED_VERSION, contractException.getErrorType());
+        assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());
     }
 
     @Test

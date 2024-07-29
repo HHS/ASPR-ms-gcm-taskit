@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
-import gov.hhs.aspr.ms.taskit.core.TranslationController;
-import gov.hhs.aspr.ms.taskit.core.TranslationEngineType;
-import gov.hhs.aspr.ms.taskit.protobuf.ProtobufTranslationEngine;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
+import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
@@ -26,16 +26,16 @@ public class IT_ReportsTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        TranslationController translatorController = TranslationController.builder()
-                .addTranslationEngine(
-                        ProtobufTranslationEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
-                .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, TranslationEngineType.PROTOBUF)
+        TaskitEngineManager translatorController = TaskitEngineManager.builder()
+                .addTaskitEngine(
+                        IProtobufTaskitEngineBuilder().addTranslator(ReportsTranslator.getTranslator()).build())
+                .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class, TaskitEngineId.PROTOBUF)
                 .build();
 
         ReportLabel expecetdReportLabel = new SimpleReportLabel("report label");
 
         translatorController.writeOutput(expecetdReportLabel, filePath.resolve(fileName),
-                TranslationEngineType.PROTOBUF);
+                TaskitEngineId.PROTOBUF);
 
         translatorController.readInput();
 

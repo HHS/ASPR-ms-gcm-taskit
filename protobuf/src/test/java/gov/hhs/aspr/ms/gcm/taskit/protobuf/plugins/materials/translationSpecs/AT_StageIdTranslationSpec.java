@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.materials.support.StageId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.MaterialsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.support.input.StageIdInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.specs.StageIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.RegionsTranslator;

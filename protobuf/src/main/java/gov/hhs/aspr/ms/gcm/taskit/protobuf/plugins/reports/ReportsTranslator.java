@@ -3,9 +3,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportLabelTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.ReportPeriodTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translationSpecs.SimpleReportLabelTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.specs.ReportLabelTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.specs.ReportPeriodTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.specs.SimpleReportLabelTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;

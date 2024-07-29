@@ -9,6 +9,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPro
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.GlobalPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyIdInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;

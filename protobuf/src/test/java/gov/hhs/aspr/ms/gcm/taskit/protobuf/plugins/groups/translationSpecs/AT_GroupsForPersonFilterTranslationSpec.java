@@ -9,6 +9,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupsForPersonFilt
 import gov.hhs.aspr.ms.gcm.simulation.plugins.partitions.support.Equality;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.GroupsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupsForPersonFilterInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.specs.GroupsForPersonFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.partitions.PartitionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.PropertiesTranslator;

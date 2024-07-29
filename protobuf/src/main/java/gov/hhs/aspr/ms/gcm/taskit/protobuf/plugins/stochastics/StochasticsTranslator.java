@@ -3,11 +3,11 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.RandomNumberGeneratorIdTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.SimpleRandomNumberGeneratorIdTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.StochasticsPluginDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.TestRandomGeneratorIdTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translationSpecs.WellStateTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.RandomNumberGeneratorIdTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.SimpleRandomNumberGeneratorIdTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.StochasticsPluginDataTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.TestRandomGeneratorIdTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.WellStateTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;

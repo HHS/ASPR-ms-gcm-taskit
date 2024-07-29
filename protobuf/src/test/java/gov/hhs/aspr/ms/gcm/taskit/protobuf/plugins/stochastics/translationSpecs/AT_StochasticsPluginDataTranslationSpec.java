@@ -15,6 +15,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.Stochastic
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.StochasticsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.specs.StochasticsPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;

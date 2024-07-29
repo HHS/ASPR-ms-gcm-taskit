@@ -9,6 +9,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.specs.ReportLabelTranslationSpec;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.util.annotations.UnitTestConstructor;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;

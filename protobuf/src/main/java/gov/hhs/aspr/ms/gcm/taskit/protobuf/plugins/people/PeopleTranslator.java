@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.support.input.PersonIdInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PeoplePluginDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PersonIdTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translationSpecs.PersonRangeTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.specs.PeoplePluginDataTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.specs.PersonIdTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.specs.PersonRangeTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;

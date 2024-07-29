@@ -3,7 +3,7 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties;
 import java.util.ArrayList;
 import java.util.List;
 
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translationSpecs.PropertyDefinitionTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.specs.PropertyDefinitionTranslationSpec;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;

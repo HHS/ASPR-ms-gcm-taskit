@@ -29,19 +29,17 @@ public class IT_ReportsTranslator {
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(
                         ProtobufJsonTaskitEngine.builder().addTranslator(ReportsTranslator.getTranslator()).build())
-                .addInputFilePath(filePath.resolve(fileName), ReportLabelInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
-        ReportLabel expecetdReportLabel = new SimpleReportLabel("report label");
+        ReportLabel expectedReportLabel = new SimpleReportLabel("report label");
 
-        taskitEngineManager.translateAndWrite(expecetdReportLabel, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedReportLabel,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        
-        ReportLabel actualReportLabel = taskitEngineManager.getFirstObject(ReportLabel.class);
+        ReportLabel actualReportLabel = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                ReportLabelInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
-        assertEquals(expecetdReportLabel, actualReportLabel);
+        assertEquals(expectedReportLabel, actualReportLabel);
 
     }
 }

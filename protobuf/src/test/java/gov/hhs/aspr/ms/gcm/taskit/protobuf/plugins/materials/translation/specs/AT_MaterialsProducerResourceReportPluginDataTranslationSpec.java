@@ -11,7 +11,6 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.reports.input.MaterialsProducerResourceReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.MaterialsTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.specs.MaterialsProducerResourceReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTranslator;

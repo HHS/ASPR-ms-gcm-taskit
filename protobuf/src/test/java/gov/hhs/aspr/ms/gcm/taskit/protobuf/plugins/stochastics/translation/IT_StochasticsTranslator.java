@@ -14,14 +14,10 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.support.WellState;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.StochasticsTestPluginFactory;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.stochastics.testsupport.TestRandomGeneratorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.data.input.StochasticsPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.stochastics.translation.StochasticsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
-import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
-import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_StochasticsTranslator {
@@ -38,8 +34,6 @@ public class IT_StochasticsTranslator {
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(
                         ProtobufJsonTaskitEngine.builder().addTranslator(StochasticsTranslator.getTranslator()).build())
-                .addInputFilePath(filePath.resolve(fileName), StochasticsPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         long seed = 524805676405822016L;
@@ -67,8 +61,9 @@ public class IT_StochasticsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        
-        StochasticsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(StochasticsPluginData.class);
+
+        StochasticsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                StochasticsPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

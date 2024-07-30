@@ -66,7 +66,7 @@ public class AT_StageReportPluginDataTranslationSpec {
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
             translationSpec
-                    .translateInputObject(StageReportPluginDataInput.newBuilder().setVersion("badversion").build());
+                    .translateInputObject(StageReportPluginDataInput.newBuilder().setVersion("badVersion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

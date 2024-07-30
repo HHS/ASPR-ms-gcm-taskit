@@ -67,7 +67,7 @@ public class AT_MaterialsProducerResourceReportPluginDataTranslationSpec {
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
             translationSpec.translateInputObject(
-                    MaterialsProducerResourceReportPluginDataInput.newBuilder().setVersion("badversion").build());
+                    MaterialsProducerResourceReportPluginDataInput.newBuilder().setVersion("badVersion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

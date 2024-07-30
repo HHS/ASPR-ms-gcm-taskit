@@ -66,7 +66,7 @@ public class AT_BatchStatusReportPluginDataTranslationSpec {
         // version is not supported
         ContractException contractException = assertThrows(ContractException.class, () -> {
             translationSpec.translateInputObject(
-                    BatchStatusReportPluginDataInput.newBuilder().setVersion("badversion").build());
+                    BatchStatusReportPluginDataInput.newBuilder().setVersion("badVersion").build());
         });
 
         assertEquals(TaskitError.UNSUPPORTED_VERSION, contractException.getErrorType());

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.ReportLabel;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.reports.support.SimpleReportLabel;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.ReportLabelInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.support.input.SimpleReportLabelInput;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
@@ -37,7 +37,7 @@ public class IT_ReportsTranslator {
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         ReportLabel actualReportLabel = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
-                ReportLabelInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
+                SimpleReportLabelInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedReportLabel, actualReportLabel);
 

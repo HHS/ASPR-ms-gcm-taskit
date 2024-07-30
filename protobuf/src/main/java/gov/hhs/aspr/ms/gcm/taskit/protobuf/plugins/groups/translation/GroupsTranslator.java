@@ -19,7 +19,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.specs.Test
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.specs.TestGroupTypeIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslatorId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;

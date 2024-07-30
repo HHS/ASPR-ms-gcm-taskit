@@ -27,7 +27,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.Proper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.data.input.RegionsPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionPropertyReportPluginDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.reports.input.RegionTransferReportPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
@@ -53,8 +53,6 @@ public class IT_RegionsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), RegionsPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         long seed = 524805676405822016L;
@@ -70,8 +68,9 @@ public class IT_RegionsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        
-        RegionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);.getFirstObject(RegionsPluginData.class);
+
+        RegionsPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                RegionsPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -91,8 +90,6 @@ public class IT_RegionsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         long seed = 524805676405822016L;
@@ -119,9 +116,10 @@ public class IT_RegionsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        
-        RegionPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(RegionPropertyReportPluginData.class);
+
+        RegionPropertyReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(
+                filePath.resolve(fileName), RegionPropertyReportPluginDataInput.class,
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());
@@ -141,8 +139,6 @@ public class IT_RegionsTranslator {
                         .addTranslator(PeopleTranslator.getTranslator())
                         .addTranslator(ReportsTranslator.getTranslator())
                         .build())
-                .addInputFilePath(filePath.resolve(fileName), RegionTransferReportPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         ReportLabel reportLabel = new SimpleReportLabel("region transfer report label");
@@ -156,9 +152,10 @@ public class IT_RegionsTranslator {
 
         taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        
-        RegionTransferReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(filePath.resolve(fileName), null, ProtobufTaskitEngineId.JSON_ENGINE_ID);
-                .getFirstObject(RegionTransferReportPluginData.class);
+
+        RegionTransferReportPluginData actualPluginData = taskitEngineManager.readAndTranslate(
+                filePath.resolve(fileName), RegionTransferReportPluginDataInput.class,
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         assertEquals(expectedPluginData, actualPluginData);
         assertEquals(expectedPluginData.toString(), actualPluginData.toString());

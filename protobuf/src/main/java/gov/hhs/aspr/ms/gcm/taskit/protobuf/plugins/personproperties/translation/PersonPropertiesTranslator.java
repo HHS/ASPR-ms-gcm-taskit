@@ -13,7 +13,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translation.
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translation.specs.PersonPropertyReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translation.specs.TestPersonPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslatorId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;

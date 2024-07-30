@@ -22,7 +22,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.specs.T
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.materials.translation.specs.TestMaterialsProducerPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTranslatorId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.ResourcesTranslatorId;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;

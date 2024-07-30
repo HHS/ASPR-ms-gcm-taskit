@@ -17,7 +17,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.specs.Sim
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.specs.SimpleRegionPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.specs.TestRegionIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.specs.TestRegionPropertyIdTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;

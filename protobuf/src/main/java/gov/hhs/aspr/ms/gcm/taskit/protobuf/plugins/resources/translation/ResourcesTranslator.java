@@ -6,7 +6,7 @@ import java.util.List;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTranslatorId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.specs.PersonResourceReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.specs.ResourceFilterTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.resources.translation.specs.ResourceIdTranslationSpec;

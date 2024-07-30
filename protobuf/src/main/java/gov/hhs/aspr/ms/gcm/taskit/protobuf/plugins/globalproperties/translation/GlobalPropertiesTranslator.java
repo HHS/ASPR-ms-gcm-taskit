@@ -9,7 +9,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.TestGlobalPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslatorId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslatorId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslatorId;
 import gov.hhs.aspr.ms.taskit.core.translation.Translator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.IProtobufTaskitEngineBuilder;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;

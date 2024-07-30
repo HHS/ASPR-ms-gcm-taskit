@@ -9,11 +9,9 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.datamanagers.Pers
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.PersonPropertiesTestPluginFactory;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.translation.PersonPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.ReportsTranslator;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
@@ -22,18 +20,18 @@ import gov.hhs.aspr.ms.util.time.TimeElapser;
 
 public class MT_PersonPropertiesTranslator {
 
-    long seed = 4684903523797799712L;
-    String times = "";
-    Path basePath = ResourceHelper.getResourceDir(this.getClass());
-    Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
-    ProtobufTaskitEngine protobufTaskitEngine;
-    TimeElapser timeElapser = new TimeElapser();
-    PersonPropertiesPluginData pluginData;
-    PersonPropertiesPluginDataInput inputPluginData;
-    TaskitEngineManager TaskitEngineManager;
+    private long seed = 4684903523797799712L;
+    private String times = "";
+    private Path basePath = ResourceHelper.getResourceDir(this.getClass());
+    private Path filePath = ResourceHelper.createDirectory(basePath, "test-output");
+    private ProtobufTaskitEngine protobufTaskitEngine;
+    private TimeElapser timeElapser = new TimeElapser();
+    private PersonPropertiesPluginData pluginData;
+    private PersonPropertiesPluginDataInput inputPluginData;
+    private TaskitEngineManager taskitEngineManager;
 
     private MT_PersonPropertiesTranslator() {
-        ProtobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
+        this.protobufTaskitEngine = ProtobufJsonTaskitEngine.builder()
                 .addTranslator(PersonPropertiesTranslator.getTranslator())
                 .addTranslator(PropertiesTranslator.getTranslator())
                 .addTranslator(PeopleTranslator.getTranslator())
@@ -46,11 +44,7 @@ public class MT_PersonPropertiesTranslator {
 
         ResourceHelper.createFile(filePath, fileName);
 
-        this.TaskitEngineManager = TaskitEngineManager.builder()
-                .addTaskitEngine(this.ProtobufTaskitEngine)
-                .addInputFilePath(filePath.resolve(fileName), PersonPropertiesPluginDataInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
-                .build();
+        this.taskitEngineManager = TaskitEngineManager.builder().addTaskitEngine(this.protobufTaskitEngine).build();
 
         List<PersonId> people = new ArrayList<>();
         for (int i = 0; i < population; i++) {
@@ -64,10 +58,21 @@ public class MT_PersonPropertiesTranslator {
         this.times.concat(elapsedTime + ",");
     }
 
-    public void convertPluginDataToInput() {
+    private void convertPluginDataToInput() {
         this.timeElapser.reset();
         // convert data
-        this.inputPluginData = this.ProtobufTaskitEngine.translateObject(this.pluginData);
+        this.inputPluginData = this.protobufTaskitEngine.translateObject(this.pluginData);
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.times.concat(elapsedTime + ",");
+
+        this.pluginData = null;
+        System.gc();
+    }
+
+    private void convertPluginDataToApp() {
+        this.timeElapser.reset();
+        // convert data
+        this.pluginData = this.protobufTaskitEngine.translateObject(this.inputPluginData);
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(elapsedTime + ",");
 
@@ -79,7 +84,7 @@ public class MT_PersonPropertiesTranslator {
         String fileName = "personPropertiesPluginData_mt-" + population + ".json";
         this.timeElapser.reset();
 
-        this.taskitEngineManager.translateAndWrite(this.inputPluginData, filePath.resolve(fileName),
+        this.taskitEngineManager.write(filePath.resolve(fileName), this.inputPluginData,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
@@ -88,10 +93,14 @@ public class MT_PersonPropertiesTranslator {
         System.gc();
     }
 
-    private void readInput() {
+    private void readInput(int population) {
+        String fileName = "personPropertiesPluginData_mt-" + population + ".json";
         this.timeElapser.reset();
 
-        this.double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
+        this.inputPluginData = this.taskitEngineManager.read(filePath.resolve(fileName),
+                PersonPropertiesPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
+
+        double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.times.concat(Double.toString(elapsedTime));
     }
 
@@ -106,7 +115,7 @@ public class MT_PersonPropertiesTranslator {
     public static void main(String[] args) {
         MT_PersonPropertiesTranslator test = new MT_PersonPropertiesTranslator();
 
-        System.out.println("Population,Generating Data,Converting Data,Writing Data,Reading and Converting Data");
+        System.out.println("Population,Generate,Translate,Write,Read,Translate");
 
         for (int i = 0; i < 1_000_000; i += 5000) {
             if (i == 0)
@@ -115,7 +124,8 @@ public class MT_PersonPropertiesTranslator {
             test.createPluginData(i);
             test.convertPluginDataToInput();
             test.writeOutput(i);
-            test.readInput();
+            test.readInput(i);
+            test.convertPluginDataToApp();
             System.out.println(test.times);
             test.clearTimesString();
         }

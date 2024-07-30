@@ -8,14 +8,10 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
-import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineId;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
-import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.annotations.UnitTestForCoverage;
-import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
 
 public class IT_PropertiesTranslator {
@@ -32,8 +28,6 @@ public class IT_PropertiesTranslator {
         TaskitEngineManager taskitEngineManager = TaskitEngineManager.builder()
                 .addTaskitEngine(
                         ProtobufJsonTaskitEngine.builder().addTranslator(PropertiesTranslator.getTranslator()).build())
-                .addInputFilePath(filePath.resolve(fileName), PropertyDefinitionInput.class,
-                        ProtobufTaskitEngineId.JSON_ENGINE_ID)
                 .build();
 
         PropertyDefinition expectedPropertyDefinition = PropertyDefinition.builder()
@@ -42,12 +36,13 @@ public class IT_PropertiesTranslator {
                 .setType(String.class)
                 .build();
 
-        taskitEngineManager.translateAndWrite(expectedPropertyDefinition, filePath.resolve(fileName),
+        taskitEngineManager.translateAndWrite(filePath.resolve(fileName), expectedPropertyDefinition,
                 ProtobufTaskitEngineId.JSON_ENGINE_ID);
-        
-        PropertyDefinition actualPropertyDefiniton = taskitEngineManager.getFirstObject(PropertyDefinition.class);
 
-        assertEquals(expectedPropertyDefinition, actualPropertyDefiniton);
+        PropertyDefinition actualPropertyDefinition = taskitEngineManager.readAndTranslate(filePath.resolve(fileName),
+                PropertyDefinitionInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
+
+        assertEquals(expectedPropertyDefinition, actualPropertyDefinition);
 
     }
 }

@@ -14,7 +14,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Stochastics Plugin. Using this Translator will add all the
- * necessary TanslationSpecs needed to read and write the StochasticsPlugin
+ * necessary TranslationSpecs needed to read and write the StochasticsPlugin
  */
 public class StochasticsTranslator {
 

@@ -10,7 +10,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Properties Plugin. Using this Translator will add all the
- * necessary TanslationSpecs needed to read and write the PropertiesPlugin
+ * necessary TranslationSpecs needed to read and write the PropertiesPlugin
  */
 public class PropertiesTranslator {
 

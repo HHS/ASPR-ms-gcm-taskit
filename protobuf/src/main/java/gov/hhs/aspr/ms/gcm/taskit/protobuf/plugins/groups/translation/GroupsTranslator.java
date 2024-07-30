@@ -27,7 +27,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Groups Plugin. Using this Translator will add all the
- * necessary TanslationSpecs needed to read and write the GroupsPlugin.
+ * necessary TranslationSpecs needed to read and write the GroupsPlugin.
  */
 public class GroupsTranslator {
 

@@ -23,7 +23,7 @@ import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 /**
  * Translator for the Resources Plugin. Using this Translator will add all the
- * necessary TanslationSpecs needed to read and write the ResourcesPlugin
+ * necessary TranslationSpecs needed to read and write the ResourcesPlugin
  */
 public class ResourcesTranslator {
 

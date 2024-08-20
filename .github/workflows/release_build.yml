@@ -60,6 +60,7 @@ jobs:
         skipIfReleaseExists: true
 
   update-gcm-pipeline:
+    if: ${{ !endsWith(needs.release.outputs.gcm_taskit_version, '0') }}
     needs: release
     runs-on: ubuntu-latest
     permissions:

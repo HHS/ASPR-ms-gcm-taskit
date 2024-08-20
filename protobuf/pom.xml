@@ -26,8 +26,8 @@
     <properties>
         <!-- protobuf specific plugins versions -->
         <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
-        <maven-dependency-plugin.version>3.6.1</maven-dependency-plugin.version>
-        <build-helper-maven-plugin.version>3.5.0</build-helper-maven-plugin.version>
+        <maven-dependency-plugin.version>3.7.1</maven-dependency-plugin.version>
+        <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <maven-replacer-plugin.version>1.4.1</maven-replacer-plugin.version>
 
@@ -37,11 +37,6 @@
 
     <!-- Dependencies -->
     <dependencies>
-        <dependency>
-            <groupId>gov.hhs.aspr.ms.taskit</groupId>
-            <artifactId>protobuf</artifactId>
-            <version>${taskit.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protoc</artifactId>
@@ -94,20 +89,14 @@
                         <id>unpack-protos</id>
                         <phase>generate-sources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>unpack-dependencies</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>gov.hhs.aspr.ms.taskit</groupId>
-                                    <artifactId>protobuf</artifactId>
-                                    <version>${taskit.version}</version>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                                    <includes>**/*.proto</includes>
-                                    <excludes>**/testsupport/*.proto</excludes>
-                                </artifactItem>
-                            </artifactItems>
+                            <includes>**/*.proto</includes>
+                            <excludes>**/testsupport/*.proto</excludes>
+                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <includeArtifactIds>protobuf</includeArtifactIds>
+                            <includeTypes>jar</includeTypes>
                         </configuration>
                     </execution>
                 </executions>

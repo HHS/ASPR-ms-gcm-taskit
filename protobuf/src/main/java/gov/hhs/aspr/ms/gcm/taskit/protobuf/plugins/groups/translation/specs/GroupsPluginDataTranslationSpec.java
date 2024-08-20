@@ -2,6 +2,8 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.specs;
 
 import java.util.*;
 
+import com.google.protobuf.Any;
+
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.datamanagers.GroupsPluginData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyId;
@@ -110,19 +112,21 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
         builder.setVersion(appObject.getVersion());
 
+        Map<GroupTypeId, GroupTypeIdInput> groupTypeIdTranslatedCacheMap = new HashMap<>();
+
         // add group type ids
         for (GroupTypeId groupTypeId : appObject.getGroupTypeIds()) {
             GroupTypeIdInput groupTypeIdInput = this.taskitEngine.translateObjectAsClassSafe(groupTypeId,
                     GroupTypeId.class);
             builder.addGroupTypeIds(groupTypeIdInput);
+            groupTypeIdTranslatedCacheMap.put(groupTypeId, groupTypeIdInput);
         }
 
         Map<GroupTypeIdInput, List<Integer>> groupMap = new LinkedHashMap<>();
         // add groups
         for (GroupId groupId : appObject.getGroupIds()) {
 
-            GroupTypeIdInput groupTypeIdInput = this.taskitEngine
-                    .translateObjectAsClassSafe(appObject.getGroupTypeId(groupId), GroupTypeId.class);
+            GroupTypeIdInput groupTypeIdInput = groupTypeIdTranslatedCacheMap.get(appObject.getGroupTypeId(groupId));
 
             List<Integer> groups = groupMap.get(groupTypeIdInput);
 
@@ -141,14 +145,15 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
             builder.addGroups(groupInput);
         }
 
-        // add group type property definitions
+        groupMap.clear();
 
+        Map<GroupPropertyId, Any> groupPropertyIdTranslatedCacheMap = new HashMap<>();
+        // add group type property definitions
         for (GroupTypeId groupTypeId : appObject.getGroupTypeIds()) {
             GroupPropertyDefinitionMapInput.Builder groupPropDefMapInputBuilder = GroupPropertyDefinitionMapInput
                     .newBuilder();
 
-            GroupTypeIdInput groupTypeIdInput = this.taskitEngine.translateObjectAsClassSafe(groupTypeId,
-                    GroupTypeId.class);
+            GroupTypeIdInput groupTypeIdInput = groupTypeIdTranslatedCacheMap.get(groupTypeId);
             groupPropDefMapInputBuilder.setGroupTypeId(groupTypeIdInput);
 
             Set<GroupPropertyId> groupPropertyIds = appObject.getGroupPropertyIds(groupTypeId);
@@ -159,9 +164,16 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
                 PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine.translateObject(propertyDefinition);
 
+                Any groupPropertyIdInput = groupPropertyIdTranslatedCacheMap.get(groupPropertyId);
+
+                if (groupPropertyIdInput == null) {
+                    groupPropertyIdInput = this.taskitEngine.getAnyFromObject(groupPropertyId);
+                    groupPropertyIdTranslatedCacheMap.put(groupPropertyId, groupPropertyIdInput);
+                }
+
                 PropertyDefinitionMapInput propertyDefInput = PropertyDefinitionMapInput.newBuilder()
                         .setPropertyDefinition(propertyDefinitionInput)
-                        .setPropertyId(this.taskitEngine.getAnyFromObject(groupPropertyId))
+                        .setPropertyId(groupPropertyIdInput)
                         .build();
 
                 groupPropDefMapInputBuilder.addPropertyDefinitions(propertyDefInput);
@@ -169,12 +181,13 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
             builder.addGroupPropertyDefinitions(groupPropDefMapInputBuilder.build());
         }
+
+        groupTypeIdTranslatedCacheMap.clear();
+
         // add group property values
         Map<GroupPropertyValue, List<Integer>> propValueToGroupIdsMap = new LinkedHashMap<>();
 
         for (GroupId groupId : appObject.getGroupIds()) {
-
-            // groupPropValMapBuilder.setGId(groupId.getValue());
 
             List<GroupPropertyValue> groupPropertyValues = appObject.getGroupPropertyValues(groupId);
 
@@ -190,22 +203,34 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
             }
         }
 
+        Map<Object, Any> propertyValueTranslatedCacheMap = new HashMap<>();
+
         for (GroupPropertyValue groupPropertyValue : propValueToGroupIdsMap.keySet()) {
             GroupPropertyValueMapInput.Builder groupPropValMapBuilder = GroupPropertyValueMapInput.newBuilder();
 
             Object propertyValue = groupPropertyValue.value();
+            Any propertyValueInput = propertyValueTranslatedCacheMap.get(propertyValue);
+
+            if (propertyValueInput == null) {
+                propertyValueInput = this.taskitEngine.getAnyFromObject(propertyValue);
+                propertyValueTranslatedCacheMap.put(propertyValue, propertyValueInput);
+            }
+
             List<Integer> groupIds = propValueToGroupIdsMap.get(groupPropertyValue);
             Collections.sort(groupIds);
 
             PropertyValueMapInput propertyValueMapInput = PropertyValueMapInput.newBuilder()
-                    .setPropertyValue(this.taskitEngine.getAnyFromObject(propertyValue))
-                    .setPropertyId(this.taskitEngine.getAnyFromObject(groupPropertyValue.groupPropertyId()))
+                    .setPropertyValue(propertyValueInput)
+                    .setPropertyId(groupPropertyIdTranslatedCacheMap.get(groupPropertyValue.groupPropertyId()))
                     .build();
 
             groupPropValMapBuilder.setPropertyValueMap(propertyValueMapInput).addAllGIds(groupIds);
 
             builder.addGroupPropertyValues(groupPropValMapBuilder.build());
         }
+
+        propValueToGroupIdsMap.clear();
+        groupPropertyIdTranslatedCacheMap.clear();
 
         // add people
         for (int i = 0; i < appObject.getPersonCount(); i++) {
@@ -225,6 +250,7 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
 
         }
 
+        // add groups
         for (int i = 0; i < appObject.getGroupCount(); i++) {
             GroupId groupId = new GroupId(i);
             List<PersonId> peopleInGroup = appObject.getPeopleForGroup(groupId);
@@ -237,6 +263,7 @@ public class GroupsPluginDataTranslationSpec extends ProtobufTranslationSpec<Gro
                 for (PersonId personId : peopleInGroup) {
                     groupMembershipBuilder.addPIds(personId.getValue());
                 }
+
                 builder.addGroupToPersonMemberships(groupMembershipBuilder.build());
             }
         }

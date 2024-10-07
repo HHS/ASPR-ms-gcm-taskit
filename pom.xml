@@ -71,7 +71,7 @@
         <!-- dependency versions -->
         <gcm.version>4.3.0</gcm.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
-        <junit-jupiter-engine.version>5.11.0</junit-jupiter-engine.version>
+        <junit-jupiter-engine.version>5.11.2</junit-jupiter-engine.version>
     </properties>
 
     <dependencyManagement>

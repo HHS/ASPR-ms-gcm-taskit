@@ -32,7 +32,7 @@
         <maven-replacer-plugin.version>1.4.1</maven-replacer-plugin.version>
 
         <!-- dependency versions -->
-        <protoc.version>3.25.3</protoc.version>
+        <protoc.version>3.25.5</protoc.version>
     </properties>
 
     <!-- Dependencies -->

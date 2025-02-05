@@ -16,6 +16,7 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.Proper
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitEngineManager;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufBinaryTaskitEngine;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngine;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufTaskitEngineId;
 import gov.hhs.aspr.ms.util.resourcehelper.ResourceHelper;
@@ -40,14 +41,27 @@ public class MT_PersonPropertiesTranslator {
                 .addTranslator(PeopleTranslator.getTranslator())
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
+
+        this.taskitEngineManager = TaskitEngineManager.builder()//
+                .addTaskitEngine(ProtobufBinaryTaskitEngine.builder()
+                        .addTranslator(PersonPropertiesTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())//
+                .addTaskitEngine(ProtobufJsonTaskitEngine.builder()
+                        .addTranslator(PersonPropertiesTranslator.getTranslator())
+                        .addTranslator(PropertiesTranslator.getTranslator())
+                        .addTranslator(PeopleTranslator.getTranslator())
+                        .addTranslator(ReportsTranslator.getTranslator())
+                        .build())//
+                .build();
     }
 
     private void createPluginData(int population) {
         String fileName = "personPropertiesPluginData_mt-" + population + ".json";
 
         ResourceHelper.createFile(filePath, fileName);
-
-        this.taskitEngineManager = TaskitEngineManager.builder().addTaskitEngine(this.protobufTaskitEngine).build();
 
         List<PersonId> people = new ArrayList<>();
         for (int i = 0; i < population; i++) {
@@ -154,7 +168,7 @@ public class MT_PersonPropertiesTranslator {
 
         System.out.println("Population,Generate,Translate,Write,Size,Read,Translate");
 
-        for (int i = 0; i <= 100_000_000; i += 100_000_000) {
+        for (int i = 0; i <= 10_000_000; i += 1_000_000) {
             if (i == 0)
                 continue;
             test.appendToTimeString(new String(i + ","));

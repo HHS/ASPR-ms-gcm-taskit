@@ -6,6 +6,8 @@ option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personpropert
 
 import "plugins/partitions/support.proto";
 import "google/protobuf/any.proto";
+import "google/type/date.proto";
+import "core.proto";
 
 
 message PersonPropertyIdInput {
@@ -14,7 +16,15 @@ message PersonPropertyIdInput {
 
 message PersonPropertyValueInput {
     repeated int32 pId = 1;
-    optional google.protobuf.Any value = 2;
+    optional google.protobuf.Any mVal = 2;
+    optional int32 i32Val = 3;
+    optional double dVal = 4;
+    optional bool bVal = 5;
+    optional float fVal = 6;
+    optional int64 i64Val = 7;
+    optional string sVal = 8;
+    optional google.type.Date dateVal = 9;
+    optional gov.hhs.aspr.ms.taskit.protobuf.WrapperEnumValue enumVal = 10;
 }
 
 message PersonPropertyValueMapInput {

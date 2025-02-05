@@ -94,7 +94,7 @@
                         <configuration>
                             <includes>**/*.proto</includes>
                             <excludes>**/testsupport/*.proto</excludes>
-                            <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+                            <outputDirectory>${basedir}/src/main/proto</outputDirectory>
                             <includeArtifactIds>protobuf</includeArtifactIds>
                             <includeTypes>jar</includeTypes>
                         </configuration>
@@ -140,7 +140,8 @@
                     <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}</protocArtifact>
                     <protoSourceRoot>${basedir}/src/main/proto/gov/hhs/aspr/ms/gcm/taskit/protobuf</protoSourceRoot>
                     <additionalProtoPathElements>
-                        <additionalProtoPathElement>${project.build.outputDirectory}</additionalProtoPathElement>
+                        <additionalProtoPathElement>${basedir}/src/main/proto</additionalProtoPathElement>
+                        <additionalProtoPathElement>${basedir}/src/main/proto/gov/hhs/aspr/ms/taskit/protobuf</additionalProtoPathElement>
                     </additionalProtoPathElements>
                     <attachProtoSources>false</attachProtoSources>
                 </configuration>

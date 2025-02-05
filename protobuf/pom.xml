@@ -26,7 +26,7 @@
     <properties>
         <!-- protobuf specific plugins versions -->
         <os-maven-plugin.version>1.7.1</os-maven-plugin.version>
-        <maven-dependency-plugin.version>3.8.0</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
         <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <maven-replacer-plugin.version>1.4.1</maven-replacer-plugin.version>

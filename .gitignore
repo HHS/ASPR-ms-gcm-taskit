@@ -330,3 +330,5 @@ Temporary Items
 
 # VSCode
 .vscode
+protobuf/src/main/proto/gov/hhs/aspr/ms/taskit/protobuf
+protobuf/src/main/proto/google

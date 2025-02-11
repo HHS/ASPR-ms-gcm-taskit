@@ -6,6 +6,9 @@ option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personpropert
 
 import "plugins/partitions/support.proto";
 import "google/protobuf/any.proto";
+import "core.proto";
+import "nucleus/nucleus.proto";
+
 
 
 message PersonPropertyIdInput {
@@ -14,7 +17,7 @@ message PersonPropertyIdInput {
 
 message PersonPropertyValueInput {
     repeated int32 pId = 1;
-    optional google.protobuf.Any value = 2;
+    ms.taskit.protobuf.TaskitObjectInput value = 2;
 }
 
 message PersonPropertyValueMapInput {
@@ -32,10 +35,10 @@ message PersonPropertyTimeMapInput {
     repeated PersonPropertyTimeInput propertyTimes = 2;
 }
 
-message PersonPropertyDimensionInput {
+message PersonPropertyDimensionDataInput {
     PersonPropertyIdInput personPropertyId = 1;
     bool trackTimes = 2;
-    repeated google.protobuf.Any values = 3;
+    repeated nucleus.DimensionSingleValueInput values = 3;
 }
 
 message PersonPropertyFilterInput {

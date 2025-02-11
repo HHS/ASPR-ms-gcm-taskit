@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertiesPluginDataTranslationSpec;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyDimensionTranslationSpec;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyDimensionDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyIdTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.GlobalPropertyReportPluginDataTranslationSpec;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.specs.TestGlobalPropertyIdTranslationSpec;
@@ -29,7 +29,7 @@ public class GlobalPropertiesTranslator {
 
         list.add(new GlobalPropertiesPluginDataTranslationSpec());
         list.add(new GlobalPropertyIdTranslationSpec());
-        list.add(new GlobalPropertyDimensionTranslationSpec());
+        list.add(new GlobalPropertyDimensionDataTranslationSpec());
         list.add(new TestGlobalPropertyIdTranslationSpec());
         list.add(new GlobalPropertyReportPluginDataTranslationSpec());
 

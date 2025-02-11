@@ -4,6 +4,7 @@ import com.google.protobuf.Any;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionInput;
@@ -11,10 +12,10 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionP
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class RegionPropertyDimensionTranslationSpec
-        extends ProtobufTranslationSpec<RegionPropertyDimensionInput, RegionPropertyDimension> {
+        extends ProtobufTranslationSpec<RegionPropertyDimensionInput, RegionPropertyDimensionData> {
     @Override
-    protected RegionPropertyDimension translateInputObject(RegionPropertyDimensionInput inputObject) {
-        RegionPropertyDimension.Builder builder = RegionPropertyDimension.builder();
+    protected RegionPropertyDimensionData translateInputObject(RegionPropertyDimensionInput inputObject) {
+        RegionPropertyDimensionData.Builder builder = RegionPropertyDimensionData.builder();
 
         RegionPropertyId globalPropertyId = this.taskitEngine.translateObject(inputObject.getRegionPropertyId());
         RegionId groupId = this.taskitEngine.translateObject(inputObject.getRegionId());
@@ -30,7 +31,7 @@ public class RegionPropertyDimensionTranslationSpec
     }
 
     @Override
-    protected RegionPropertyDimensionInput translateAppObject(RegionPropertyDimension appObject) {
+    protected RegionPropertyDimensionInput translateAppObject(RegionPropertyDimensionData appObject) {
         RegionPropertyDimensionInput.Builder builder = RegionPropertyDimensionInput.newBuilder();
 
         RegionPropertyIdInput globalPropertyIdInput = this.taskitEngine
@@ -48,8 +49,8 @@ public class RegionPropertyDimensionTranslationSpec
     }
 
     @Override
-    public Class<RegionPropertyDimension> getAppObjectClass() {
-        return RegionPropertyDimension.class;
+    public Class<RegionPropertyDimensionData> getAppObjectClass() {
+        return RegionPropertyDimensionData.class;
     }
 
     @Override

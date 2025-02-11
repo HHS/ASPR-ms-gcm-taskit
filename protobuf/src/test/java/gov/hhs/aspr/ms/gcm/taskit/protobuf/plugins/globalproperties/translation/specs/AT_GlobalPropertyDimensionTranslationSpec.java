@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.GlobalPropertiesTranslator;
@@ -20,9 +21,9 @@ import gov.hhs.aspr.ms.util.annotations.UnitTestMethod;
 public class AT_GlobalPropertyDimensionTranslationSpec {
 
     @Test
-    @UnitTestConstructor(target = GlobalPropertyDimensionTranslationSpec.class, args = {})
+    @UnitTestConstructor(target = GlobalPropertyDimensionDataTranslationSpec.class, args = {})
     public void testConstructor() {
-        assertNotNull(new GlobalPropertyDimensionTranslationSpec());
+        assertNotNull(new GlobalPropertyDimensionDataTranslationSpec());
     }
 
     @Test
@@ -34,10 +35,10 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
                 .addTranslator(ReportsTranslator.getTranslator())
                 .build();
 
-        GlobalPropertyDimensionTranslationSpec translationSpec = new GlobalPropertyDimensionTranslationSpec();
+        GlobalPropertyDimensionDataTranslationSpec translationSpec = new GlobalPropertyDimensionDataTranslationSpec();
         translationSpec.init(protobufTaskitEngine);
 
-        GlobalPropertyDimension expectedAppValue = GlobalPropertyDimension.builder()
+        GlobalPropertyDimensionData expectedAppValue = GlobalPropertyDimensionData.builder()
                 .setAssignmentTime(0)
                 .setGlobalPropertyId(TestGlobalPropertyId.GLOBAL_PROPERTY_3_DOUBLE_MUTABLE)
                 .addValue(10.0)
@@ -47,23 +48,23 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
 
         GlobalPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        GlobalPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
+        GlobalPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }
 
     @Test
-    @UnitTestMethod(target = GlobalPropertyDimensionTranslationSpec.class, name = "getAppObjectClass", args = {})
+    @UnitTestMethod(target = GlobalPropertyDimensionDataTranslationSpec.class, name = "getAppObjectClass", args = {})
     public void testGetAppObjectClass() {
-        GlobalPropertyDimensionTranslationSpec translationSpec = new GlobalPropertyDimensionTranslationSpec();
+        GlobalPropertyDimensionDataTranslationSpec translationSpec = new GlobalPropertyDimensionDataTranslationSpec();
 
         assertEquals(GlobalPropertyDimension.class, translationSpec.getAppObjectClass());
     }
 
     @Test
-    @UnitTestMethod(target = GlobalPropertyDimensionTranslationSpec.class, name = "getInputObjectClass", args = {})
+    @UnitTestMethod(target = GlobalPropertyDimensionDataTranslationSpec.class, name = "getInputObjectClass", args = {})
     public void testGetInputObjectClass() {
-        GlobalPropertyDimensionTranslationSpec translationSpec = new GlobalPropertyDimensionTranslationSpec();
+        GlobalPropertyDimensionDataTranslationSpec translationSpec = new GlobalPropertyDimensionDataTranslationSpec();
 
         assertEquals(GlobalPropertyDimensionInput.class, translationSpec.getInputObjectClass());
     }

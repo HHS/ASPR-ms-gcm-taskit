@@ -5,14 +5,15 @@ option java_multiple_files = true;
 option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input";
 
 import "google/protobuf/any.proto";
+import "nucleus/nucleus.proto";
 
 
 message GlobalPropertyIdInput {
     google.protobuf.Any id = 1;
 }
 
-message GlobalPropertyDimensionInput {
+message GlobalPropertyDimensionDataInput {
     GlobalPropertyIdInput globalPropertyId = 1;
     double assignmentTime = 2;
-    repeated google.protobuf.Any values = 3;
+    repeated nucleus.DimensionDataInput values = 3;
 }

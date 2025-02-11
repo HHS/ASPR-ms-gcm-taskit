@@ -6,6 +6,7 @@ option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input";
 
 import "google/type/date.proto";
 import "google/protobuf/any.proto";
+import "core.proto";
 
 enum PlannerInput {
     DATA_MANAGER = 0;
@@ -32,4 +33,9 @@ message ExperimentParameterDataInput {
 
 message DimensionInput {
     google.protobuf.Any dimension = 1;
+}
+
+message DimensionDataInput {
+    string levelName = 1;
+    repeated ms.taskit.protobuf.TaskitObjectInput values = 2;
 }

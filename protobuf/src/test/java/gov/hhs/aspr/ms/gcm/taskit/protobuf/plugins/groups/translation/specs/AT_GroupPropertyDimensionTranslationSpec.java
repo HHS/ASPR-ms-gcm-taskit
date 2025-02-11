@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.GroupsTranslator;
@@ -40,7 +41,7 @@ public class AT_GroupPropertyDimensionTranslationSpec {
         GroupPropertyDimensionTranslationSpec translationSpec = new GroupPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTaskitEngine);
 
-        GroupPropertyDimension expectedAppValue = GroupPropertyDimension.builder()
+        GroupPropertyDimensionData expectedAppValue = GroupPropertyDimensionData.builder()
                 .setGroupId(new GroupId(0))
                 .setGroupPropertyId(TestGroupPropertyId.GROUP_PROPERTY_1_3_DOUBLE_MUTABLE_NO_TRACK)
                 .addValue(10.0)
@@ -50,7 +51,7 @@ public class AT_GroupPropertyDimensionTranslationSpec {
 
         GroupPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        GroupPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
+        GroupPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

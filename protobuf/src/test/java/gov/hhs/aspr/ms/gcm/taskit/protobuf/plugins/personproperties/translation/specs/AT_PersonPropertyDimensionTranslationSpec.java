@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.testsupport.TestPersonPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyDimensionInput;
@@ -39,7 +40,7 @@ public class AT_PersonPropertyDimensionTranslationSpec {
         PersonPropertyDimensionTranslationSpec translationSpec = new PersonPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTaskitEngine);
 
-        PersonPropertyDimension expectedAppValue = PersonPropertyDimension.builder()
+        PersonPropertyDimensionData expectedAppValue = PersonPropertyDimensionData.builder()
                 .setPersonPropertyId(TestPersonPropertyId.PERSON_PROPERTY_6_DOUBLE_MUTABLE_TRACK)
                 .setTrackTimes(true)
                 .addValue(10.0)
@@ -49,7 +50,7 @@ public class AT_PersonPropertyDimensionTranslationSpec {
 
         PersonPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        PersonPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
+        PersonPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }

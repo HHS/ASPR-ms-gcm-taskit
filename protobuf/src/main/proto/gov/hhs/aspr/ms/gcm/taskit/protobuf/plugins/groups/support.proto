@@ -54,7 +54,7 @@ message GroupInput {
 message GroupPropertyDimensionDataInput {
     int32 gId = 1;
     GroupPropertyIdInput groupPropertyId = 2;
-    repeated nucleus.DimensionDataInput values = 3;
+    repeated nucleus.DimensionSingleValueInput values = 3;
 }
 
 message GroupMemberFilterInput {

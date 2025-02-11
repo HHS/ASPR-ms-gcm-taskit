@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.RegionsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslator;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.ProtobufJsonTaskitEngine;
@@ -40,17 +41,17 @@ public class AT_RegionPropertyDimensionTranslationSpec {
         RegionPropertyDimensionTranslationSpec translationSpec = new RegionPropertyDimensionTranslationSpec();
         translationSpec.init(protobufTaskitEngine);
 
-        RegionPropertyDimension expectedAppValue = RegionPropertyDimension.builder()
+        RegionPropertyDimensionData expectedAppValue = RegionPropertyDimensionData.builder()
                 .setRegionId(TestRegionId.REGION_1)
                 .setRegionPropertyId(TestRegionPropertyId.REGION_PROPERTY_3_DOUBLE_MUTABLE)
-                .addValue(10.0)
-                .addValue(1250.2)
-                .addValue(15000.5)
+                .addValue("1",10.0)
+                .addValue("2",1250.2)
+                .addValue("3",15000.5)
                 .build();
 
-        RegionPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
+        RegionPropertyDimensionDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
-        RegionPropertyDimension actualAppValue = translationSpec.translateInputObject(inputValue);
+        RegionPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
         assertEquals(expectedAppValue, actualAppValue);
     }
@@ -68,6 +69,6 @@ public class AT_RegionPropertyDimensionTranslationSpec {
     public void testGetInputObjectClass() {
         RegionPropertyDimensionTranslationSpec translationSpec = new RegionPropertyDimensionTranslationSpec();
 
-        assertEquals(RegionPropertyDimensionInput.class, translationSpec.getInputObjectClass());
+        assertEquals(RegionPropertyDimensionDataInput.class, translationSpec.getInputObjectClass());
     }
 }

@@ -42,7 +42,7 @@ message RegionPropertyValueMapInput {
 message RegionPropertyDimensionDataInput {
     RegionIdInput regionId = 1;
     RegionPropertyIdInput regionPropertyId = 2;
-    repeated nucleus.DimensionDataInput values = 3;
+    repeated nucleus.DimensionSingleValueInput values = 3;
 }
 
 message RegionFilterInput {

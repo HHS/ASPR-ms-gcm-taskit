@@ -2,10 +2,9 @@ package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation
 
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.DimensionDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.DimensionSingleValueInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyIdInput;
-import gov.hhs.aspr.ms.taskit.protobuf.engine.TaskitObject;
 import gov.hhs.aspr.ms.taskit.protobuf.engine.TaskitObjectHelper;
 import gov.hhs.aspr.ms.taskit.protobuf.objects.TaskitObjectInput;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
@@ -21,12 +20,11 @@ public class GlobalPropertyDimensionDataTranslationSpec
 
         builder.setGlobalPropertyId(globalPropertyId).setAssignmentTime(inputObject.getAssignmentTime());
 
-        for (DimensionDataInput dimDataInput : inputObject.getValuesList()) {
+        for (DimensionSingleValueInput dimDataInput : inputObject.getValuesList()) {
             String levelName = dimDataInput.getLevelName();
-            for(TaskitObjectInput taskitObject : dimDataInput.getValuesList()) {
-                Object value = TaskitObjectHelper.getValue(taskitObject);
-                builder.addValue(levelName, value);
-            }
+            Object value = TaskitObjectHelper.getValue(dimDataInput.getValue());
+
+            builder.addValue(levelName, value);
         }
 
         return builder.build();
@@ -41,9 +39,18 @@ public class GlobalPropertyDimensionDataTranslationSpec
 
         builder.setGlobalPropertyId(globalPropertyIdInput).setAssignmentTime(appObject.getAssignmentTime());
 
-        for(String levelName : appObject.getLevelNames()) {
+        for (String levelName : appObject.getLevelNames()) {
             int level = appObject.getLevel(levelName);
             Object value = appObject.getValue(level);
+
+            TaskitObjectInput inValue = TaskitObjectHelper.getTaskitObjectInput(value, taskitEngine);
+
+            DimensionSingleValueInput dimInput = DimensionSingleValueInput.newBuilder()
+                    .setLevelName(levelName)
+                    .setValue(inValue)
+                    .build();
+
+            builder.addValues(dimInput);
         }
 
         return builder.build();

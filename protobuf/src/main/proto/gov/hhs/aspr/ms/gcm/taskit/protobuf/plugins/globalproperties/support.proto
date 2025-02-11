@@ -15,5 +15,5 @@ message GlobalPropertyIdInput {
 message GlobalPropertyDimensionDataInput {
     GlobalPropertyIdInput globalPropertyId = 1;
     double assignmentTime = 2;
-    repeated nucleus.DimensionDataInput values = 3;
+    repeated nucleus.DimensionSingleValueInput values = 3;
 }

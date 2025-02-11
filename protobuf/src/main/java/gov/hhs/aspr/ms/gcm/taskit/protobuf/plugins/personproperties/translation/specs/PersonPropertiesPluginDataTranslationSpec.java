@@ -19,6 +19,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.TaskitObjectHelper;
+import gov.hhs.aspr.ms.taskit.protobuf.objects.TaskitObjectInput;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
@@ -58,9 +60,9 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .get(personPropertyValueMapInput.getPersonPropertyId().getId());
             for (PersonPropertyValueInput personPropertyValueInput : personPropertyValueMapInput
                     .getPropertyValuesList()) {
+                Object value = TaskitObjectHelper.getValue(personPropertyValueInput.getValue());
                 for (int pId : personPropertyValueInput.getPIdList()) {
-                    builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                            this.taskitEngine.getObjectFromAny(personPropertyValueInput.getValue()));
+                    builder.setPersonPropertyValue(new PersonId(pId), propertyId, value);
                 }
             }
         }
@@ -118,13 +120,15 @@ public class PersonPropertiesPluginDataTranslationSpec
 
             for (int i = 0; i < propertyValues.size(); i++) {
                 if (propertyValues.get(i) != null) {
+                    Object propertyValue = propertyValues.get(i);
                     PersonPropertyValueInput.Builder personPropertyValueInputBuilder = personPropertyInputBuildersMap
-                            .get(propertyValues.get(i));
+                            .get(propertyValue);
 
                     if (personPropertyValueInputBuilder == null) {
-                        personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder()
-                                .setValue(this.taskitEngine.getAnyFromObject(propertyValues.get(i)));
+                        personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder();
+                        TaskitObjectInput value = TaskitObjectHelper.getTaskitObjectInput(propertyValue, taskitEngine);
 
+                        personPropertyValueInputBuilder.setValue(value);
                         personPropertyInputBuildersMap.put(propertyValues.get(i), personPropertyValueInputBuilder);
                     }
 

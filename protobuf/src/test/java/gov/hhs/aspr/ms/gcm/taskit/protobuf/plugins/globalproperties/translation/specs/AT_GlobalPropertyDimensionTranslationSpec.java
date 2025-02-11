@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimension;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.testsupport.TestGlobalPropertyId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.translation.GlobalPropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.reports.translation.ReportsTranslator;
@@ -41,12 +41,12 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
         GlobalPropertyDimensionData expectedAppValue = GlobalPropertyDimensionData.builder()
                 .setAssignmentTime(0)
                 .setGlobalPropertyId(TestGlobalPropertyId.GLOBAL_PROPERTY_3_DOUBLE_MUTABLE)
-                .addValue(10.0)
-                .addValue(1250.2)
-                .addValue(15000.5)
+                .addValue("1", 10.0)
+                .addValue("2", 1250.2)
+                .addValue("3", 15000.5)
                 .build();
 
-        GlobalPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
+        GlobalPropertyDimensionDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
         GlobalPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
@@ -66,7 +66,7 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
     public void testGetInputObjectClass() {
         GlobalPropertyDimensionDataTranslationSpec translationSpec = new GlobalPropertyDimensionDataTranslationSpec();
 
-        assertEquals(GlobalPropertyDimensionInput.class, translationSpec.getInputObjectClass());
+        assertEquals(GlobalPropertyDimensionDataInput.class, translationSpec.getInputObjectClass());
     }
 
 }

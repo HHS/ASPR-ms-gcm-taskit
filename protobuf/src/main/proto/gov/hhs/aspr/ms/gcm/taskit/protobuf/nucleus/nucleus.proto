@@ -35,7 +35,12 @@ message DimensionInput {
     google.protobuf.Any dimension = 1;
 }
 
-message DimensionDataInput {
+message DimensionMultiValueInput {
     string levelName = 1;
     repeated ms.taskit.protobuf.TaskitObjectInput values = 2;
+}
+
+message DimensionSingleValueInput {
+    string levelName = 1;
+    ms.taskit.protobuf.TaskitObjectInput value = 2;
 }

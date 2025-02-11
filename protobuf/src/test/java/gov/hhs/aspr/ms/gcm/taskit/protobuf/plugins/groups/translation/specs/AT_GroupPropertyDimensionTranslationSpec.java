@@ -9,7 +9,7 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimension;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.support.GroupPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.groups.testsupport.TestGroupPropertyId;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.support.input.GroupPropertyDimensionDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.translation.GroupsTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.people.translation.PeopleTranslator;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.translation.PropertiesTranslator;
@@ -44,12 +44,12 @@ public class AT_GroupPropertyDimensionTranslationSpec {
         GroupPropertyDimensionData expectedAppValue = GroupPropertyDimensionData.builder()
                 .setGroupId(new GroupId(0))
                 .setGroupPropertyId(TestGroupPropertyId.GROUP_PROPERTY_1_3_DOUBLE_MUTABLE_NO_TRACK)
-                .addValue(10.0)
-                .addValue(1250.2)
-                .addValue(15000.5)
+                .addValue("1", 10.0)
+                .addValue("2",1250.2)
+                .addValue("3",15000.5)
                 .build();
 
-        GroupPropertyDimensionInput inputValue = translationSpec.translateAppObject(expectedAppValue);
+        GroupPropertyDimensionDataInput inputValue = translationSpec.translateAppObject(expectedAppValue);
 
         GroupPropertyDimensionData actualAppValue = translationSpec.translateInputObject(inputValue);
 
@@ -69,6 +69,6 @@ public class AT_GroupPropertyDimensionTranslationSpec {
     public void testGetInputObjectClass() {
         GroupPropertyDimensionTranslationSpec translationSpec = new GroupPropertyDimensionTranslationSpec();
 
-        assertEquals(GroupPropertyDimensionInput.class, translationSpec.getInputObjectClass());
+        assertEquals(GroupPropertyDimensionDataInput.class, translationSpec.getInputObjectClass());
     }
 }

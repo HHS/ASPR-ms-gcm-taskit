@@ -61,7 +61,7 @@ public class AT_RegionPropertyDimensionTranslationSpec {
     public void testGetAppObjectClass() {
         RegionPropertyDimensionTranslationSpec translationSpec = new RegionPropertyDimensionTranslationSpec();
 
-        assertEquals(RegionPropertyDimension.class, translationSpec.getAppObjectClass());
+        assertEquals(RegionPropertyDimensionData.class, translationSpec.getAppObjectClass());
     }
 
     @Test

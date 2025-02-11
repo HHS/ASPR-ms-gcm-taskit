@@ -60,7 +60,7 @@ public class AT_PersonPropertyDimensionTranslationSpec {
     public void testGetAppObjectClass() {
         PersonPropertyDimensionTranslationSpec translationSpec = new PersonPropertyDimensionTranslationSpec();
 
-        assertEquals(PersonPropertyDimension.class, translationSpec.getAppObjectClass());
+        assertEquals(PersonPropertyDimensionData.class, translationSpec.getAppObjectClass());
     }
 
     @Test

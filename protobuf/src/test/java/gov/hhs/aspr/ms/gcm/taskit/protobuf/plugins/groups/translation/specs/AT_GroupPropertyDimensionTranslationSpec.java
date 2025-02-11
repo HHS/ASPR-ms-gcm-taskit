@@ -61,7 +61,7 @@ public class AT_GroupPropertyDimensionTranslationSpec {
     public void testGetAppObjectClass() {
         GroupPropertyDimensionTranslationSpec translationSpec = new GroupPropertyDimensionTranslationSpec();
 
-        assertEquals(GroupPropertyDimension.class, translationSpec.getAppObjectClass());
+        assertEquals(GroupPropertyDimensionData.class, translationSpec.getAppObjectClass());
     }
 
     @Test

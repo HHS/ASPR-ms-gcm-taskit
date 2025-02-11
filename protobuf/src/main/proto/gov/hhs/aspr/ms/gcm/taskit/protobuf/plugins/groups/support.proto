@@ -7,6 +7,7 @@ option java_package = "gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.groups.suppor
 import "plugins/partitions/support.proto";
 import "plugins/properties/support.proto";
 import "google/protobuf/any.proto";
+import "nucleus/nucleus.proto";
 
 
 message GroupIdInput {
@@ -50,10 +51,10 @@ message GroupInput {
     repeated int32 gId = 2;
 }
 
-message GroupPropertyDimensionInput {
+message GroupPropertyDimensionDataInput {
     int32 gId = 1;
     GroupPropertyIdInput groupPropertyId = 2;
-    repeated google.protobuf.Any values = 3;
+    repeated nucleus.DimensionSingleValueInput values = 3;
 }
 
 message GroupMemberFilterInput {

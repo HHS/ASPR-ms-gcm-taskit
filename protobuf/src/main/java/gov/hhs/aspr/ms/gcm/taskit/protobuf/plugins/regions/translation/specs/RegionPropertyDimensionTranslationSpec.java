@@ -1,37 +1,40 @@
 package gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.translation.specs;
 
-import com.google.protobuf.Any;
-
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionId;
-import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimension;
+import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyId;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.nucleus.input.DimensionSingleValueInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionIdInput;
-import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyDimensionDataInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.regions.support.input.RegionPropertyIdInput;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.TaskitObjectHelper;
+import gov.hhs.aspr.ms.taskit.protobuf.objects.TaskitObjectInput;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 
 public class RegionPropertyDimensionTranslationSpec
-        extends ProtobufTranslationSpec<RegionPropertyDimensionInput, RegionPropertyDimension> {
+        extends ProtobufTranslationSpec<RegionPropertyDimensionDataInput, RegionPropertyDimensionData> {
     @Override
-    protected RegionPropertyDimension translateInputObject(RegionPropertyDimensionInput inputObject) {
-        RegionPropertyDimension.Builder builder = RegionPropertyDimension.builder();
+    protected RegionPropertyDimensionData translateInputObject(RegionPropertyDimensionDataInput inputObject) {
+        RegionPropertyDimensionData.Builder builder = RegionPropertyDimensionData.builder();
 
         RegionPropertyId globalPropertyId = this.taskitEngine.translateObject(inputObject.getRegionPropertyId());
         RegionId groupId = this.taskitEngine.translateObject(inputObject.getRegionId());
 
         builder.setRegionPropertyId(globalPropertyId).setRegionId(groupId);
 
-        for (Any anyValue : inputObject.getValuesList()) {
-            Object value = this.taskitEngine.getObjectFromAny(anyValue);
-            builder.addValue(value);
+        for (DimensionSingleValueInput dimDataInput : inputObject.getValuesList()) {
+            String levelName = dimDataInput.getLevelName();
+            Object value = TaskitObjectHelper.getValue(dimDataInput.getValue());
+
+            builder.addValue(levelName, value);
         }
 
         return builder.build();
     }
 
     @Override
-    protected RegionPropertyDimensionInput translateAppObject(RegionPropertyDimension appObject) {
-        RegionPropertyDimensionInput.Builder builder = RegionPropertyDimensionInput.newBuilder();
+    protected RegionPropertyDimensionDataInput translateAppObject(RegionPropertyDimensionData appObject) {
+        RegionPropertyDimensionDataInput.Builder builder = RegionPropertyDimensionDataInput.newBuilder();
 
         RegionPropertyIdInput globalPropertyIdInput = this.taskitEngine
                 .translateObjectAsClassSafe(appObject.getRegionPropertyId(), RegionPropertyId.class);
@@ -40,20 +43,30 @@ public class RegionPropertyDimensionTranslationSpec
 
         builder.setRegionPropertyId(globalPropertyIdInput).setRegionId(groupIdInput);
 
-        for (Object objValue : appObject.getValues()) {
-            builder.addValues(this.taskitEngine.getAnyFromObject(objValue));
+        for (String levelName : appObject.getLevelNames()) {
+            int level = appObject.getLevel(levelName);
+            Object value = appObject.getValue(level);
+
+            TaskitObjectInput inValue = TaskitObjectHelper.getTaskitObjectInput(value, taskitEngine);
+
+            DimensionSingleValueInput dimInput = DimensionSingleValueInput.newBuilder()
+                    .setLevelName(levelName)
+                    .setValue(inValue)
+                    .build();
+
+            builder.addValues(dimInput);
         }
 
         return builder.build();
     }
 
     @Override
-    public Class<RegionPropertyDimension> getAppObjectClass() {
-        return RegionPropertyDimension.class;
+    public Class<RegionPropertyDimensionData> getAppObjectClass() {
+        return RegionPropertyDimensionData.class;
     }
 
     @Override
-    public Class<RegionPropertyDimensionInput> getInputObjectClass() {
-        return RegionPropertyDimensionInput.class;
+    public Class<RegionPropertyDimensionDataInput> getInputObjectClass() {
+        return RegionPropertyDimensionDataInput.class;
     }
 }

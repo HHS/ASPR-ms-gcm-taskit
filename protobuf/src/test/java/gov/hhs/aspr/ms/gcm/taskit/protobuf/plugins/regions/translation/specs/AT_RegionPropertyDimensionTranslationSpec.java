@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimension;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.support.RegionPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.regions.testsupport.TestRegionPropertyId;

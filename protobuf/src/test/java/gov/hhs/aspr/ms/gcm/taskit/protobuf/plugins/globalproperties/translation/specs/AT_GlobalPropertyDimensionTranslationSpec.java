@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimension;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.support.GlobalPropertyDimensionData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.globalproperties.testsupport.TestGlobalPropertyId;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.globalproperties.support.input.GlobalPropertyDimensionDataInput;
@@ -58,7 +57,7 @@ public class AT_GlobalPropertyDimensionTranslationSpec {
     public void testGetAppObjectClass() {
         GlobalPropertyDimensionDataTranslationSpec translationSpec = new GlobalPropertyDimensionDataTranslationSpec();
 
-        assertEquals(GlobalPropertyDimension.class, translationSpec.getAppObjectClass());
+        assertEquals(GlobalPropertyDimensionData.class, translationSpec.getAppObjectClass());
     }
 
     @Test

@@ -20,7 +20,8 @@ import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.inpu
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.properties.support.input.PropertyDefinitionMapInput;
 import gov.hhs.aspr.ms.taskit.core.engine.TaskitError;
-import gov.hhs.aspr.ms.taskit.protobuf.objects.WrapperEnumValue;
+import gov.hhs.aspr.ms.taskit.protobuf.engine.TaskitObjectHelper;
+import gov.hhs.aspr.ms.taskit.protobuf.objects.TaskitObjectInput;
 import gov.hhs.aspr.ms.taskit.protobuf.translation.ProtobufTranslationSpec;
 import gov.hhs.aspr.ms.util.errors.ContractException;
 
@@ -60,52 +61,9 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .get(personPropertyValueMapInput.getPersonPropertyId().getId());
             for (PersonPropertyValueInput personPropertyValueInput : personPropertyValueMapInput
                     .getPropertyValuesList()) {
+                Object value = TaskitObjectHelper.getValue(personPropertyValueInput.getValue());
                 for (int pId : personPropertyValueInput.getPIdList()) {
-                    if (personPropertyValueInput.hasI32Val()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getI32Val());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasI64Val()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getI64Val());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasDVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getDVal());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasFVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getFVal());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasBVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getBVal());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasDateVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                this.taskitEngine.translateObject(personPropertyValueInput.getDateVal()));
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasSVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                personPropertyValueInput.getSVal());
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasEnumVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                this.taskitEngine.translateObject(personPropertyValueInput.getEnumVal()));
-                        continue;
-                    }
-                    if (personPropertyValueInput.hasMVal()) {
-                        builder.setPersonPropertyValue(new PersonId(pId), propertyId,
-                                this.taskitEngine.getObjectFromAny(personPropertyValueInput.getMVal()));
-                        continue;
-                    }
+                    builder.setPersonPropertyValue(new PersonId(pId), propertyId, value);
                 }
             }
         }
@@ -163,55 +121,15 @@ public class PersonPropertiesPluginDataTranslationSpec
 
             for (int i = 0; i < propertyValues.size(); i++) {
                 if (propertyValues.get(i) != null) {
+                    Object propertyValue = propertyValues.get(i);
                     PersonPropertyValueInput.Builder personPropertyValueInputBuilder = personPropertyInputBuildersMap
-                            .get(propertyValues.get(i));
+                            .get(propertyValue);
 
                     if (personPropertyValueInputBuilder == null) {
                         personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder();
-                        Object value = propertyValues.get(i);
-                        String valClass = value.getClass().getSimpleName();
+                        TaskitObjectInput value = TaskitObjectHelper.getTaskitObjectInput(propertyValue, taskitEngine);
 
-                        if (value instanceof Enum) {
-                            valClass = "Enum";
-                        }
-
-                        switch (valClass) {
-                        case "int":
-                        case "Integer":
-                            personPropertyValueInputBuilder.setI32Val((int) value);
-                            break;
-                        case "long":
-                        case "Long":
-                            personPropertyValueInputBuilder.setI64Val((long) value);
-                            break;
-                        case "double":
-                        case "Double":
-                            personPropertyValueInputBuilder.setDVal((double) value);
-                            break;
-                        case "float":
-                        case "Float":
-                            personPropertyValueInputBuilder.setDVal((float) value);
-                            break;
-                        case "boolean":
-                        case "Boolean":
-                            personPropertyValueInputBuilder.setBVal((boolean) value);
-                            break;
-                        case "String":
-                            personPropertyValueInputBuilder.setSVal((String) value);
-                            break;
-                        case "LocalDate":
-                            personPropertyValueInputBuilder.setDateVal((Date) this.taskitEngine.translateObject(value));
-                            break;
-                        case "Enum":
-                            personPropertyValueInputBuilder
-                                    .setEnumVal((WrapperEnumValue) this.taskitEngine.translateObject(value));
-                            break;
-                        default:
-                            personPropertyValueInputBuilder
-                                    .setMVal(this.taskitEngine.getAnyFromObject(propertyValues.get(i)));
-                            break;
-                        }
-
+                        personPropertyValueInputBuilder.setValue(value);
                         personPropertyInputBuildersMap.put(propertyValues.get(i), personPropertyValueInputBuilder);
                     }
 

@@ -22,7 +22,14 @@ message PersonPropertyValueInput {
 
 message PersonPropertyValueMapInput {
     PersonPropertyIdInput personPropertyId = 1;
-    repeated PersonPropertyValueInput propertyValues = 2;
+    oneof propertyValues {
+        PersonPropertyValueListInput valuesList = 2;
+        bytes valuesBytes = 3;
+    } 
+}
+
+message PersonPropertyValueListInput {
+    repeated PersonPropertyValueInput values = 1;
 }
 
 message PersonPropertyTimeInput {

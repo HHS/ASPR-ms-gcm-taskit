@@ -10,7 +10,14 @@ import "plugins/properties/support.proto";
 
 message PersonPropertiesPluginDataInput {
     repeated PropertyDefinitionMapInput personPropertyDefinitions = 1;
-    repeated PersonPropertyValueMapInput personPropertyValues = 2;
-    repeated PersonPropertyTimeMapInput personPropertyTimes = 3;
-    string version = 4;
+    oneof personPropertyValues {
+        PersonPropertyValueMapListInput valuesList = 2;
+        bytes valuesBytes = 3;
+    }
+    repeated PersonPropertyTimeMapInput personPropertyTimes = 4;
+    string version = 5;
+}
+
+message PersonPropertyValueMapListInput {
+    repeated PersonPropertyValueMapInput personPropertyValues = 1;
 }

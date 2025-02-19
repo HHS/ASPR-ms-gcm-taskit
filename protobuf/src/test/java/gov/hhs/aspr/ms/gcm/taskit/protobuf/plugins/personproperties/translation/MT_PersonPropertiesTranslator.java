@@ -98,11 +98,11 @@ public class MT_PersonPropertiesTranslator {
     }
 
     private void writeOutput(int population) {
-        String fileName = "personPropertiesPluginData_mt-" + population + ".json";
+        String fileName = "personPropertiesPluginData_mt-" + population + "-5.json";
         this.timeElapser.reset();
 
         this.taskitEngineManager.write(filePath.resolve(fileName), this.inputPluginData,
-                ProtobufTaskitEngineId.BINARY_ENGINE_ID);
+                ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.appendTimeToTimeString(elapsedTime, false);
@@ -136,11 +136,11 @@ public class MT_PersonPropertiesTranslator {
     }
 
     private void readInput(int population) {
-        String fileName = "personPropertiesPluginData_mt-" + population + ".json";
+        String fileName = "personPropertiesPluginData_mt-" + population + "-5.json";
         this.timeElapser.reset();
 
         this.inputPluginData = this.taskitEngineManager.read(filePath.resolve(fileName),
-                PersonPropertiesPluginDataInput.class, ProtobufTaskitEngineId.BINARY_ENGINE_ID);
+                PersonPropertiesPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.appendTimeToTimeString(elapsedTime, false);
@@ -168,7 +168,7 @@ public class MT_PersonPropertiesTranslator {
 
         System.out.println("Population,Generate,Translate,Write,Size,Read,Translate");
 
-        for (int i = 0; i <= 10_000_000; i += 1_000_000) {
+        for (int i = 0; i <= 1_000_000; i += 1_000_000) {
             if (i == 0)
                 continue;
             test.appendToTimeString(new String(i + ","));

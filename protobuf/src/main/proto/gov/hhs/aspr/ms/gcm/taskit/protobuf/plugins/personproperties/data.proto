@@ -9,15 +9,26 @@ import "plugins/properties/support.proto";
 
 
 message PersonPropertiesPluginDataInput {
+    oneof pluginDataType {
+        PersonPropertiesPluginDataDenseInput densePluginData = 1;
+        PersonPropertiesPluginDataNonDenseInput pluginData = 2;
+    }
+    string version = 5;
+}
+
+message PersonPropertyValueMapListInput {
+    repeated PersonPropertyValueMapInput personPropertyValues = 1;
+}
+
+message PersonPropertiesPluginDataDenseInput {
+    bytes dataBytes = 1;
+}
+
+message PersonPropertiesPluginDataNonDenseInput {
     repeated PropertyDefinitionMapInput personPropertyDefinitions = 1;
     oneof personPropertyValues {
         PersonPropertyValueMapListInput valuesList = 2;
         bytes valuesBytes = 3;
     }
     repeated PersonPropertyTimeMapInput personPropertyTimes = 4;
-    string version = 5;
-}
-
-message PersonPropertyValueMapListInput {
-    repeated PersonPropertyValueMapInput personPropertyValues = 1;
 }

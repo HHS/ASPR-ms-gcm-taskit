@@ -21,8 +21,9 @@ import gov.hhs.aspr.ms.gcm.simulation.plugins.people.support.PersonId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.datamanagers.PersonPropertiesPluginData;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.personproperties.support.PersonPropertyId;
 import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.PropertyDefinition;
-import gov.hhs.aspr.ms.gcm.simulation.plugins.properties.support.arraycontainers.IntValueContainer;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataDenseInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataInput;
+import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertiesPluginDataNonDenseInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.data.input.PersonPropertyValueMapListInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyIdInput;
 import gov.hhs.aspr.ms.gcm.taskit.protobuf.plugins.personproperties.support.input.PersonPropertyTimeInput;
@@ -47,20 +48,75 @@ public class PersonPropertiesPluginDataTranslationSpec
         extends ProtobufTranslationSpec<PersonPropertiesPluginDataInput, PersonPropertiesPluginData> {
 
     private final int PEOPLE_CUT_OFF = 10_000;
-    private final int BIG_PEOPLE_CUT_OFF = 100_000;
-    private final boolean serializeProtoClasses = true;
+    private final int BIG_PEOPLE_CUT_OFF = 10;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected PersonPropertiesPluginData translateInputObject(PersonPropertiesPluginDataInput inputObject) {
         if (!PersonPropertiesPluginData.checkVersionSupported(inputObject.getVersion())) {
             throw new ContractException(TaskitError.UNSUPPORTED_VERSION);
         }
-
         PersonPropertiesPluginData.Builder builder = PersonPropertiesPluginData.builder();
 
-        Map<Any, PersonPropertyId> personPropIdMap = new LinkedHashMap<>();
+        if (inputObject.hasDensePluginData()) {
+            ByteString byteString = inputObject.getDensePluginData().getDataBytes();
 
-        for (PropertyDefinitionMapInput propertyDefinitionMapInput : inputObject.getPersonPropertyDefinitionsList()) {
+            byte[] bArr = byteString.toByteArray();
+
+            ByteArrayInputStream b = new ByteArrayInputStream(bArr);
+
+            try (ObjectInputStream ois = new ObjectInputStream(b)) {
+                int numPeople = ois.readInt();
+                int numPropIds = ois.readInt();
+
+                for (int i = 0; i < numPropIds; i++) {
+                    PersonPropertyId personPropertyId = (PersonPropertyId) ois.readObject();
+                    PropertyDefinitionInput propertyDefinitionInput = (PropertyDefinitionInput) ois.readObject();
+
+                    PropertyDefinition propertyDefinition = this.taskitEngine.translateObject(propertyDefinitionInput);
+
+                    boolean timeTrackingPolicy = ois.readBoolean();
+                    double definitionTime = ois.readDouble();
+
+                    builder.definePersonProperty(personPropertyId, propertyDefinition, definitionTime,
+                            timeTrackingPolicy);
+                    int numValues = ois.readInt();
+                    int numTimes = ois.readInt();
+
+                    for (int pId = 0; pId < numPeople; pId++) {
+                        PersonId personId = new PersonId(pId);
+
+                        if (pId < numValues) {
+                            Object o = ois.readObject();
+
+                            if (o != null) {
+                                builder.setPersonPropertyValue(personId, personPropertyId, o);
+                            }
+                        }
+
+                        if (pId < numTimes) {
+                            Double time = (Double) ois.readObject();
+
+                            if (time != null) {
+                                builder.setPersonPropertyTime(personId, personPropertyId, time);
+                            }
+                        }
+                    }
+
+                }
+
+                return builder.build();
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.print(e.getMessage());
+            }
+        }
+
+        PersonPropertiesPluginDataNonDenseInput nonDenseInput = inputObject.getPluginData();
+
+        Map<Any, PersonPropertyId> personPropIdMap = new LinkedHashMap<>();
+        Map<PersonPropertyId, PropertyDefinition> propertyDefinitions = new HashMap<>();
+
+        for (PropertyDefinitionMapInput propertyDefinitionMapInput : nonDenseInput.getPersonPropertyDefinitionsList()) {
             PersonPropertyId propertyId = this.taskitEngine
                     .getObjectFromAny(propertyDefinitionMapInput.getPropertyId());
             personPropIdMap.put(propertyDefinitionMapInput.getPropertyId(), propertyId);
@@ -71,76 +127,56 @@ public class PersonPropertiesPluginDataTranslationSpec
             builder.definePersonProperty(propertyId, propertyDefinition,
                     propertyDefinitionMapInput.getPropertyDefinitionTime(),
                     propertyDefinitionMapInput.getPropertyTrackingPolicy());
+
+            propertyDefinitions.put(propertyId, propertyDefinition);
         }
 
-        if (inputObject.hasValuesBytes()) {
-            ByteString byteString = inputObject.getValuesBytes();
+        if (nonDenseInput.hasValuesBytes()) {
+            ByteString byteString = nonDenseInput.getValuesBytes();
 
             byte[] bArr = byteString.toByteArray();
 
             ByteArrayInputStream b = new ByteArrayInputStream(bArr);
 
             try (ObjectInputStream ois = new ObjectInputStream(b)) {
-                @SuppressWarnings("unchecked")
-                List<PersonPropertyId> personPropertyIds = (List<PersonPropertyId>) ois.readObject();
+                List<PersonPropertyId> propertyIds = (List<PersonPropertyId>) ois.readObject();
+                BitSet propValIsIndexed = (BitSet) ois.readObject();
 
-                Object[] valueLookup = (Object[]) ois.readObject();
-                int[][] allPropVals = (int[][]) ois.readObject();
+                List<Object> indexedValues = (List<Object>) ois.readObject();
 
-                int numPeople = allPropVals.length;
+                int numPeople = ois.readInt();
 
-                for (int pId = 0; pId < numPeople; pId++) {
-                    int[] propVals = allPropVals[pId];
+                for (int propIndex = 0; propIndex < propertyIds.size(); propIndex++) {
+                    PersonPropertyId personPropertyId = propertyIds.get(propIndex);
 
-                    for (int propIndex = 0; propIndex < propVals.length; propIndex++) {
-                        PersonPropertyId propId = personPropertyIds.get(propIndex);
-                        int valueIndex = propVals[propIndex];
-                        if (valueIndex != -1) {
-                            Object val = valueLookup[valueIndex];
+                    BitSet propValExists = (BitSet) ois.readObject();
 
-                            if (val != null) {
-                                builder.setPersonPropertyValue(new PersonId(pId), propId, val);
+                    if (propValIsIndexed.get(propIndex)) {
+                        int[] vals = (int[]) ois.readObject();
+                        for (int pId = 0; pId < numPeople; pId++) {
+                            if (propValExists.get(pId)) {
+                                int index = vals[pId];
+
+                                Object value = indexedValues.get(index);
+                                builder.setPersonPropertyValue(new PersonId(pId), personPropertyId, value);
                             }
                         }
-
+                    } else {
+                        Object[] vals = (Object[]) ois.readObject();
+                        for (int pId = 0; pId < numPeople; pId++) {
+                            if (propValExists.get(pId)) {
+                                Object value = vals[pId];
+                                builder.setPersonPropertyValue(new PersonId(pId), personPropertyId, value);
+                            }
+                        }
                     }
                 }
-                // int numProperties = ois.readInt();
 
-                // for (int i = 0; i < numProperties; i++) {
-                // PersonPropertyId propId = (PersonPropertyId) ois.readObject();
-
-                // boolean isPid = ois.readBoolean();
-
-                // if (isPid) {
-                // int numVals = ois.readInt();
-
-                // for (int j = 0; j < numVals; j++) {
-                // int pId = ois.readInt();
-                // Object o = ois.readObject();
-
-                // builder.setPersonPropertyValue(new PersonId(pId), propId, o);
-                // }
-                // } else {
-                // int numPropVals = ois.readInt();
-
-                // for (int j = 0; j < numPropVals; j++) {
-                // Object o = ois.readObject();
-                // @SuppressWarnings("unchecked")
-                // List<Integer> pIds = (List<Integer>) ois.readObject();
-
-                // for (Integer pId : pIds) {
-                // builder.setPersonPropertyValue(new PersonId(pId), propId, o);
-                // }
-                // }
-                // }
-
-                // }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            for (PersonPropertyValueMapInput personPropertyValueMapInput : inputObject.getValuesList()
+            for (PersonPropertyValueMapInput personPropertyValueMapInput : nonDenseInput.getValuesList()
                     .getPersonPropertyValuesList()) {
                 PersonPropertyId propertyId = personPropIdMap
                         .get(personPropertyValueMapInput.getPersonPropertyId().getId());
@@ -161,7 +197,6 @@ public class PersonPropertiesPluginDataTranslationSpec
                     ByteArrayInputStream b = new ByteArrayInputStream(bArr);
 
                     try (ObjectInputStream o = new ObjectInputStream(b)) {
-                        @SuppressWarnings("unchecked")
                         List<Object> values = (List<Object>) o.readObject();
 
                         for (int i = 0; i < values.size(); i++) {
@@ -178,7 +213,7 @@ public class PersonPropertiesPluginDataTranslationSpec
             }
         }
 
-        for (PersonPropertyTimeMapInput personPropertyTimeMapInput : inputObject.getPersonPropertyTimesList()) {
+        for (PersonPropertyTimeMapInput personPropertyTimeMapInput : nonDenseInput.getPersonPropertyTimesList()) {
             PersonPropertyId propertyId = personPropIdMap.get(personPropertyTimeMapInput.getPersonPropertyId().getId());
             for (PersonPropertyTimeInput personPropertyTimeInput : personPropertyTimeMapInput.getPropertyTimesList()) {
                 for (int pId : personPropertyTimeInput.getPIdList()) {
@@ -195,9 +230,9 @@ public class PersonPropertiesPluginDataTranslationSpec
 
     @Override
     protected PersonPropertiesPluginDataInput translateAppObject(PersonPropertiesPluginData appObject) {
-        PersonPropertiesPluginDataInput.Builder builder = PersonPropertiesPluginDataInput.newBuilder();
+        PersonPropertiesPluginDataInput.Builder pluginDataBuilder = PersonPropertiesPluginDataInput.newBuilder();
 
-        builder.setVersion(appObject.getVersion());
+        pluginDataBuilder.setVersion(appObject.getVersion());
 
         Map<PersonPropertyId, PropertyDefinition> personPropertyDefinitions = appObject.getPropertyDefinitions();
         Map<PersonPropertyId, Boolean> personPropertyTimeTrackingPolicies = appObject.getPropertyTrackingPolicies();
@@ -206,6 +241,70 @@ public class PersonPropertiesPluginDataTranslationSpec
         Map<PersonPropertyId, List<Double>> personPropertyTimes = appObject.getPropertyTimes();
 
         Map<PersonPropertyId, PersonPropertyIdInput> translatedObjectCache = new HashMap<>();
+
+        int _numPeople = 0;
+        for (List<Object> values : personPropertyValues.values()) {
+            _numPeople = FastMath.max(_numPeople, values.size());
+        }
+
+        final int numPeople = _numPeople;
+
+        if (numPeople > BIG_PEOPLE_CUT_OFF) {
+            PersonPropertiesPluginDataDenseInput.Builder denseBuilder = PersonPropertiesPluginDataDenseInput
+                    .newBuilder();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream(numPeople * 3);
+            try {
+                ObjectOutputStream oos = new ObjectOutputStream(bos);
+
+                oos.writeInt(numPeople);
+                oos.writeInt(personPropertyDefinitions.keySet().size());
+                for (PersonPropertyId personPropertyId : personPropertyDefinitions.keySet()) {
+                    PropertyDefinition propertyDefinition = appObject.getPersonPropertyDefinition(personPropertyId);
+
+                    PropertyDefinitionInput propertyDefinitionInput = this.taskitEngine
+                            .translateObject(propertyDefinition);
+
+                    oos.writeObject(personPropertyId);
+                    oos.writeObject(propertyDefinitionInput);
+                    oos.writeBoolean(personPropertyTimeTrackingPolicies.get(personPropertyId));
+                    oos.writeDouble(personPropertyDefinitionTimes.get(personPropertyId));
+
+                    List<Object> values = personPropertyValues.getOrDefault(personPropertyId, new ArrayList<>());
+                    List<Double> times = personPropertyTimes.getOrDefault(personPropertyId, new ArrayList<>());
+
+                    Class<?> propClass = propertyDefinition.getType();
+
+                    oos.writeInt(values.size());
+                    oos.writeInt(times.size());
+                    for (int pId = 0; pId < numPeople; pId++) {
+                        if (pId < values.size()) {
+                            Object o = values.get(pId);
+                            oos.writeObject(propClass.cast(o));
+                        }
+
+                        if (pId < times.size()) {
+                            Double time = times.get(pId);
+                            oos.writeObject(time);
+                        }
+                    }
+                }
+
+                oos.flush();
+                oos.close();
+                bos.close();
+
+                denseBuilder.setDataBytes(ByteString.copyFrom(bos.toByteArray()));
+
+                pluginDataBuilder.setDensePluginData(denseBuilder);
+
+                return pluginDataBuilder.build();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        PersonPropertiesPluginDataNonDenseInput.Builder builder = PersonPropertiesPluginDataNonDenseInput.newBuilder();
 
         // Person Prop Defs
         for (PersonPropertyId personPropertyId : personPropertyDefinitions.keySet()) {
@@ -226,262 +325,211 @@ public class PersonPropertiesPluginDataTranslationSpec
                     .build();
 
             builder.addPersonPropertyDefinitions(propertyDefinitionMapInput);
-
         }
 
-        boolean bigPop = false;
-        int numPeople = 0;
-        for (List<Object> values : personPropertyValues.values()) {
-            bigPop |= values.size() > BIG_PEOPLE_CUT_OFF;
-            numPeople = FastMath.max(numPeople, values.size());
-        }
+        // if (bigPop) {
+        // ByteArrayOutputStream bos = new ByteArrayOutputStream(numPeople * 3);
+        // try {
+        // ObjectOutputStream oos = new ObjectOutputStream(bos);
 
-        if (bigPop) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            try {
-                ObjectOutputStream oos = new ObjectOutputStream(bos);
+        // List<PersonPropertyId> propertyIds = new
+        // ArrayList<>(personPropertyValues.keySet());
+        // List<Object> duplicateValues = new ArrayList<>();
+        // List<Object> indexedValues = new ArrayList<>();
+        // Map<Object, Integer> indexValueLookupMap = new HashMap<>();
 
-                int[][] propertyValuesOutput = new int[numPeople][];
-                List<PersonPropertyId> propertyIds = new ArrayList<>();
-                Map<Object, Integer> valueMap = new LinkedHashMap<>();
+        // oos.writeObject(propertyIds);
 
-                for (PersonPropertyId id : personPropertyValues.keySet()) {
-                    propertyIds.add(id);
-                }
+        // BitSet propValIsIndexed = new BitSet(propertyIds.size());
 
-                oos.writeObject(propertyIds);
-                for (int i = 0; i < numPeople; i++) {
-                    propertyValuesOutput[i] = new int[propertyIds.size()];
-                }
+        // personPropertyValues.entrySet().parallelStream().forEach((entry) -> {
+        // List<Object> distinctValues =
+        // entry.getValue().parallelStream().distinct().toList();
 
-                for (int propIndex = 0; propIndex < propertyIds.size(); propIndex++) {
-                    PersonPropertyId propertyId = propertyIds.get(propIndex);
-                    PropertyDefinition propertyDefinition = personPropertyDefinitions.get(propertyId);
-                    Class<?> propClass = propertyDefinition.getType();
+        // double distinctValueSize = ((double) distinctValues.size() /
+        // entry.getValue().size());
 
-                    List<Object> propVals = personPropertyValues.get(propertyId);
+        // boolean shouldIndexValues = distinctValueSize <= 0.25;
 
-                    BitSet
+        // if (shouldIndexValues) {
+        // propValIsIndexed.set(propertyIds.indexOf(entry.getKey()));
+        // synchronized (duplicateValues) {
+        // duplicateValues.addAll(distinctValues);
+        // }
+        // }
+        // });
 
-                    for (int pId = 0; pId < numPeople; pId++) {
-                        int[] vals = propertyValuesOutput[pId];
-                        if (pId >= propVals.size()) {
-                            vals[propIndex] = -1;
-                            continue;
-                        }
-                        Object val = propVals.get(pId);
+        // for (Object o : duplicateValues) {
+        // if (indexValueLookupMap.get(o) == null) {
+        // indexedValues.add(o);
+        // indexValueLookupMap.put(o, indexedValues.size() - 1);
+        // }
+        // }
 
-                        if (val == null) {
-                            vals[propIndex] = -1;
-                            continue;
-                        }
+        // oos.writeObject(propValIsIndexed);
+        // oos.writeObject(duplicateValues);
+        // oos.writeInt(numPeople);
 
-                        if(propertyDefinition.getDefaultValue().isPresent() && val.equals(propertyDefinition.getDefaultValue().get())) {
-                            vals[propIndex] = -1;
-                            continue;
-                        }
+        // for (int propIndex = 0; propIndex < propertyIds.size(); propIndex++) {
+        // PersonPropertyId personPropertyId = propertyIds.get(propIndex);
 
-                        if (valueMap.get(val) == null) {
-                            valueMap.put(propClass.cast(val), valueMap.size());
-                        }
+        // BitSet propValExists = new BitSet(numPeople);
+        // boolean shouldIndexValues = propValIsIndexed.get(propIndex);
+        // List<Object> actualPropVals = personPropertyValues.get(personPropertyId);
+        // Object[] outputVals = new Object[numPeople];
+        // int[] indexedVals = new int[numPeople];
 
-                        vals[propIndex] = valueMap.get(propClass.cast(val));
-                    }
-                }
+        // Map<Double, PersonPropertyTimeInput.Builder> personPropertyInputBuildersMap =
+        // new LinkedHashMap<>();
 
-                Object[] valueLookup = new Object[valueMap.keySet().size()];
+        // List<Double> propertyTimes =
+        // personPropertyTimes.getOrDefault(personPropertyId, new ArrayList<>());
 
-                for (Object val : valueMap.keySet()) {
-                    int index = valueMap.get(val);
-                    valueLookup[index] = val;
-                }
+        // for (int pId = 0; pId < numPeople; pId++) {
+        // if (pId < actualPropVals.size()) {
+        // Object value = actualPropVals.get(pId);
 
-                oos.writeObject(valueLookup);
-                oos.writeObject(propertyValuesOutput);
+        // if (value != null) {
+        // propValExists.set(pId);
 
-                // for (PersonPropertyId personPropertyId : personPropertyValues.keySet()) {
-                // List<Object> propertyValues = personPropertyValues.get(personPropertyId);
+        // if (shouldIndexValues) {
+        // int index = indexValueLookupMap.get(value);
 
-                // PropertyDefinition propertyDefinition =
-                // personPropertyDefinitions.get(personPropertyId);
+        // indexedVals[pId] = index;
+        // continue;
+        // }
 
-                // Class<?> propClass = propertyDefinition.getType();
+        // outputVals[pId] = value;
+        // }
+        // }
 
-                // oos.writeObject(personPropertyId);
+        // if (pId < propertyTimes.size()) {
+        // if (propertyTimes.get(pId) != null) {
+        // PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder =
+        // personPropertyInputBuildersMap
+        // .get(propertyTimes.get(pId));
 
-                // Map<Integer, Object> pIdToValMap = new HashMap<>();
-                // Map<Object, List<Integer>> valToPidMap = new HashMap<>();
+        // if (personPropertyTimeInputBuilder == null) {
+        // personPropertyTimeInputBuilder = PersonPropertyTimeInput.newBuilder()
+        // .setPropertyValueTime(propertyTimes.get(pId));
 
-                // for (int i = 0; i < propertyValues.size(); i++) {
-                // Object o = propertyValues.get(i);
+        // personPropertyInputBuildersMap.put(propertyTimes.get(pId),
+        // personPropertyTimeInputBuilder);
+        // }
 
-                // if (o != null) {
-                // pIdToValMap.put(i, propClass.cast(o));
-                // if (valToPidMap.get(propClass.cast(o)) == null) {
-                // valToPidMap.put(propClass.cast(o), new ArrayList<>());
-                // }
-                // valToPidMap.get(propClass.cast(o)).add(i);
-                // }
-                // }
+        // personPropertyTimeInputBuilder.addPId(pId);
+        // }
+        // }
+        // }
+        // oos.writeObject(propValExists);
 
-                // if (pIdToValMap.keySet().size() < valToPidMap.keySet().size()) {
-                // oos.writeBoolean(true);
-                // oos.writeInt(pIdToValMap.keySet().size());
+        // if (shouldIndexValues) {
+        // oos.writeObject(indexedVals);
+        // } else {
+        // oos.writeObject(outputVals);
+        // }
 
-                // for (int i = 0; i < propertyValues.size(); i++) {
-                // Object o = pIdToValMap.get(i);
+        // PersonPropertyTimeMapInput.Builder timeMapInputBuilder =
+        // PersonPropertyTimeMapInput.newBuilder()
+        // .setPersonPropertyId(translatedObjectCache.get(personPropertyId));
 
-                // if (o != null) {
-                // oos.writeInt(i);
-                // oos.writeObject(propClass.cast(o));
-                // }
+        // for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder :
+        // personPropertyInputBuildersMap
+        // .values()) {
+        // timeMapInputBuilder.addPropertyTimes(personPropertyTimeInputBuilder.build());
+        // }
 
-                // }
-                // } else {
-                // oos.writeBoolean(false);
-                // oos.writeInt(valToPidMap.keySet().size());
+        // builder.addPersonPropertyTimes(timeMapInputBuilder.build());
+        // }
 
-                // for (Object o : valToPidMap.keySet()) {
-                // Object castedO = propClass.cast(o);
+        // oos.flush();
+        // oos.close();
+        // bos.close();
 
-                // oos.writeObject(castedO);
-                // oos.writeObject(valToPidMap.get(o));
-                // }
-                // }
+        // builder.setValuesBytes(ByteString.copyFrom(bos.toByteArray()));
+        // } catch (IOException e) {
+        // e.printStackTrace();
+        // }
+        // }
 
-                // }
-
-                oos.flush();
-                oos.close();
-                bos.close();
-
-                builder.setValuesBytes(ByteString.copyFrom(bos.toByteArray()));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (!bigPop) {
-            PersonPropertyValueMapListInput.Builder valueListBuilder = PersonPropertyValueMapListInput.newBuilder();
-            // Person Prop Values
-            for (PersonPropertyId personPropertyId : personPropertyValues.keySet()) {
-                PersonPropertyValueMapInput.Builder valueMapInputBuilder = PersonPropertyValueMapInput.newBuilder()
-                        .setPersonPropertyId(translatedObjectCache.get(personPropertyId));
-
-                List<Object> propertyValues = personPropertyValues.get(personPropertyId);
-
-                if (propertyValues.size() > PEOPLE_CUT_OFF) {
-                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                    ObjectOutputStream oos;
-                    try {
-                        oos = new ObjectOutputStream(bos);
-                        oos.writeObject(propertyValues);
-                        oos.flush();
-
-                        ByteString byteString = ByteString.copyFrom(bos.toByteArray());
-                        valueMapInputBuilder.setValuesBytes(byteString);
-
-                        oos.close();
-                        bos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                } else {
-                    Map<Object, PersonPropertyValueInput.Builder> personPropertyInputBuildersMap = new LinkedHashMap<>();
-
-                    for (int i = 0; i < propertyValues.size(); i++) {
-                        if (propertyValues.get(i) != null) {
-                            Object propertyValue = propertyValues.get(i);
-                            PersonPropertyValueInput.Builder personPropertyValueInputBuilder = personPropertyInputBuildersMap
-                                    .get(propertyValue);
-
-                            if (personPropertyValueInputBuilder == null) {
-                                personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder();
-                                TaskitObjectInput value = TaskitObjectHelper.getTaskitObjectInput(propertyValue,
-                                        taskitEngine);
-
-                                personPropertyValueInputBuilder.setValue(value);
-                                personPropertyInputBuildersMap.put(propertyValue, personPropertyValueInputBuilder);
-                            }
-
-                            personPropertyValueInputBuilder.addPId(i);
-                        }
-                    }
-
-                    PersonPropertyValueListInput.Builder valueListInput = PersonPropertyValueListInput.newBuilder();
-
-                    for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyInputBuildersMap
-                            .values()) {
-                        valueListInput.addValues(personPropertyValueInputBuilder);
-                    }
-
-                    if (serializeProtoClasses) {
-                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                        ObjectOutputStream oos;
-                        try {
-                            oos = new ObjectOutputStream(bos);
-                            oos.writeObject(valueListInput.build());
-                            oos.flush();
-
-                            ByteString byteString = ByteString.copyFrom(bos.toByteArray());
-                            valueMapInputBuilder.setValuesBytes(byteString);
-
-                            oos.close();
-                            bos.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        valueMapInputBuilder.setValuesList(valueListInput);
-                    }
-                }
-
-                valueListBuilder.addPersonPropertyValues(valueMapInputBuilder.build());
-            }
-
-            builder.setValuesList(valueListBuilder);
-        }
-
-        // Person Prop Times
-        for (PersonPropertyId personPropertyId : personPropertyTimes.keySet()) {
-
-            Map<Double, PersonPropertyTimeInput.Builder> personPropertyInputBuildersMap = new LinkedHashMap<>();
-
-            List<Double> propertyTimes = personPropertyTimes.get(personPropertyId);
-
-            for (int i = 0; i < propertyTimes.size(); i++) {
-                if (propertyTimes.get(i) != null) {
-                    PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder = personPropertyInputBuildersMap
-                            .get(propertyTimes.get(i));
-
-                    if (personPropertyTimeInputBuilder == null) {
-                        personPropertyTimeInputBuilder = PersonPropertyTimeInput.newBuilder()
-                                .setPropertyValueTime(propertyTimes.get(i));
-
-                        personPropertyInputBuildersMap.put(propertyTimes.get(i), personPropertyTimeInputBuilder);
-                    }
-
-                    personPropertyTimeInputBuilder.addPId(i);
-
-                }
-            }
+        PersonPropertyValueMapListInput.Builder valueListBuilder = PersonPropertyValueMapListInput.newBuilder();
+        // Person Prop Values
+        for (PersonPropertyId personPropertyId : personPropertyValues.keySet()) {
+            PersonPropertyValueMapInput.Builder valueMapInputBuilder = PersonPropertyValueMapInput.newBuilder()
+                    .setPersonPropertyId(translatedObjectCache.get(personPropertyId));
 
             PersonPropertyTimeMapInput.Builder timeMapInputBuilder = PersonPropertyTimeMapInput.newBuilder()
-                    .setPersonPropertyId((PersonPropertyIdInput) this.taskitEngine
-                            .translateObjectAsClassSafe(personPropertyId, PersonPropertyId.class));
+                    .setPersonPropertyId(translatedObjectCache.get(personPropertyId));
 
-            for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyInputBuildersMap
+            List<Object> propertyValues = personPropertyValues.get(personPropertyId);
+            List<Double> propertyTimes = personPropertyTimes.getOrDefault(personPropertyId, new ArrayList<>());
+
+            Map<Object, PersonPropertyValueInput.Builder> personPropertyValInputBuildersMap = new LinkedHashMap<>();
+            Map<Double, PersonPropertyTimeInput.Builder> personPropertyTimeInputBuildersMap = new LinkedHashMap<>();
+
+            for (int pId = 0; pId < numPeople; pId++) {
+                if (pId < propertyValues.size()) {
+                    if (propertyValues.get(pId) != null) {
+                        Object propertyValue = propertyValues.get(pId);
+                        PersonPropertyValueInput.Builder personPropertyValueInputBuilder = personPropertyValInputBuildersMap
+                                .get(propertyValue);
+
+                        if (personPropertyValueInputBuilder == null) {
+                            personPropertyValueInputBuilder = PersonPropertyValueInput.newBuilder();
+                            TaskitObjectInput value = TaskitObjectHelper.getTaskitObjectInput(propertyValue,
+                                    taskitEngine);
+
+                            personPropertyValueInputBuilder.setValue(value);
+                            personPropertyValInputBuildersMap.put(propertyValue, personPropertyValueInputBuilder);
+                        }
+
+                        personPropertyValueInputBuilder.addPId(pId);
+                    }
+                }
+
+                if (pId < propertyTimes.size()) {
+                    if (propertyTimes.get(pId) != null) {
+                        PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder = personPropertyTimeInputBuildersMap
+                                .get(propertyTimes.get(pId));
+
+                        if (personPropertyTimeInputBuilder == null) {
+                            personPropertyTimeInputBuilder = PersonPropertyTimeInput.newBuilder()
+                                    .setPropertyValueTime(propertyTimes.get(pId));
+
+                            personPropertyTimeInputBuildersMap.put(propertyTimes.get(pId),
+                                    personPropertyTimeInputBuilder);
+                        }
+
+                        personPropertyTimeInputBuilder.addPId(pId);
+                    }
+                }
+
+            }
+
+            PersonPropertyValueListInput.Builder valueListInput = PersonPropertyValueListInput.newBuilder();
+
+            for (PersonPropertyValueInput.Builder personPropertyValueInputBuilder : personPropertyValInputBuildersMap
                     .values()) {
+                valueListInput.addValues(personPropertyValueInputBuilder);
+            }
 
+            valueMapInputBuilder.setValuesList(valueListInput);
+
+            for (PersonPropertyTimeInput.Builder personPropertyTimeInputBuilder : personPropertyTimeInputBuildersMap
+                    .values()) {
                 timeMapInputBuilder.addPropertyTimes(personPropertyTimeInputBuilder.build());
-
             }
 
             builder.addPersonPropertyTimes(timeMapInputBuilder.build());
+
+            valueListBuilder.addPersonPropertyValues(valueMapInputBuilder.build());
         }
 
-        return builder.build();
+        builder.setValuesList(valueListBuilder);
+
+        pluginDataBuilder.setPluginData(builder);
+
+        return pluginDataBuilder.build();
     }
 
     @Override

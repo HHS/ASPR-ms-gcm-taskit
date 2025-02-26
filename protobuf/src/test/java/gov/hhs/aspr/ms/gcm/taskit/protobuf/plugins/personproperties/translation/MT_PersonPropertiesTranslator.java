@@ -98,11 +98,11 @@ public class MT_PersonPropertiesTranslator {
     }
 
     private void writeOutput(int population) {
-        String fileName = "personPropertiesPluginData_mt-" + population + "-5.json";
+        String fileName = "personPropertiesPluginData_mt-" + population + "-2.bin";
         this.timeElapser.reset();
 
         this.taskitEngineManager.write(filePath.resolve(fileName), this.inputPluginData,
-                ProtobufTaskitEngineId.JSON_ENGINE_ID);
+                ProtobufTaskitEngineId.BINARY_ENGINE_ID);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.appendTimeToTimeString(elapsedTime, false);
@@ -136,11 +136,11 @@ public class MT_PersonPropertiesTranslator {
     }
 
     private void readInput(int population) {
-        String fileName = "personPropertiesPluginData_mt-" + population + "-5.json";
+        String fileName = "personPropertiesPluginData_mt-" + population + "-2.bin";
         this.timeElapser.reset();
 
         this.inputPluginData = this.taskitEngineManager.read(filePath.resolve(fileName),
-                PersonPropertiesPluginDataInput.class, ProtobufTaskitEngineId.JSON_ENGINE_ID);
+                PersonPropertiesPluginDataInput.class, ProtobufTaskitEngineId.BINARY_ENGINE_ID);
 
         double elapsedTime = this.timeElapser.getElapsedMilliSeconds();
         this.appendTimeToTimeString(elapsedTime, false);

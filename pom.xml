@@ -50,6 +50,7 @@
 
     <!-- Properties -->
     <properties>
+
         <revision>3.2.0</revision>
 
         <!-- basic project properties -->
@@ -69,9 +70,11 @@
         <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
 
         <!-- dependency versions -->
+
         <gcm.version>4.5.0</gcm.version>
         <jacoco-maven-plugin.version>0.8.13</jacoco-maven-plugin.version>
         <junit-jupiter-engine.version>5.13.4</junit-jupiter-engine.version>
+
     </properties>
 
     <dependencyManagement>
